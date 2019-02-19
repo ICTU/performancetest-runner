@@ -1,0 +1,439 @@
+<html>
+	<head>
+	<title>||Project|| Performancetest Summary [${printableTime}]</title>
+			
+			<script type="text/javascript" src="js/jquery.min.js"></script>
+			
+<script type="text/javascript">			
+$(function () {
+        $('#container_counters').highcharts({
+            chart: {
+                type: 'line',
+				zoomType: 'x',
+				height: 420,
+				marginBottom : 80
+            },
+			legend: {
+				enabled: true,
+				layout: 'horizontal',
+				align: '',
+				verticalAlign: 'bottom'
+			},			
+            title: {
+                text: 'Counters'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            yAxis: [{ // Primary yAxis
+			    labels: {
+                    formatter: function() {
+                        return this.value;
+                    },
+                    style: {
+                        color: '#89A54E'
+                    }
+                },
+                title: {
+                    text: 'Value'
+                },
+				min: 0,
+                opposite: true 
+            },
+			{
+			    labels: {
+                    formatter: function() {
+                        return this.value + 's';
+                    },
+                    style: {
+                        color: '#89A54E'
+                    }
+                },
+                title: {
+                    text: 'Response time'
+                },
+				min: 0,
+                opposite: false 			
+			}],
+			tooltip: {
+                shared: true
+            },
+            plotOptions: {
+                line: {
+                    lineWidth: 2,				
+					marker: {
+						enabled: false
+					},
+                    pointStart: Date.UTC(${Time}),
+					pointInterval: ${Interval},
+                }
+            },
+            series: [{
+			    name: 'Transaction Busy Time',
+				yAxis: 1,
+                data: [${Transaction#Overall_Response_Time#Trans.(busy)_ok[s]}],
+				tooltip: {
+                    valueSuffix: ' s'
+                }
+			}, {
+			    name: 'Transaction Rate',
+				yAxis: 0,
+                data: [${Summary_General---Transactions}],
+				tooltip: {
+                    valueSuffix: ' trs/s'
+                }
+            },{
+			    name: 'Error Rate',
+				yAxis: 0,
+				color: 'red',
+                data: [${Summary_General---Errors}],
+				tooltip: {
+                    valueSuffix: ' err/s'
+                }
+			},{
+                name: 'Active Users',
+				yAxis: 0,
+                color: '#89A54E',
+                data: [${Summary_General---Active_users}]
+			}]
+        });
+    });
+	
+$(function () {
+        $('#container_trend').highcharts({
+            chart: {
+                type: 'line',
+				zoomType: 'x',
+				height: 420,
+				marginBottom : 80
+            },
+				legend: {
+					enabled: false,
+					layout: 'horizontal',
+					align: 'bottom',
+					verticalAlign: 'bottom'
+				},		
+            title: {
+                text: 'Trend last ${maxtrendcount} testruns'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    align : 'left',
+					rotation: -90,
+					x : -12,
+					y : 0
+                },
+				alternateGridColor: '#F4F4F4',
+				categories: [''$[,'${printableTime:#}']]
+            },
+            yAxis: [{ // Primary yAxis
+			    labels: {
+                    formatter: function() {
+                        return this.value;
+                    },
+                    style: {
+                        color: '#89A54E'
+                    }
+                },
+                title: {
+                    text: ''
+                },
+				min: 0,
+                opposite: true 
+            },
+			{
+			    labels: {
+                    formatter: function() {
+                        return this.value + 's';
+                    },
+                    style: {
+                        color: '#89A54E'
+                    }
+                },
+                title: {
+                    text: 'Response time'
+                },
+				min: 0,
+                opposite: false 			
+			}],
+			tooltip: {
+                shared: false
+            },
+            plotOptions: {
+                line: {
+                    lineWidth: 2,				
+					marker: {
+						enabled: false
+					}
+				}
+            },
+            series: [
+            ||BLOK1||]
+        });
+    });	
+</script>	
+
+	<style type="text/css">
+		body {
+			font: normal 68% verdana, arial, helvetica;
+			color: #000000;
+		}
+
+		table tr td,
+		table tr th {
+			font-size: 68%;
+		}
+
+		table tr td.green {
+			background-color: lime;
+		}
+
+		table tr td.yellow {
+			background-color: yellow;
+		}
+
+		table tr td.red {
+			background-color: red;
+			color: white;
+		}
+
+		table.config tr th {
+			font-weight: bold;
+			background: #a6caf0;
+			text-align: center;
+		}
+
+		table.config tr td {
+			white-space: nowrap;
+			text-align: left;
+			padding-left: 5px;
+			padding-right: 10px; //width:100px;
+		}
+
+		table.config tr td.header {
+			background: #eeeee0; //font-style:italic;
+		}
+		
+		table.config tr td.rightalign {
+			text-align: right;
+		}
+
+		table.config tr td.name {
+			background: #eeeee0;
+			min-width:120px;
+		}
+
+		table.config tr td.highlight {
+			background-color: yellow;
+		}
+
+		table.details tr th {
+			font-weight: bold;
+			background: #a6caf0;
+			text-align: center;
+		}
+
+		table.details tr th.blank {
+			font-weight: bold;
+			background-color: white;
+			text-align: center;
+		}
+
+		table.details tr td {
+			background-color: #eeeee0;
+			white-space: nowrap;
+			text-align: right;
+		}
+
+		table.details tr td.blank {
+			background-color: white;
+			white-space: nowrap;
+			text-align: right;
+		}
+		
+		table.details tr td.name {
+			font-weight: bold;
+			text-align: left;
+			min-width: 400px;
+		}
+
+		table.details tr td.green {
+			background-color: lime;
+		}
+
+		table.details tr td.yellow {
+			background-color: yellow;
+		}
+
+		table.details tr td.red {
+			background-color: red;
+			color: white;
+		}
+
+		h1 {
+			margin: 0px 0px 5px;
+			font: 165% verdana, arial, helvetica
+		}
+
+		h2 {
+			margin-top: 1em;
+			margin-bottom: 0.5em;
+			125% verdana,
+			arial,
+			helvetica
+		}
+
+		h3 {
+			margin-bottom: 0.5em;
+			115% verdana,
+			arial,
+			helvetica
+		}
+
+		.Failure {
+			font-weight: bold;
+			color: red;
+		}
+	</style>
+	
+</head>
+<body>
+	
+<table width="100%"><tr>
+<td>
+	<h1>||Project|| Performancetest Summary [${printableTime}]</h1> 
+	</td>
+<td align="right">
+<img src="js\graph\logo.png" height="30p"/>
+</td></tr></table>
+	
+<hr align="left" width="100%" size="1"/>
+
+<p class="Failure">${messages}</p>
+
+<table><tr valign="top"><td>
+
+<h3>Specification</h3>
+<table class="config">
+	<tr><td class="name">Comment</td><td id="comment">${label}</td></tr>
+<tr><td>&nbsp</td></tr>
+	<tr><td class="name">Application version</td><td id="application_version">${appversion}</td></tr>
+	<tr><td class="name">Workload</td><td id="workload">${workload}</td></tr>
+	<tr><td class="name">Loadgenerator</td><td id="loadgenerator">${loadgeneratortype}</td></tr>
+	<tr><td class="name">Start of the test</td><td id="start_of_the_test">${printableTime}</td></tr>
+	<tr><td class="name">Report generated</td><td id="report_generated">${rptgendatetime}</td></tr>
+<tr><td>&nbsp</td></tr>
+	<tr><td class="name">Baseline version</td><td id="baseline_version">${baseline.appversion}</td></tr>
+	<tr><td class="name">Baseline used</td><td id="baseline_used">${_baselineref}</td></tr>
+	<tr><td class="name">Baseline reason</td><td id="baseline_reason">${_baselinereason}</td></tr>
+<tr><td>&nbsp</td></tr>
+	<tr><td class="name">Max trend items</td><td id="max_trend_items">${maxtrendcount}</td></tr>
+</table>
+
+</td><td>
+
+<h3>Legend</h3>
+<table class="config">
+	<tr><td class="name">'No data' value</td><td>${onbekendevariabele}</td></tr>
+	<tr><td class="name">(st)</td><td>static data, not dynamically retrieved</td></tr>
+	<tr><td class="name">Evaluated</td><td>Requirements are evaluated against this value</td></tr>
+	<tr><td class="name">Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
+	<tr><td class="name">Current</td><td>This session's measurement (evaluated value)</td></tr>
+	<tr><td class="name">Delta %</td><td>
+		Difference between current and baseline, in % compared to the baseline<br>
+		Shows if current or baseline exceeds a threshold (yellow or red)<br>
+		Shows if difference is substantial (>15%)<br>
+		Shows Red at performance degradation<br>
+		Shows Green at performance improvement</td></tr>
+	<tr><td class="name">Summary<br><td>
+		Only transactions containing pattern '<2digitnumber>_' are evaluated</td></tr>
+	<tr><td class="name">Threshold violations<br><td>
+		Num of transactions exceeding 'red' threshold<br>
+	<tr><td class="name">Baseline warnings<br><td>
+		Num of transactions with 'red' baseline delta% are evaluated<br>
+</table>
+
+</td><td>
+
+<h3>Thresholds</h3>
+<table class="config">
+	<tr><td></td><td class="header">OK</td><td class="header">WARNING</td><td class="header">HIGH</tr>
+	$[<tr><td class="name">${threshold.pattern:#}</td><td class="green rightalign"></td><td class="yellow rightalign">${threshold.th1:#:0.0}</td><td class="red rightalign">${threshold.th2:#:0.0}</td></tr>]
+</table>
+
+</td>
+</tr></table>
+
+<hr align="left" width="100%" size="1"/>
+
+<table width="100%">
+<tr valign="top">
+<td><h3>Summary</h3>
+<table class="config">
+	<tr><td class="name">Transactions failed (%)</td><td id="transactions_failed">${faultpercentage}</td></tr>
+	<tr><td class="name">Threshold violations</td><td id="threshold_violations">${_thresholdviolations:4:0:0}</td></tr>
+	<tr><td class="name">Baseline warnings</td><td id="baseline_warnings">${_baselinewarnings:4:0:0}</td></tr>
+	<tr><td>&nbsp</td><td></td></tr>
+	<tr><td class="name">Duration</td><td id="duration">${testduration}</td></tr>
+	<tr><td class="name">Virtual users</td><td id="virtual_users">${Merged users}</td></tr>	
+	<tr><td class="name">Success</td><td id="success">${AGGREGATED:0:0:0}</td></tr>	
+	<tr><td class="name">Failed</td><td id="failed">${AGGREGATED:5:0:0}</td></tr>	
+	<tr><td class="name">Canceled</td><td id="canceled">${AGGREGATED:6:0:0}</td></tr>	
+	<tr><td class="name">Min</td><td id="min">${AGGREGATED:1:0.000}</td></tr>	
+	<tr><td class="name">Avg</td><td id="avg">${AGGREGATED:2:0.000}</td></tr>	
+	<tr><td class="name">Avg 90 percentile</td><td id="avg_90_percentile">${AGGREGATED:4:0.000}</td></tr>	
+	<tr><td class="name">Max</td><td id="max">${AGGREGATED:3:0.000}</td></tr>	
+	<tr><td class="name">Avg StdDev</td><td id="avg_stddev">${AGGREGATED:9:0.000}</td></tr>	
+</table>
+</td>
+<td><div id="container_counters" style="min-width: 600px; height: 400px; margin: 0 auto"></div></td>
+<td><div id="container_trend" style="min-width: 600px; height: 400px; margin: 0 auto"></div></td>
+</tr></table>
+	
+<hr align="left" width="100%" size="1"/>
+
+<h2>Response times (ms)</h2>
+<table cellspacing="2" cellpadding="5" border="0" class="details">
+	<tr valign="top">
+	<th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Evaluated</th><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Baseline</th><th class="blank">Current</th><th class="blank"/>
+	</tr>
+	
+	<tr valign="top">
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${_baselineref}<br>${baseline.appversion}</th><th>${printableTime}<br>${appversion}</th><th>Delta %</th>
+	</tr>
+	
+	||BLOK2||
+
+	<tr valign="top">
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"></th><th>${_baselineref}</th><th>${printableTime}</th><th>Delta %</th>
+	</tr>
+</table>
+
+<h2>Trend (ms)</h2>
+<table cellspacing="2" cellpadding="5" border="0" class="details">
+	<tr valign="top">
+	<th>Transaction</th>$[<th>${printableTime:#}<br>${appversion:#}</th>]
+	</tr>
+	||BLOK3||
+	<th>Transaction</th>$[<th>${printableTime:#}</th>]
+	</tr>
+</table>
+
+
+<hr align="left" width="100%" size="1">
+
+<h3>end of report</h3>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+</body></html>

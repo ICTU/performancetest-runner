@@ -1,0 +1,8 @@
+{
+            	name: '||TransactionName||',
+                yAxis: 1,
+                data: [null$[,${||TransactionName||:#:0.000:null},]],
+                tooltip: {
+                	valueSuffix: ' s'
+                }
+            }

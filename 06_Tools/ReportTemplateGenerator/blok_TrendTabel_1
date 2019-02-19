@@ -1,0 +1,3 @@
+<tr valign="top" class="">
+	<td class="name">||TransactionName||</td>$[<td class="${||TransactionName||_c:#}">${||TransactionName||:#:0.000}</td>]
+</tr>
