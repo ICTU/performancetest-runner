@@ -1,0 +1,787 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>srt.common</name>
+    </assembly>
+    <members>
+        <member name="M:srt.common.Baselining.GenerateBaselineEvaluationValues(srt.common.Intermediate,srt.common.Intermediate,srt.common.Intermediate,System.String,System.String)">
+            <summary>
+            Generate new Intermediate with baselining values
+            ${Appbeheer_01_Inloggen_br // reference (baseline value)
+            ${Appbeheer_01_Inloggen_be // evaluated value (difference from baseline in %)
+            ${Appbeheer_01_Inloggen_be_c // colorcode, mark when current value exceeds threshold th1, green when diff > -15%, red when diff > +15%
+            </summary>
+            <param name="intermediate"></param>
+            <param name="baselineIntermediate"></param>
+            <param name="baselineReferenceIntermediate"></param>
+            <param name="colorcodeBetter"></param>
+            <param name="colorcodeWorse"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Baselining.GenerateEvaluation(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Generate _be and _be_c values (baseline evaluation and colorcodes)
+            </summary>
+            <param name="key"></param>
+            <param name="baselineValueSeries"></param>
+            <param name="currentValueSeries"></param>
+            <param name="baselineThresholdValueSeries"></param>
+            <param name="currentThresholdValueSeries"></param>
+            <param name="colorcodeBetter"></param>
+            <param name="colorcodeWorse"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Baselining.DoEvaluate(System.String,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.String,System.String)">
+            <summary>
+            Perform the evaluation
+            </summary>
+            <param name="baselineValueStr"></param>
+            <param name="evaluateValueStr"></param>
+            <param name="beValues"></param>
+            <param name="becValues"></param>
+            <param name="colorcodeBetter"></param>
+            <param name="colorcodeWorse"></param>
+        </member>
+        <member name="M:srt.common.Baselining.GetBaselineReferenceKey(System.String)">
+            <summary>
+            Generate key for baseline reference value
+            </summary>
+            <param name="orgKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Baselining.GetBaselineEvaluationKey(System.String)">
+            <summary>
+            Generate key for baseline comparison value
+            </summary>
+            <param name="orgKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Baselining.GetBaselineEvaluationColorKey(System.String)">
+            <summary>
+            Generate key for color code the baseline comparison value
+            </summary>
+            <param name="orgKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Connection.GetConnection">
+            <summary>
+            Create connection
+            </summary>
+        </member>
+        <member name="M:srt.common.Connection.GetConnectString">
+            <summary>
+            Build connect string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.#ctor(System.String)">
+            <summary>
+            Object creation with initialization
+            </summary>
+            <param name="project"></param>
+        </member>
+        <member name="M:srt.common.DataAccess.#ctor">
+            <summary>
+            Raw object creation with connect, but without initialization
+            </summary>
+        </member>
+        <member name="M:srt.common.DataAccess.Initialize(System.String)">
+            <summary>
+            Setup connection
+            </summary>
+        </member>
+        <member name="M:srt.common.DataAccess.InsertValue(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Insert key/value pair with all contextual info
+            </summary>
+            <param name="projectcode"></param>
+            <param name="testname"></param>
+            <param name="category"></param>
+            <param name="entity"></param>
+            <param name="p1"></param>
+            <param name="p2"></param>
+        </member>
+        <member name="M:srt.common.DataAccess.RefreshRefProject(System.String)">
+            <summary>
+            Refresh reference hastable refProject
+            </summary>
+        </member>
+        <member name="M:srt.common.DataAccess.AddProject(System.String)">
+            <summary>
+            Add project
+            </summary>
+            <param name="projectName"></param>
+            <returns>id</returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetTestrunId(System.String,System.Boolean)">
+            <summary>
+            Get testrun ID or create if not exist (optional)
+             returns 0 if not exist and not created
+            </summary>
+            <param name="testrunName"></param>
+            <param name="createIfNotExist"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetSafeIdFromRef(System.Collections.Hashtable,System.String)">
+            <summary>
+            Get ID no matter if an entry is found (fallback to id=0)
+            </summary>
+            <param name="refTable"></param>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.RefreshRefTestrun">
+            <summary>
+            Reference table testrun (behorend bij huidig project)
+            </summary>
+        </member>
+        <member name="M:srt.common.DataAccess.GetValue(System.String,System.String)">
+            <summary>
+            Get only first string result from database
+            </summary>
+            <param name="testrunName"></param>
+            <param name="category"></param>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.TidyWildcards(System.String)">
+            <summary>
+            Transform wildcards (* -> %)
+            </summary>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetThresholds">
+            <summary>
+            Get Threshold values for current project
+            </summary>
+        </member>
+        <member name="M:srt.common.DataAccess.CreateGenericThresholds">
+            <summary>
+            Create default threshold set
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetProjectTableData(System.String,System.String)">
+            <summary>
+            Get data (table, column) from a project table (with project_id)
+            </summary>
+            <param name="table"></param>
+            <param name="column"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetTestrunNames(System.String,System.String,System.Int32)">
+            <summary>
+            Get TESTRUN names, includemode: 0=disabled 1=enabled 2=all
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <param name="includingDisabled"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetTestrunNames(System.String,System.String)">
+            <summary>
+             Get all testrun names matching regex pattern, only enabled testruns (default)
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetAllTestrunNames(System.String,System.String)">
+            <summary>
+            Get all testrun names matching regex pattern, both enabled and disabled
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetDisabledTestrunNames(System.String,System.String)">
+            <summary>
+            Get only disabled testrun names matching regex pattern
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetEnabledTestrunNames(System.String,System.String)">
+            <summary>
+            Get all testrun names matching regex pattern, both enabled and disabled
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetAllProjectNames">
+            <summary>
+            Get names of all projects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.GetTestrunNamesWithValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            Get enabled testrun names where key=value in values table is as specified
+            </summary>
+            <param name="project"></param>
+            <param name="testrunNamePattern"></param>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.EnableTestrun(System.String,System.Boolean)">
+            <summary>
+            Enable or disable one single testrun
+            </summary>
+            <param name="testname"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.DataAccess.CreateProject(System.String)">
+            <summary>
+            Create a new project
+            </summary>
+            <param name="projectName"></param>
+        </member>
+        <member name="M:srt.common.DataAccess.DeleteProject(System.String)">
+            <summary>
+            Delete (cascade) project
+            </summary>
+            <param name="projectName"></param>
+        </member>
+        <member name="M:srt.common.DataAccess.DeleteTestrun(System.String)">
+            <summary>
+            Delete (cascade) testrun
+            </summary>
+            <param name="testrunName"></param>
+        </member>
+        <member name="M:srt.common.Diff.GenerateDiffValues(srt.common.Intermediate,System.String)">
+            <summary>
+            Generate colorcode entries based on diff evaluation of all intermediate value entities
+            input:
+            key1=1;2;3;blaat;zee
+            key2=1;3;3;blaat;zoo
+            ...
+            output (generated keys):
+            key1_c="";"highlite";"";"highlite"
+            key2_c="";"highlite";"";"highlite"
+            ...
+            </summary>
+            <param name="intermediate"></param>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Diff.GetDiffValue(System.Collections.Generic.KeyValuePair{System.String,System.String},srt.common.Intermediate,System.String)">
+            <summary>
+            Generate colorcode string for this key
+            </summary>
+            <param name="key"></param>
+            <param name="intermediate"></param>
+            <param name="colorCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Diff.EvaluateDiffValueItem(System.String,System.String,srt.common.Intermediate)">
+            <summary>
+            Compware value to all other value strings, return true if corresponding value is found
+            </summary>
+            <param name="value"></param>
+            <param name="intermediate"></param>
+            <returns>false if no brothers found</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:srt.common.IntermediateFactory.ApplyKeyPrefix(srt.common.Intermediate,System.String)" -->
+        <member name="M:srt.common.Intermediate.WriteToFile(System.String,System.String)">
+            <summary>
+            Write intermediate to file
+            </summary>
+            <param name="filename"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.WriteToFile(System.String)">
+            <summary>
+            Overload
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.ReadFromFile(System.String)">
+            <summary>
+            Read intermediate from file
+            </summary>
+            <param name="filename"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.ReadFromDatabaseValue(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Read intermediate data from database
+            </summary>
+            <param name="project"></param>
+            <param name="testrun"></param>
+            <param name="category"></param>
+            <param name="entity"></param>
+            <returns>number of rows in result</returns>
+        </member>
+        <member name="M:srt.common.Intermediate.ReadFromDatabaseValue(System.String,System.String,System.String,System.String)">
+            <summary>
+            Overload without prefix
+            </summary>
+            <param name="project"></param>
+            <param name="testrun"></param>
+            <param name="category"></param>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetIndexedValues(System.Int32)">
+            <summary>
+            Get intermediate with only one value from datasource series
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.Expand(srt.common.Intermediate,System.String)">
+            <summary>
+            Join new list with older values (concatenate with listseparator)
+            </summary>
+            <param name="intermediate"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.AddValue(System.String,System.String)">
+            <summary>
+            Add value with listseparator
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.Normalize">
+            <summary>
+            Fill values with blanks to normalize length of all values
+            </summary>
+        </member>
+        <member name="M:srt.common.Intermediate.CopyFrom(srt.common.Intermediate)">
+            <summary>
+            Copy content from dictionary
+            </summary>
+            <param name="workList"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.NumOfElements(System.String)">
+            <summary>
+            Get number of element from value list
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.NumOfValues(System.String)">
+            <summary>
+            Number of values associated with this variable
+            </summary>
+            <param name="variableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetValue(System.String,System.Int32)">
+            <summary>
+            Get the value list entry associated with index
+            </summary>
+            <param name="varname"></param>
+            <param name="valueIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetValue(System.String)">
+            <summary>
+            Get the raw value field of this entry
+            </summary>
+            <param name="varname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetValueArray(System.String)">
+            <summary>
+            Get the values of this entry as string array
+            </summary>
+            <param name="varname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.Add(srt.common.Intermediate)">
+            <summary>
+            Add intermediate content of param to current/this value set
+            </summary>
+            <param name="intermediate"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.ReadFromDatabaseThreshold(System.String)">
+            <summary>
+            Insert data from database table into this (intermediate)
+            </summary>
+            <param name="project"></param>
+            <param name="table"></param>
+            <param name="columns"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.MergeDatabaseValueResult(System.Collections.Generic.List{System.Object},System.String)">
+            <summary>
+            Merge 1-column result into intermediate key-value pair with serialized values
+            </summary>
+            <param name="list"></param>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.MergeDatabaseKeyValueResult(System.Collections.Generic.List{System.Object},System.String)">
+            <summary>
+            Merge 2-column result into intermediate key-value pairs
+            </summary>
+            <param name="dbResult"></param>
+            <returns>number of rows in result</returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetKeys">
+            <summary>
+            Return keys as string array
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.Duplicate(System.String,System.String)">
+            <summary>
+            Duplicate existing (current) currentKey=value to newKey=value
+            </summary>
+            <param name="existingKey"></param>
+            <param name="newKey"></param>
+        </member>
+        <member name="M:srt.common.Intermediate.AggregateCount(System.String,System.String,System.String)">
+            <summary>
+            Generate new intermedate with new counters holding aggregated values (per column)
+            </summary>
+            <param name="aggregateKey"></param>
+            <param name="keyPattern"></param>
+            <param name="valuePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Intermediate.GetMaxNumOfValues">
+            <summary>
+            Get max number of values of all values stored in this matrix
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.MeasureDetails.AddToList(System.String,System.String,srt.common.Intermediate)">
+            <summary>
+            Add new key=value or (if key exist): add value to list of values
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="list"></param>
+        </member>
+        <member name="M:srt.common.MeasureDetails.Add(System.String,System.String)">
+            <summary>
+            Add new key=value or (if key exist): add value to list of values
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:srt.common.MeasureDetails.FormatMeasureData(System.String[],System.Char)">
+            <summary>
+            Format read measure data and replace SILK proprietary separators with parameter decimal- and listseparator
+            </summary>
+            <param name="keys"></param>
+            <param name="decimalSeparator"></param>
+            <param name="listSeparator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.MeasureDetails.FormatDataReplace(System.String,System.Char,System.Char)">
+            <summary>
+            Format data part of series including decimal and list separators
+            </summary>
+            <param name="key"></param>
+            <param name="searchTag"></param>
+            <param name="targetTag"></param>
+        </member>
+        <member name="M:srt.common.MeasureDetails.FormatDataReplace(System.String[],System.Char,System.Char)">
+            <summary>
+            Format data part of series including decimal and list separators
+            </summary>
+            <param name="keys"></param>
+            <param name="searchTag"></param>
+            <param name="targetTag"></param>
+        </member>
+        <member name="M:srt.common.MeasureDetails.GetSystemDecimalSeparator">
+            <summary>
+            Get current system decimal separator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.MeasureDetails.GetSystemThousandSeparator">
+            <summary>
+            Get current system thousandseparator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.MeasureDetails.TrimLeftValues(System.Int32)">
+            <summary>
+            Trim first x values of series
+            </summary>
+            <param name="preamble"></param>
+        </member>
+        <member name="M:srt.common.MeasureDetails.TrimRightValues(System.Int32)">
+            <summary>
+            Trim first x values of series
+            </summary>
+            <param name="preamble"></param>
+        </member>
+        <member name="M:srt.common.MessageManager.LogSkipMessage(System.String,System.String)">
+            <summary>
+            Publish logmessage with reason to skip processing (in log and report)
+            </summary>
+            <param name="moduleName"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.Initialize(System.String[],System.Boolean)">
+            <summary>
+            Initialize object, read params into local structure
+            </summary>
+            <param name="arguments"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.Initialize(System.String[])">
+            <summary>
+            Initialize default non-interactive
+            </summary>
+            <param name="arguments"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.Initialize(System.String[],System.Int32)">
+            <summary>
+            Initialize params and check number of arguments
+            </summary>
+            <param name="arguments"></param>
+            <param name="numOfArguments"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.DissectArgumentList(System.String[])">
+            <summary>
+            Get params from string param1:param1value param2:param2value
+            </summary>
+            <param name="_orgArguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.Value(System.String,System.String)">
+            <summary>
+            Get parameter value with default
+            </summary>
+            <param name="paramName"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.ValueInt(System.String,System.String)">
+            <summary>
+            Get parameter and convert to int
+            </summary>
+            <param name="paramName"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.Value(System.String)">
+            <summary>
+            Get parameter value with optional value (return "" if empty)
+            </summary>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.ValueInt(System.String)">
+            <summary>
+            Return param value as Integer
+            </summary>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.AskForValue(System.String)">
+            <summary>
+            Ask for parameter value from command line
+            </summary>
+            <param name="paramName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.ValueEq(System.String,System.String)">
+            <summary>
+            Is value equal to .. ?
+            </summary>
+            <param name="paramName"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.ArgumentsStr">
+            <summary>
+            Original argument string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.NumOfArguments">
+            <summary>
+            Number of arguments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.ToConsole">
+            <summary>
+            Make list of params with liinefeeds for console.writeline output
+            </summary>
+            <param name="ToConsole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.VerifyMandatory(System.String)">
+            <summary>
+            Verify if param is set, else throw exception
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.VerifyFileExists(System.String)">
+            <summary>
+            Verify if param value file does exist
+            </summary>
+            <param name="p"></param>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.AskForHelp">
+            <summary>
+            Verify if help function is there
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.ParamInterpreter.IsDefined(System.String)">
+            <summary>
+            Is param defined?
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.Load(System.String)">
+            <summary>
+             Load threshold values for this project
+            </summary>
+            <param name="project"></param>
+        </member>
+        <member name="M:srt.common.Thresholds.GetThresholdKey(System.String)">
+            <summary>
+            Determine threshold (color) key
+            </summary>
+            <param name="orgKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.GenerateThresholdValues(srt.common.Intermediate,System.String,System.String,System.String)">
+            <summary>
+            Generate
+            </summary>
+            <param name="intermediate"></param>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="p3"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.GenerateThresholdValue(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Add intermediate colorcode values according to threshold
+            </summary>
+            <param name="key"></param>
+            <param name="valueList"></param>
+            <param name="green"></param>
+            <param name="yellow"></param>
+            <param name="red"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.GetThresholdForKey(System.String)">
+            <summary>
+            Find threshold that matches the key
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.StringValueToDouble(System.String)">
+            <summary>
+            Convert string number any format to double
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Thresholds.DoubleValueToSTring(System.Double)">
+            <summary>
+            Convert double to a string value with .000 format
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.TransactionValue.#ctor(System.String)">
+            <summary>
+            Parse list of values to local values
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:srt.common.TransactionValueAggregate.AddStrInt(System.Int32,System.String)">
+            <summary>
+            Convert string to integer and add to baseValue, return as integer
+            </summary>
+            <param name="baseValue"></param>
+            <param name="addValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.TransactionValueAggregate.LowestStrDouble(System.Double,System.String)">
+            <summary>
+            Return lowest value as double
+            </summary>
+            <param name="baseValue"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.TransactionValueAggregate.AddStrDouble(System.Double,System.String)">
+            <summary>
+            Return added values
+            </summary>
+            <param name="baseValue"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.TransactionValueAggregate.Evaluate(srt.common.TransactionValue)">
+            <summary>
+            Evaluate all values for aggregation purposes
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:srt.common.TransactionValueAggregate.Aggregate">
+            <summary>
+            Conclude aggregate evaluation
+            </summary>
+        </member>
+        <member name="M:srt.common.Utils.IsNumeric(System.String)">
+            <summary>
+            Test if given string (or character) is a numeric value or not
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.ExtractValueByPatternFirst(System.String[],System.String)">
+            <summary>
+            Find first occurence of pattern in lines
+            </summary>
+            <param name="lines"></param>
+            <param name="valuePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.ExtractValueByPatternLast(System.String[],System.String)">
+            <summary>
+            Find last occurence of pattern in lines
+            </summary>
+            <param name="lines"></param>
+            <param name="valuePattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.ParseJMeterEpoch(System.String)">
+            <summary>
+            Convert Jmeter epoch (ms) to DateTime
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.NormalizeFloatString(System.String)">
+            <summary>
+            Convert malformed decimal string to workable decimal string (acc to system locale)
+            </summary>
+            <param name="inValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.NormalizeTime(System.String)">
+            <summary>
+            Convert Jmeter time to intermediate seconds
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:srt.common.Utils.NormalizeFloat(System.String)">
+            <summary>
+            Float string to intermediate float string
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

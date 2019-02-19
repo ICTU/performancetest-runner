@@ -1,0 +1,1 @@
+https://github.com/npgsql/npgsql/blob/master/LICENSE.txt
