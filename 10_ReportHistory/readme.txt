@@ -1,0 +1,1 @@
+This folder is filled with cumulative report results per project
