@@ -1,0 +1,10 @@
+#!/bin/bash
+######################
+#projectname="test.ltp" #Silk		# Name of the project
+#tool="silk"	     					# Tool that should be used to run the test options are 'silk' and 'jmeter'
+projectname="test" #JMeter			# Name of the project
+tool="jmeter"	   					# Tool that should be used to run the test options are 'silk' and 'jmeter'
+######################
+# Overwrite globals
+kill_project_tool="false"			# 2018-11-15 EPO: Disabled to not disrupt other people on the test environment
+######################
