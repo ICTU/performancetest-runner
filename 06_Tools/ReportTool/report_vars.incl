@@ -1,0 +1,48 @@
+#!/bin/bash
+
+rpt_maxtrendcount=14
+
+project=$rpt_projectname  # input for globals for building globals path variables
+
+. ..\\..\\00_Globals\\testautomation_globals.incl
+
+# -----------------------------------------------------------------------------------------
+
+echo projectname=$rpt_projectname
+echo loadgenerator=$rpt_loadgen
+echo maxtrendcount=$rpt_maxtrendcount
+
+# -----------------------------------------------------------------------------------------
+
+echo local variables, based on globals...
+# resolve folder locations from global settings
+rpt_resultroot=$logdir_root
+rpt_resultpath=$loadtest_logdir # path to  resultsdir\project\testresults (loadgen results)
+rpt_measureresultpath=$loadtest_measures
+rpt_reporttemplatepath=$reporttemplatedestinationfolder
+rpt_reporttargetpath=$loadtest_report
+rpt_toolspath=$reporttoolfolder\\tools # local structure
+rpt_temppath=$reporttoolfolder\\temp # local structure
+
+echo resultroot=$rpt_resultroot
+echo resultpath=$rpt_resultpath
+echo reporttemplatepath=$rpt_reporttemplatepath
+echo reporttargetpath=$rpt_reporttargetpath
+echo loadgen=$rpt_loadgen
+echo measureresultpath=$rpt_measureresultpath
+
+if [[ "$rpt_loadgen" == "silk" ]]; then
+	rpt_loadgendir=$loadgendir_silk
+elif [[ "$rpt_loadgen" == "jmeter" ]]; then
+	rpt_loadgendir=$loadgendir_jmeter/jmeter/bin
+fi
+
+echo loadgendir=$rpt_loadgendir
+
+# report targets
+rpt_reporttargetfilebase=$rpt_reporttargetpath\\$rpt_projectname
+rpt_reporttemplatefilename=$rpt_reporttemplatepath\\"$rpt_projectname"_report_template.html
+rpt_reporttemptargetfile=$rpt_temppath\\work.html
+rpt_reporterrorfile=$rpt_reporttargetpath\\"$rpt_projectname"_report.exitcode
+rpt_runinfopath=$rpt_resultroot
+

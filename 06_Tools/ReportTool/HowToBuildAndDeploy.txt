@@ -1,0 +1,15 @@
+Compile binaries Reportgenerator and deploy
+
+1) Open Visual Studio solution SilkResultTools.sln
+2) Build the solutaion (Rebuild 'Release' configuration)
+3) Run ReportTool\_deploy_pull.bat (copy build result binary target folder)
+
+Make new release
+4) Run ReportTool\_release.bat (create release)
+5) Zip directory and contents of ReportTool\release
+
+Deploy
+6) Deploy (unzip) <zip>\release to ..\06_Tools\ReportTool\
+
+Prerequisites:
+.Net framework v4
