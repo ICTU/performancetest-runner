@@ -504,50 +504,6 @@ commit_to_GIT () {
 	echo " -- Done commiting results to GIT"
 }
 
-# Gestandariseerde manier van versie ophalen
-getInstanceVersion() {
-	API=$1
-	Project=$2
-	Instance=$3
-	
-	# Check if APIKey if filled
-	if [[ -z $API ]]; then
-		echo "APIKey niet ingevoerd"
-		exit 1
-	fi
-	
-	# Check if Project if filled
-	if [[ -z $Project ]]; then
-		echo "Project niet ingevoerd"
-		exit 1
-	fi
-	
-	# Check if password if filled
-	if [[ -z $Instance ]]; then
-		echo "Instance niet ingevoerd, gebruik default (=performance)"
-		Instance="performance"
-	fi
-	
-	
-	# echo "API: $API"
-	# echo "Project: $Project"
-	version=$(curl -s -H "api-key:$API" -H "Content-Type:application/json" http://www.dashboard.$Project.ictu/api/v2/instances/$Instance | sed -n 's/.*version":"\(.*\)"},"ser.*/\1/gp')
-	
-	if [[ -z $version ]]; then 
-		echo " $version is empty"
-		return
-	fi
-	
-	if [[ ${#version} -gt 15 ]]; then
-		echo "Versie nummer te lang = ${#version} moet < 15 zijn. Waarschijnlijk iets mis gegaan."
-		exit 1
-	fi
-	
-	setAppVersion $version
-	# echo $version
-	#inbouwen dat als respons leeg is er een unknown return value gezet word
-}
-
 setAppVersion() {
 	appVersion=$1
 }
