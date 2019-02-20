@@ -1,4 +1,4 @@
-﻿Ymor SRT (Silk Result Tools) release notes
+﻿SRT (Silk Report Tools) release notes
 
 1.0..2.0: developments until 1-1-2016
 

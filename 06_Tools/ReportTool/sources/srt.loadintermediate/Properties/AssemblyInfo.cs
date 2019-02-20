@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("srt.loadintermediate")]
-[assembly: AssemblyDescription("Ymor Loadtest Reporting Tools - Load Intermediate")]
+[assembly: AssemblyDescription("Loadtest Reporting Tool - Load Intermediate")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ymor")]
+[assembly: AssemblyCompany("ICTU")]
 [assembly: AssemblyProduct("srt.loadintermediate")]
-[assembly: AssemblyCopyright("Ymor 2018")]
+[assembly: AssemblyCopyright("ICTU 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

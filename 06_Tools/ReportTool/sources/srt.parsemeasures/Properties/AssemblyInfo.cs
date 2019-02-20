@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("srt.parsemeasures")]
-[assembly: AssemblyDescription("Ymor Loadtest Reporting Tools - Parse Measures")]
+[assembly: AssemblyDescription("Loadtest Reporting Tool - Parse Measures")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ymor")]
+[assembly: AssemblyCompany("ICTU")]
 [assembly: AssemblyProduct("srt.parsemeasures")]
-[assembly: AssemblyCopyright("Ymor 2018")]
+[assembly: AssemblyCopyright("ICTU 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

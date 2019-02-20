@@ -9,7 +9,7 @@ Pworkload=$2
 baseline=$3
 
 # even aanzetten om te testen
-# project="ivs-next"
+# project="<projectnaam>"
 
 . functions.sh || aborttest "Could not include functions"
 loadGlobals

@@ -506,9 +506,6 @@ commit_to_GIT () {
 
 # Gestandariseerde manier van versie ophalen
 getInstanceVersion() {
-	# KWM: 62fbe06a233eec75250a345ee855a437
-	# Project: kwm
-	
 	API=$1
 	Project=$2
 	Instance=$3

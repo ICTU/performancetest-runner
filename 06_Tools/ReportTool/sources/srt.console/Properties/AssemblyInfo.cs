@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("srt.console")]
-[assembly: AssemblyDescription("Ymor Loadtest Reporting Tools - Console")]
+[assembly: AssemblyDescription("Loadtest Reporting Tool - Console")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ymor")]
+[assembly: AssemblyCompany("ICTU")]
 [assembly: AssemblyProduct("srt.console")]
-[assembly: AssemblyCopyright("Ymor 2018")]
+[assembly: AssemblyCopyright("ICTU 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

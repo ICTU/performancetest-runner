@@ -1,0 +1,1 @@
+https://www.npgsql.org/#license
