@@ -26,6 +26,11 @@ else
 fi
 #------------------------------------------------------------
 
+# Aanmaken templates folder
+#------------------------------------------------------------
+mkdir -p ./templates
+#------------------------------------------------------------
+
 # Functies
 #------------------------------------------------------------
 removeIfExists() {
@@ -38,13 +43,13 @@ removeIfExists() {
 
 genereerVergelijkGrafiek(){
 	while read p; do
-		# verwijder de regel einde uit TransactionFile
-		pn=$(echo $p | sed -e 's/\r//g')
+		pn=$(echo $p | sed -e 's/\r//g') # verwijder de regel einde uit TransactionFile
+		ps=$(echo $pn | sed -e 's/\&/\\&/g') # Zet een \ voor & tekens (ivm escapen van special characters)
 		if [ "$pn" = "HEADER" ]; then
 			echo "Doe niks" > /dev/null
 		else
 			# Vervang ||TransactionName|| met transactienaam in het vergelijkGrafiek blok
-			sed "s/||TransactionName||/$pn/" < blok_grafiek_1 >> intermediate_VergelijkGrafiek_1
+			sed "s/||TransactionName||/$ps/" < blok_grafiek_1 >> intermediate_VergelijkGrafiek_1
 		fi
 	done <$Transactions
 
@@ -54,26 +59,26 @@ genereerVergelijkGrafiek(){
 
 genereerDeltaTabel(){
 	while read p; do
-		# verwijder de regel einde uit TransactionFile
-		pn=$(echo $p | sed -e 's/\r//g')
+		pn=$(echo $p | sed -e 's/\r//g') # verwijder de regel einde uit TransactionFile
+		ps=$(echo $pn | sed -e 's/\&/\\&/g') # Zet een \ voor & tekens (ivm escapen van special characters)
 		if [ "$pn" = "HEADER" ]; then
 			cat blok_deltaTabel_2 >> intermediate_Delta_1
 		else
 			# Vervang ||TransactionName|| met transactienaam in het deltaTabel blok
-			sed "s/||TransactionName||/$pn/g" < blok_deltaTabel_1 >> intermediate_Delta_1
+			sed "s/||TransactionName||/$ps/g" < blok_deltaTabel_1 >> intermediate_Delta_1
 		fi
 	done <$Transactions
 }
 
 genereerTrendTabel(){
 	while read p; do
-		# verwijder de regel einde uit TransactionFile
-		pn=$(echo $p | sed -e 's/\r//g')
+		pn=$(echo $p | sed -e 's/\r//g') # verwijder de regel einde uit TransactionFile
+		ps=$(echo $pn | sed -e 's/\&/\\&/g') # Zet een \ voor & tekens (ivm escapen van special characters)
 		if [ "$pn" = "HEADER" ]; then
 			cat blok_TrendTabel_2 >> intermediate_blokTrend_1
 		else
 			# Vervang ||TransactionName|| met transactienaam in het trendTabel blok
-			sed "s/||TransactionName||/$pn/g" < blok_TrendTabel_1 >> intermediate_blokTrend_1
+			sed "s/||TransactionName||/$ps/g" < blok_TrendTabel_1 >> intermediate_blokTrend_1
 		fi
 	done <$Transactions
 }
@@ -93,13 +98,14 @@ vervangInTemplate(){
 	echo "${intermediate_final_3//||BLOK3||/$intermediate_trendTabel}" > intermediate_final
 }
 
-vervangProjectNaam(){
-	sed "s/||Project||/$projectNaam/g" < intermediate_final >> "$projectNaam"_report_template.html
+vervangProjectNaamEnVerplaats(){
+	sed "s/||Project||/$projectNaam/g" < intermediate_final > ./templates/"$projectNaam"_report_template.html
 }
 
 removeDOSCarriageReturn(){
 	sed -e 's/\r$//' $Transactions > ${Transactions}.tmp && mv ${Transactions}.tmp $Transactions
 }
+
 #------------------------------------------------------------
 
 # begin met verwijderen van oude bestanden
@@ -116,7 +122,7 @@ removeIfExists intermediate_final
 removeIfExists intermediate_final_1
 removeIfExists intermediate_final_2
 removeIfExists intermediate_final_3
-removeIfExists "$projectNaam"_report_template.html
+removeIfExists /templates/"$projectNaam"_report_template.html
 echo "Done with removing temp files"
 echo "---"
 echo "Start with removeDOSCarriageReturn"
@@ -134,6 +140,6 @@ vervangInTemplate
 echo "Done generate template and subsitute the parts"
 echo "---"
 echo "Start replacing the projectname"
-vervangProjectNaam
+vervangProjectNaamEnVerplaats
 echo "Done replacing the projectname"
 echo "====="

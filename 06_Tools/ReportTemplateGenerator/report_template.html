@@ -1,6 +1,6 @@
 <html>
 	<head>
-	<title>||Project|| Performancetest Summary [${printableTime}]</title>
+	<title>||Project|| Performancetest Summary [${testrundatetime}]</title>
 			
 			<script type="text/javascript" src="js/jquery.min.js"></script>
 			
@@ -23,7 +23,7 @@ $(function () {
                 text: 'Counters'
             },
             subtitle: {
-                text: ''
+                text: 'interval is ${Interval} ms'
             },
             xAxis: {
                 type: 'datetime',
@@ -75,7 +75,7 @@ $(function () {
                 }
             },
             series: [{
-			    name: 'Transaction Busy Time',
+			    name: 'Response Time',
 				yAxis: 1,
                 data: [${Transaction#Overall_Response_Time#Trans.(busy)_ok[s]}],
 				tooltip: {
@@ -86,7 +86,7 @@ $(function () {
 				yAxis: 0,
                 data: [${Summary_General---Transactions}],
 				tooltip: {
-                    valueSuffix: ' trs/s'
+                    valueSuffix: ' trs/interval'
                 }
             },{
 			    name: 'Error Rate',
@@ -94,7 +94,7 @@ $(function () {
 				color: 'red',
                 data: [${Summary_General---Errors}],
 				tooltip: {
-                    valueSuffix: ' err/s'
+                    valueSuffix: ' err/interval'
                 }
 			},{
                 name: 'Active Users',
@@ -120,10 +120,10 @@ $(function () {
 					verticalAlign: 'bottom'
 				},		
             title: {
-                text: 'Trend last ${maxtrendcount} testruns'
+                text: 'Trend'
             },
             subtitle: {
-                text: ''
+                text: 'last ${maxtrendcount} testruns'
             },
             xAxis: {
                 type: 'datetime',
@@ -134,7 +134,7 @@ $(function () {
 					y : 0
                 },
 				alternateGridColor: '#F4F4F4',
-				categories: [''$[,'${printableTime:#}']]
+				categories: [''$[,'${testrundatetime:#}']]
             },
             yAxis: [{ // Primary yAxis
 			    labels: {
@@ -173,7 +173,7 @@ $(function () {
                 line: {
                     lineWidth: 2,				
 					marker: {
-						enabled: false
+						radius: 2
 					}
 				}
             },
@@ -311,7 +311,7 @@ $(function () {
 	
 <table width="100%"><tr>
 <td>
-	<h1>||Project|| Performancetest Summary [${printableTime}]</h1> 
+	<h1>||Project|| Performancetest Summary [${testrundatetime}]</h1> 
 	</td>
 <td align="right">
 <img src="js\graph\logo.png" height="30p"/>
@@ -330,7 +330,7 @@ $(function () {
 	<tr><td class="name">Application version</td><td id="application_version">${appversion}</td></tr>
 	<tr><td class="name">Workload</td><td id="workload">${workload}</td></tr>
 	<tr><td class="name">Loadgenerator</td><td id="loadgenerator">${loadgeneratortype}</td></tr>
-	<tr><td class="name">Start of the test</td><td id="start_of_the_test">${printableTime}</td></tr>
+	<tr><td class="name">Start of the test</td><td id="start_of_the_test">${testrundatetime}</td></tr>
 	<tr><td class="name">Report generated</td><td id="report_generated">${rptgendatetime}</td></tr>
 <tr><td>&nbsp</td></tr>
 	<tr><td class="name">Baseline version</td><td id="baseline_version">${baseline.appversion}</td></tr>
@@ -342,9 +342,28 @@ $(function () {
 
 </td><td>
 
+<h3>Thresholds</h3>
+<table class="config">
+	<tr><td></td><td class="header">OK</td><td class="header">WARNING</td><td class="header">HIGH</tr>
+	$[<tr><td class="name">${threshold.pattern:#}</td><td class="green rightalign"></td><td class="yellow rightalign">${threshold.th1:#:0.0}</td><td class="red rightalign">${threshold.th2:#:0.0}</td></tr>]
+</table>
+
+</td><td>
+
+<table><tr>
+<td valign="bottom">*</td><td>
+<h3>History</h3><table class="config">
+	<tr><td></td><td class="header">Version</td><td class="header">Duration</td><td class="header">Faults (%)</td></tr>
+	$[<tr><td class="name"><a href=${projectname}_${workload:#}_${testrundatetime:#}.html>${testrundatetime:#}</a></td><td>${appversion:#::-}</td><td>${testduration:#::-}</td><td>${faultpercentage:#::-}</td></tr>]
+</table>
+</td>
+</tr></table>
+
+</td><td>
+
 <h3>Legend</h3>
 <table class="config">
-	<tr><td class="name">'No data' value</td><td>${onbekendevariabele}</td></tr>
+	<tr><td class="name">'No data' value</td><td></td></tr>
 	<tr><td class="name">(st)</td><td>static data, not dynamically retrieved</td></tr>
 	<tr><td class="name">Evaluated</td><td>Requirements are evaluated against this value</td></tr>
 	<tr><td class="name">Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
@@ -358,17 +377,13 @@ $(function () {
 	<tr><td class="name">Summary<br><td>
 		Only transactions containing pattern '<2digitnumber>_' are evaluated</td></tr>
 	<tr><td class="name">Threshold violations<br><td>
-		Num of transactions exceeding 'red' threshold<br>
+		Num of transactions exceeding 'red' threshold</td></tr>
 	<tr><td class="name">Baseline warnings<br><td>
-		Num of transactions with 'red' baseline delta% are evaluated<br>
-</table>
-
-</td><td>
-
-<h3>Thresholds</h3>
-<table class="config">
-	<tr><td></td><td class="header">OK</td><td class="header">WARNING</td><td class="header">HIGH</tr>
-	$[<tr><td class="name">${threshold.pattern:#}</td><td class="green rightalign"></td><td class="yellow rightalign">${threshold.th1:#:0.0}</td><td class="red rightalign">${threshold.th2:#:0.0}</td></tr>]
+		Num of transactions with 'red' baseline delta% are evaluated</td></tr>
+	<tr><td class="name">Trendbreak 'ramp-up'<br><td>
+		Percentage of (max) users at which ramp-up of throughput breaks</td></tr>
+	<tr><td class="name">Trendbreak 'stability'<br><td>
+		Progress of test at which stability of throughput or errorcount breaks</td></tr>
 </table>
 
 </td>
@@ -384,16 +399,19 @@ $(function () {
 	<tr><td class="name">Threshold violations</td><td id="threshold_violations">${_thresholdviolations:4:0:0}</td></tr>
 	<tr><td class="name">Baseline warnings</td><td id="baseline_warnings">${_baselinewarnings:4:0:0}</td></tr>
 	<tr><td>&nbsp</td><td></td></tr>
+	<tr><td class="name">Trendbreak 'ramp-up' (%)</td><td id="trendbreak_rampup">${trendbreakrampuppercentage}</td></tr>
+	<tr><td class="name">Trendbreak 'stability' (%)</td><td id="trendbreak_stability">${trendbreakstabilitypercentage}</td></tr>
+	<tr><td>&nbsp</td><td></td></tr>
 	<tr><td class="name">Duration</td><td id="duration">${testduration}</td></tr>
-	<tr><td class="name">Virtual users</td><td id="virtual_users">${Merged users}</td></tr>	
+	<tr><td class="name">Virtual users</td><td id="virtual_users">${mergedusers}</td></tr>	
 	<tr><td class="name">Success</td><td id="success">${AGGREGATED:0:0:0}</td></tr>	
 	<tr><td class="name">Failed</td><td id="failed">${AGGREGATED:5:0:0}</td></tr>	
 	<tr><td class="name">Canceled</td><td id="canceled">${AGGREGATED:6:0:0}</td></tr>	
-	<tr><td class="name">Min</td><td id="min">${AGGREGATED:1:0.000}</td></tr>	
-	<tr><td class="name">Avg</td><td id="avg">${AGGREGATED:2:0.000}</td></tr>	
-	<tr><td class="name">Avg 90 percentile</td><td id="avg_90_percentile">${AGGREGATED:4:0.000}</td></tr>	
-	<tr><td class="name">Max</td><td id="max">${AGGREGATED:3:0.000}</td></tr>	
-	<tr><td class="name">Avg StdDev</td><td id="avg_stddev">${AGGREGATED:9:0.000}</td></tr>	
+	<tr><td class="name">Min of minima</td><td id="min">${AGGREGATED:1:0.000}</td></tr>	
+	<tr><td class="name">Avg of averages</td><td id="avg">${AGGREGATED:2:0.000}</td></tr>	
+	<tr><td class="name">Avg of 90 percentiles</td><td id="avg_90_percentile">${AGGREGATED:4:0.000}</td></tr>	
+	<tr><td class="name">Max of maxima</td><td id="max">${AGGREGATED:3:0.000}</td></tr>	
+	<tr><td class="name">Avg of StdDev</td><td id="avg_stddev">${AGGREGATED:9:0.000}</td></tr>	
 </table>
 </td>
 <td><div id="container_counters" style="min-width: 600px; height: 400px; margin: 0 auto"></div></td>
@@ -409,23 +427,23 @@ $(function () {
 	</tr>
 	
 	<tr valign="top">
-	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${_baselineref}<br>${baseline.appversion}</th><th>${printableTime}<br>${appversion}</th><th>Delta %</th>
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${_baselineref}<br>${baseline.appversion}</th><th>${testrundatetime}<br>${appversion}</th><th>Delta %</th>
 	</tr>
 	
 	||BLOK2||
 
 	<tr valign="top">
-	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"></th><th>${_baselineref}</th><th>${printableTime}</th><th>Delta %</th>
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"></th><th>${_baselineref}</th><th>${testrundatetime}</th><th>Delta %</th>
 	</tr>
 </table>
 
 <h2>Trend (ms)</h2>
 <table cellspacing="2" cellpadding="5" border="0" class="details">
 	<tr valign="top">
-	<th>Transaction</th>$[<th>${printableTime:#}<br>${appversion:#}</th>]
+	<th>Transaction</th>$[<th>${testrundatetime:#}<br>${appversion:#}</th>]
 	</tr>
 	||BLOK3||
-	<th>Transaction</th>$[<th>${printableTime:#}</th>]
+	<th>Transaction</th>$[<th>${testrundatetime:#}</th>]
 	</tr>
 </table>
 
