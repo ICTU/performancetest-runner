@@ -14,7 +14,6 @@ namespace srt.parsemeasures
 
         const int JMAGGREGATEPERIOD = 10000; // ms interval (10.000=10s)
         
-
         const string TRSJTLFILETAG = "transactionfilejtl";
         const string JTLCHECKSTR = "testResults";
 
@@ -82,6 +81,7 @@ namespace srt.parsemeasures
             long valueCnt = 0;
             long aggregateCnt = 0;
             long timespan = 0;
+            long timeSeriesPoint = 0;
 
             // build aggregated timeseries
             foreach (string line in lines)
@@ -123,6 +123,10 @@ namespace srt.parsemeasures
                         _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
                         _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
 
+                        // add timeseries sequence (in seconds)
+                        timeSeriesPoint = (int) aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
+                        _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
+
                         // reset all
                         resptime_agg.Reset();
                         errors_agg.Reset();
@@ -134,7 +138,7 @@ namespace srt.parsemeasures
                 }
             }
 
-            // only collect rest aggregatoin data if samples are added
+            // only collect rest aggregation data if samples are added
             if (resptime_agg.Count() > 0)
             {
                 // agg -> measuredetails (laaste restje wordt toegevoegd)
@@ -142,6 +146,11 @@ namespace srt.parsemeasures
                 _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
                 _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
                 _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
+
+                // add timeseries sequence (in seconds)
+                timeSeriesPoint = (int)aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
+                _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
+
             }
 
             // fill measurenames (only timeseries)
@@ -150,6 +159,7 @@ namespace srt.parsemeasures
             names.Add(OVERALLTRANSACTIONSKEY);
             names.Add(OVERALLUSERSKEY);
             names.Add(OVERALLERRORSKEY);
+            names.Add(OVERALLTIMESERIESKEY);
 
             _measureNames = names.ToArray();
             

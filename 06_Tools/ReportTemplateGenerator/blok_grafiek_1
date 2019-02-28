@@ -1,8 +1,10 @@
-{
-            	name: '||TransactionName||',
-                yAxis: 1,
-                data: [null$[,${||TransactionName||:#:0.000:null},]],
-                tooltip: {
-                	valueSuffix: ' s'
-                }
-            }
+{			
+          label: "||TransactionName||",
+          data: [$[${||TransactionName||:#:0.000:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 1,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+
+}

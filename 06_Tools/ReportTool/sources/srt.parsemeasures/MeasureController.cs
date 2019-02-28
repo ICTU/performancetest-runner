@@ -21,6 +21,7 @@ namespace srt.parsemeasures
         public const string OVERALLTRANSACTIONSKEY = "Summary_General---Transactions";
         public const string OVERALLERRORSKEY = "Summary_General---Errors";
         public const string OVERALLUSERSKEY = "Summary_General---Active_users";
+        public const string OVERALLTIMESERIESKEY = "measuretimeseries";
 
         public const string TRENDBREAKSTABILITYPRCKEY = "trendbreakstabilitypercentage";
 
