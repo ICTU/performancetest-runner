@@ -1,0 +1,1 @@
+https://github.com/ICTU/performancetest-runner/blob/master/LICENSE
