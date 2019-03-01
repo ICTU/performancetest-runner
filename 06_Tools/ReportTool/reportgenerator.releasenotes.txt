@@ -1,3 +1,5 @@
+Reportgenerator (ReportTool) release notes
+
 release.20151119-1350	pre- en postamble parsejstat toegevoegd tbv bsnk
 release.20151120-1524	melding gevonden aantal trs verbeterd in parsetransactions
 release.20160116-2242	disable van testruns en workload filter in trendoverzicht
@@ -71,5 +73,5 @@ release.20190117		Rptgen 3.15.3.0 progress stability naar %doorlooptijd (was %us
 						Legend uitbreiding (trend legend)
 release.20190122		Rptgen 3.15.4.0 vastloper door geheugentekort bij parsen measures duurtest (kwm) opgelost
 release.20190228		Vervanging HighCharts door ChartJS
-
-						
+release.20190301		JS dir removed, license files centralized, releasenotes renamed
+			
