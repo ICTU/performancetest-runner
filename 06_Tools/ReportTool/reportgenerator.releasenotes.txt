@@ -74,4 +74,5 @@ release.20190117		Rptgen 3.15.3.0 progress stability naar %doorlooptijd (was %us
 release.20190122		Rptgen 3.15.4.0 vastloper door geheugentekort bij parsen measures duurtest (kwm) opgelost
 release.20190228		Vervanging HighCharts door ChartJS
 release.20190301		JS dir removed, license files centralized, releasenotes renamed
+release.20190301b		Reference to company logo moved to global config
 			
