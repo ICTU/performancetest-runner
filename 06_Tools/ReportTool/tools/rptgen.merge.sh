@@ -44,6 +44,7 @@ $rpt_toolspath/srt.merge.exe v project=$rpt_projectname name=rptgendatetime valu
 $rpt_toolspath/srt.merge.exe v project=$rpt_projectname name=baselineref value=$rpt_baselineref templatefile=$rpt_reporttemptargetfile
 $rpt_toolspath/srt.merge.exe v project=$rpt_projectname name=maxtrendcount value=$rpt_maxtrendcount templatefile=$rpt_reporttemptargetfile
 $rpt_toolspath/srt.merge.exe v project=$rpt_projectname name=trendworkload value=$rpt_workload templatefile=$rpt_reporttemptargetfile
+$rpt_toolspath/srt.merge.exe v project=$rpt_projectname name=companylogoreference value=$rpt_companylogoreference templatefile=$rpt_reporttemptargetfile
 cp $rpt_reporttemptargetfile $rpt_temppath/report.04.html
 
 echo "GenerateReport - Cleanup non-used variables top section of the report..."

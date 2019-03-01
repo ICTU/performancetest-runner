@@ -8,9 +8,6 @@ rpt_reporttargetfileold="$rpt_reporttargetfilebase"_report.html
 rpt_reporttargetfileindex=$rpt_reporttargetpath/index.html
 
 echo reporttargetfilestandard=$rpt_reporttargetfilestandard
-#echo rpt_reporttargetfilehistory=$rpt_reporttargetfilehistory
-#echo rpt_reporttargetfileold=$rpt_reporttargetfileold
-#echo rpt_reporttargetfileindex=$rpt_reporttargetfileindex
 
 echo "Copy html report to target directory $rpt_reporttargetpath..."
 cp $rpt_reporttemptargetfile $rpt_reporttargetfilestandard
@@ -18,10 +15,8 @@ cp $rpt_reporttemptargetfile $rpt_reporttargetfilehistory
 cp $rpt_reporttemptargetfile $rpt_reporttargetfileold
 cp $rpt_reporttemptargetfile $rpt_reporttargetfileindex
 
-echo "Copy static resources to target directory $rpt_reporttargetpath\\js..."
-rm -r $rpt_reporttargetpath\\js
-mkdir $rpt_reporttargetpath\\js
-cp -r $rpt_toolspath/js $rpt_reporttargetpath
+# echo "Copy static resources to target directory $rpt_reporttargetpath\\js..."
+# no need for local stuff anymore
 
 echo
 echo "Copy to target DONE"

@@ -2,186 +2,8 @@
 	<head>
 	<title>||Project|| Performancetest Summary [${testrundatetime}]</title>
 			
-			<script type="text/javascript" src="js/jquery.min.js"></script>
-			
-<script type="text/javascript">			
-$(function () {
-        $('#container_counters').highcharts({
-            chart: {
-                type: 'line',
-				zoomType: 'x',
-				height: 420,
-				marginBottom : 80
-            },
-			legend: {
-				enabled: true,
-				layout: 'horizontal',
-				align: '',
-				verticalAlign: 'bottom'
-			},			
-            title: {
-                text: 'Counters'
-            },
-            subtitle: {
-                text: 'interval is ${Interval} ms'
-            },
-            xAxis: {
-                type: 'datetime',
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            yAxis: [{ // Primary yAxis
-			    labels: {
-                    formatter: function() {
-                        return this.value;
-                    },
-                    style: {
-                        color: '#89A54E'
-                    }
-                },
-                title: {
-                    text: 'Value'
-                },
-				min: 0,
-                opposite: true 
-            },
-			{
-			    labels: {
-                    formatter: function() {
-                        return this.value + 's';
-                    },
-                    style: {
-                        color: '#89A54E'
-                    }
-                },
-                title: {
-                    text: 'Response time'
-                },
-				min: 0,
-                opposite: false 			
-			}],
-			tooltip: {
-                shared: true
-            },
-            plotOptions: {
-                line: {
-                    lineWidth: 2,				
-					marker: {
-						enabled: false
-					},
-                    pointStart: Date.UTC(${Time}),
-					pointInterval: ${Interval},
-                }
-            },
-            series: [{
-			    name: 'Response Time',
-				yAxis: 1,
-                data: [${Transaction#Overall_Response_Time#Trans.(busy)_ok[s]}],
-				tooltip: {
-                    valueSuffix: ' s'
-                }
-			}, {
-			    name: 'Transaction Rate',
-				yAxis: 0,
-                data: [${Summary_General---Transactions}],
-				tooltip: {
-                    valueSuffix: ' trs/interval'
-                }
-            },{
-			    name: 'Error Rate',
-				yAxis: 0,
-				color: 'red',
-                data: [${Summary_General---Errors}],
-				tooltip: {
-                    valueSuffix: ' err/interval'
-                }
-			},{
-                name: 'Active Users',
-				yAxis: 0,
-                color: '#89A54E',
-                data: [${Summary_General---Active_users}]
-			}]
-        });
-    });
-	
-$(function () {
-        $('#container_trend').highcharts({
-            chart: {
-                type: 'line',
-				zoomType: 'x',
-				height: 420,
-				marginBottom : 80
-            },
-				legend: {
-					enabled: false,
-					layout: 'horizontal',
-					align: 'bottom',
-					verticalAlign: 'bottom'
-				},		
-            title: {
-                text: 'Trend'
-            },
-            subtitle: {
-                text: 'last ${maxtrendcount} testruns'
-            },
-            xAxis: {
-                type: 'datetime',
-                labels: {
-                    align : 'left',
-					rotation: -90,
-					x : -12,
-					y : 0
-                },
-				alternateGridColor: '#F4F4F4',
-				categories: [''$[,'${testrundatetime:#}']]
-            },
-            yAxis: [{ // Primary yAxis
-			    labels: {
-                    formatter: function() {
-                        return this.value;
-                    },
-                    style: {
-                        color: '#89A54E'
-                    }
-                },
-                title: {
-                    text: ''
-                },
-				min: 0,
-                opposite: true 
-            },
-			{
-			    labels: {
-                    formatter: function() {
-                        return this.value + 's';
-                    },
-                    style: {
-                        color: '#89A54E'
-                    }
-                },
-                title: {
-                    text: 'Response time'
-                },
-				min: 0,
-                opposite: false 			
-			}],
-			tooltip: {
-                shared: false
-            },
-            plotOptions: {
-                line: {
-                    lineWidth: 2,				
-					marker: {
-						radius: 2
-					}
-				}
-            },
-            series: [
-            ||BLOK1||]
-        });
-    });	
-</script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes@latest/dist/chartjs-plugin-colorschemes.min.js"></script>
 
 	<style type="text/css">
 		body {
@@ -314,7 +136,7 @@ $(function () {
 	<h1>||Project|| Performancetest Summary [${testrundatetime}]</h1> 
 	</td>
 <td align="right">
-<img src="js\graph\logo.png" height="30p"/>
+<img src="${companylogoreference}" height="30p"/>
 </td></tr></table>
 	
 <hr align="left" width="100%" size="1"/>
@@ -414,8 +236,8 @@ $(function () {
 	<tr><td class="name">Avg of StdDev</td><td id="avg_stddev">${AGGREGATED:9:0.000}</td></tr>	
 </table>
 </td>
-<td><div id="container_counters" style="min-width: 600px; height: 400px; margin: 0 auto"></div></td>
-<td><div id="container_trend" style="min-width: 600px; height: 400px; margin: 0 auto"></div></td>
+	<td style="min-width: 600px; min-height: 400px"><canvas id="chart_counters"></canvas></td>
+	<td style="min-width: 600px; min-height: 400px"><canvas id="chart_trend"></canvas></td>
 </tr></table>
 	
 <hr align="left" width="100%" size="1"/>
@@ -451,7 +273,151 @@ $(function () {
 <hr align="left" width="100%" size="1">
 
 <h3>end of report</h3>
-<script src="js/highcharts.js"></script>
-<script src="js/modules/exporting.js"></script>
+
+<script>
+new Chart(document.getElementById("chart_counters"), {
+    type: 'line',
+    data: {
+      labels: [${measuretimeseries}],
+      datasets: [
+        {
+          label: "Response time",
+          data: [${Transaction#Overall_Response_Time#Trans.(busy)_ok[s]}],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 0,
+		  borderColor: ['blue'],
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+        },
+		{
+          label: "Transaction rate",
+          data: [${Summary_General---Transactions}],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 0,
+		  borderColor: ['black'],
+		  borderWidth: 2,
+		  yAxisID: 'Y2'
+        },
+		{
+          label: "Error rate",
+          data: [${Summary_General---Errors}],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 0,
+		  borderColor: ['red'],
+		  borderWidth: 2,
+		  yAxisID: 'Y2'
+        },
+		{
+          label: "Active users",
+          data: [${Summary_General---Active_users}],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 0,
+		  borderColor: ['green'],
+		  borderWidth: 2,
+		  yAxisID: 'Y2'
+        }]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                }
+        }
+	  },
+      title: {
+        display: true,
+        text: 'Counters per interval (10s)'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'response time (s)'
+					}
+			},
+			{
+				id: 'Y2',
+				type: 'linear',
+				position: 'right',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'value'
+					}
+			}],
+			xAxes: [{
+                ticks: {
+                    beginAtZero:true,
+					callback: function(dataLabel, index) {
+								return dataLabel%300 == 0 ? Math.floor((dataLabel)/60) : '';
+					}
+                },
+				gridLines: { display:false }
+            }]
+        }
+    }
+});
+
+			
+new Chart(document.getElementById("chart_trend"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        ||BLOK1||]
+    },
+    options: {
+      legend: { 
+		display: false
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                }
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'Trend last 14 testruns'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'response time (s)'
+					}
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: {
+					minRotation: 20
+				}
+            }]
+        }
+    }
+});
+</script>
 
 </body></html>

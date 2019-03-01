@@ -1,0 +1,78 @@
+Reportgenerator (ReportTool) release notes
+
+release.20151119-1350	pre- en postamble parsejstat toegevoegd tbv bsnk
+release.20151120-1524	melding gevonden aantal trs verbeterd in parsetransactions
+release.20160116-2242	disable van testruns en workload filter in trendoverzicht
+ALTER TABLE testrun
+   ADD COLUMN enabled integer NOT NULL DEFAULT 1;
+release.20170831-1858	correcties en layout verbeteringen rapport templates
+release.20171003		correctie tijdvolgorde testruns in trend; uitsmeren general grafiek over tijd (import); trend selectief op workload
+release.20171006.1840	import transactions en measures met null values wanneer geen metingen verzameld;
+						ondersteuning default waarden in templates (let op: project templates aanpassen!)
+						console functionaliteit uitgebreid met delete acties (delete project, delete testrun)
+						v3.0 jmeter parser introduced
+release.20171223.1020	v3.1 database location is configurable 
+release.20180307.0119	GenerateReport-cleanup html phase 1 geintroduceerd (met selectieve regio voor clean mergeslag)
+release.20180312.1547	Rptgen 3.2.1:
+						fix lege kolom en gat in trendgrafiek wanneer testrun disabled is
+						fix GMT to Local time for date/time stamp Jmeter test
+release.20180326.1957	Variabele testrunduration toegevoegd (rptgen v3.3)
+						Workload type filter in historische grafieken gerepareerd
+release.20180328		Duration time format aangepast van s naar hh:mm:ss
+release.20180406.1836	Variabele faultpercentage toegevoegd (rptgen v3.4)
+						Workload hoofdletterongevoelig gemaakt
+release.20180412		Gebruik van project-specifieke .bat bestanden vervangen door drie generieke: report_wrapper.bat (aanroep), report_generate.bat, report_vars.cmd
+						Foutafhandeling scripts verbeterd 0=ok, 1=missing file, 2=parse error, 3=merge error, 4=wrapup error
+						Foutgevoeligheid voor integer parameters verminderd voor tools (rptgen v3.5)
+release.20180413		Tmp, Log en reports verwijderd uit rptgen rootfolder en eigen folders voor templates en target geintroduceerd (default report en report_template)
+release.20180417		Summary infoblok herzien en voorbereid op uitbreiding; CANCELED en FAILED default 0
+release.20180424		Velden _baselinewarnings en _thresholdviolations toegevoegd (rptgen 3.6), summary en legend blok uitgebreid
+release.20180430		Rpt template aangepast zodat threshold waarden in fractionele vorm worden weergegeven en rechts uitgelijnd
+release.20180515		Rptgen v3.7.1 (Jmeter parser #success = #uitgevoerd-#fouten)
+release.20180605		Rpt template aangepast zodat appversion (applicatie versienummer) wordt meegenomen in het rapport (voorbereiding voor _baselineappversion)
+release.20180606		Rptgen uitgebreid met appversion trend merge
+release.20180615		Rptgen v3.8.0.0
+						Summary berekend op basis van trs overzicht (transacties "\d\d_")
+						Transactie stats jmeter berekend op basis van geslaagde transacties
+						ReportGenTool: summary variabele gewijzigd naar GENERATED (nieuw)
+						ReportGenTool: legend aangepast
+release.20180618		Summary stuk van template uitgebreid (baseline version) en gepartitioneerd						
+						Rptgen v3.9.0.0
+						baseline "variabelen" toegevoegd in merge tool voor gebruik in templates, baseline.<varname>
+						baseline appversion toegevoegd aan templates
+release.20180619		Rptgen v3.9.1.0
+						reparatie summary calculatie (eerdere reparatie was teruggedraaid)
+release.20180626		ICTU logo naar nieuw logo
+						exit message toegevoegd aan exitcode in <project>_report.exitcode
+release.20180628		Rptgen v3.10.0.0 (merge param defaults)
+						Historisch overzicht metingen rechtsboven in rapport
+						Genereren van rapport met versie(datum/tijd) in bestandsnaam (tbv historie)
+						Merge variabelen vereenvoudigd (selectief -> breed)
+release.20180629		Report result file krijgt workload in zich: <project>_<workload>_<testid>.html lrk_Productie_2018.06.29.11.23.06.html
+release.20180629.1		Oude bestandsformaat toegevoegd (project_report.html) tbv backwards compatibility teststraat
+release.20180709		Rptgen v3.10.1.0 Fouttelling per transactie (Jmeter)
+release.20181004		Rptgen v3.10.2.0 + v3.10.3.0
+						foutpercentage summary
+						parse van laatste stukje measures
+						database username/password in config
+						falende merge nu fataal voor het hele proces
+release.20181206		Reportgen .bat script overgezet naar .sh
+						Rptgen v3.12.0.0
+						Aantal wijzigingen, zie releasenotes
+						Aantal minor wijzigingen in tools om eea werkend te krijgen onder shell
+release.20181211		Exitcode file werd niet gecreeerd (nu wel)
+release.20181212		Test-comment kan nu spaties bevatten
+release.20181213		Exception opgelost bij berekenen avg measure bij weinig samples (vastgoed)
+						History 10 -> 15
+release.20181217		Variabelen worden nu niet meer als cmdline param meegegeven aan hoofd-scripts (als var opgevoerd)
+						History 15 -> 14
+release.20190108		Rptgen 3.15.0.0 introductie trendbreuk detectie, resultaat alleen nog in rpt log voor evaluatie
+release.20190109		Rptgen 3.15.1.0 verbetering trendbreuk detectie, introductie variabelen en template aanpassing
+release.20190115		Rptgen 3.15.2.0 verbetering trendbreuk detectie, error stability toegevoegd aan stability algoritme (throughput+error)
+release.20190117		Rptgen 3.15.3.0 progress stability naar %doorlooptijd (was %users)
+						Legend uitbreiding (trend legend)
+release.20190122		Rptgen 3.15.4.0 vastloper door geheugentekort bij parsen measures duurtest (kwm) opgelost
+release.20190228		Vervanging HighCharts door ChartJS
+release.20190301		JS dir removed, license files centralized, releasenotes renamed
+release.20190301b		Reference to company logo moved to global config
+			

@@ -7,7 +7,7 @@ md release\tools
 
 xcopy tools release\tools /s /y
 del release\tools\*.config
-copy releases\teststraat.releasenotes.txt release
+copy reportgenerator.releasenotes.txt release
 
 copy report_*.sh release
 
