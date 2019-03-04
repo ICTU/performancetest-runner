@@ -372,6 +372,8 @@ new Chart(document.getElementById("chart_counters"), {
 			xAxes: [{
                 ticks: {
                     beginAtZero:true,
+					minRotation: 90,
+					maxRotation: 90,					
 					callback: function(dataLabel, index) {
 								return dataLabel%300 == 0 ? Math.floor((dataLabel)/60) : '';
 					}
@@ -425,9 +427,7 @@ new Chart(document.getElementById("chart_trend"), {
 			xAxes: [{
 				type: 'category',
 				gridLines: { display: true },
-				ticks: {
-					minRotation: 20
-				}
+				ticks: { display: false	}
             }]
         }
     }
