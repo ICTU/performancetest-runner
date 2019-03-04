@@ -335,7 +335,7 @@ new Chart(document.getElementById("chart_counters"), {
 	  },
       title: {
         display: true,
-        text: 'Counters per interval (10s)'
+        text: 'Counters per 10s interval, x-axis is test progress in minutes'
       },
       scales: {
             yAxes: [{
@@ -395,7 +395,7 @@ new Chart(document.getElementById("chart_trend"), {
 	  },
       title: {
         display: true,
-        text: 'Trend last 14 testruns'
+        text: 'Trend last ${maxtrendcount} testruns'
       },
       scales: {
             yAxes: [{
