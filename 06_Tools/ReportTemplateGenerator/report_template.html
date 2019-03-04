@@ -329,8 +329,19 @@ new Chart(document.getElementById("chart_counters"), {
 	  tooltips: {
 		callbacks: {
 			label: function(tooltipItem, data) {
-                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
-                }
+					var unit = "";
+					if (data.datasets[tooltipItem.datasetIndex].label == "Response time")
+						unit = " s";
+					if ((data.datasets[tooltipItem.datasetIndex].label == "Transaction rate") || (data.datasets[tooltipItem.datasetIndex].label == "Error rate"))
+						unit = " trs\/10s";
+					
+					if (data.datasets[tooltipItem.datasetIndex].label == "Active users")
+						unit = " users";
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + unit;
+                },
+			title: function(tooltipItem){
+                return 'at '+Math.floor((this._data.labels[tooltipItem[0].index])/60)+' minutes';
+            }
         }
 	  },
       title: {
@@ -386,8 +397,11 @@ new Chart(document.getElementById("chart_trend"), {
 	  tooltips: {
 		callbacks: {
 			label: function(tooltipItem, data) {
-                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
-                }
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + ' s';
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
         }
 	  },
 	  	  plugins: {
