@@ -48,7 +48,6 @@ if [[ "$runmaintest" == "true" ]]; then
 	sleep 30
 	# Start
 	run_${tool} $scriptfolder $projectname $Pworkload $loadtest_logdir
-
 	
 echo "-----------------------------------------------------------------------"
 
