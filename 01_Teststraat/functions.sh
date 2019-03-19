@@ -313,6 +313,14 @@ run_jmeter() {
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
 			taskkill /F /IM Java.exe 2>/dev/null
+			
+			# Making a copy of the JMeter log for reference
+			cp ${loadgendir_jmeter}/jmeter.log $logdir_root/jmeter_${workload}.log
+			cp ${loadgendir_jmeter}/jmeter.log $logbackupdir/$testtag/jmeter_${workload}.log
+
+			# Making a copy of the testresults for reference
+			cp -f -r $loadtest_logdir\\. $logbackupdir\\$testtag\\testresults\\
+			
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			exit 1
 		fi
@@ -329,6 +337,10 @@ run_jmeter() {
 	done
 	
 	sleep 10
+	
+	# Making a copy of the JMeter log for reference
+	cp ${loadgendir_jmeter}/jmeter.log $logdir_root/jmeter_${workload}.log
+	cp ${loadgendir_jmeter}/jmeter.log $logbackupdir/$testtag/jmeter_${workload}.log
 	
 	echo "Done with performance run with workload: $3"
 	echo "_____________________________________________________"
@@ -510,4 +522,20 @@ setAppVersion() {
 
 getAppVersion() {
 	return $appVersion
+}
+
+validateDiskSpace(){
+	location=$1
+	availSpace=$(df "$location" --block-size=G | awk 'NR==2 { print $4 }' | sed 's/[^0-9]*//g')
+	if (( availSpace < freespace_$location\_threshold )); then
+	  echo "*****************************"
+	  echo "Not enough diskspace available" 
+	  echo "Required space  = $reqSpace"
+	  echo "Available space = $availSpace"
+	  echo "Aborting test"
+	  echo "*****************************"
+	  exit 1
+	else
+		echo "Genoeg vrij: $availSpace"
+	fi
 }

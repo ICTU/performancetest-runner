@@ -4,7 +4,6 @@ echo "-----------------------------------------------------------------------"
 echo "Start script $0 on `date +"%m-%d-%y"` @ `date +"%T"`"
 echo "-----------------------------------------------------------------------"
 
-# catch parameters
 buildnumber=$1
 prodload=$2
 baseline=$3
@@ -174,8 +173,8 @@ if [[ "$rebuild_directories" == "true" ]]; then
 		mkdir -p "$logbackupdir\\$testtag"
 		if isdirectory $logbackupdir\\$testtag; then echo "$logbackupdir\\$testtag created"; else aborttest "Could not create \"$logbackupdir\\$testtag\" abort test"; fi 		
 		
-		mkdir -p "$logdir_root\\measures"	
-		if isdirectory $logdir_root\\measures; then echo "$logdir_root\\measures created"; else aborttest "Could not create \"$logdir_root\\measures\" abort test"; fi
+		mkdir -p "$loadtest_measures"	
+		if isdirectory $loadtest_measures; then echo "$loadtest_measures created"; else aborttest "Could not create \"$loadtest_measures\" abort test"; fi
 		
 	echo "Done with rebuilding directories"
 
