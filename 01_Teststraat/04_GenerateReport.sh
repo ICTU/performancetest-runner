@@ -144,7 +144,7 @@ if [[ "$committorepository" == "true" ]]; then
 	cd $repository_report_dir\\$Pworkload
 	
 	echo "repository log drive: $repository_log_drive"
-	echo "repository log drive: $repository_report_dir"
+	echo "repository log dir: $repository_report_dir"
 	
 	echo "Pull GIT just in case"
 	echo "GitCustomURL: $giturl"
@@ -162,7 +162,7 @@ if [[ "$committorepository" == "true" ]]; then
 	# Start copying report to repository directory
 	echo "Start with copying report to the repository directory"
 	cp -f -r "$loadtest_report\\${project}_report.html" "$repository_report_dir\\$Pworkload\\index.html"
-	cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$Pworkload"
+	#cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$Pworkload"
 	echo "Done with copying report to the repository Directory"
 	
 	# The true commit to the repository
