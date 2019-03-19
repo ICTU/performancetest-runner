@@ -31,23 +31,24 @@ if [[ "$generatereport" == "true" ]]; then
 	echo "Begin with generating report"
 
 	# Genereren report template
-	echo "Report template: $reporttemplatefolder"
+	echo "Report template: $reporttemplategenerator_root"
 	echo "project: $project"
-	cd "$reporttemplatefolder"
+	cd "$reporttemplategenerator_root"
 	pwd
 	. ./generateTemplate.sh $project $projectfolder_root/$project/Transactions.csv || aborttest "Something went wrong generating the template"
 
 	# Kopieeren report template naar folder
-	mkdir -p $resulttemplatefolder
-	cp -f -v "${reporttemplatefolder}\\templates\\${project}_report_template.html" "${resulttemplatefolder}"
+	mkdir -p $reporttemplatedestinationfolder
+	cp -f -v "${reporttemplategenerator_root}\\templates\\${project}_report_template.html" "${reporttemplatedestinationfolder}"
 	
 	# Genereren report
-	mkdir -p $logdir_root\\report
+	mkdir -p $loadtest_report
 	echo "report tool folder: $reporttoolfolder"
 	echo "project: $project"
 	cd "$reporttoolfolder"
 	pwd
-	cygstart  -w ./report_wrapper.bat $project $tool "\"Gegenereerd vanuit de TestStraat\"" $baseline
+	#cygstart  -w ./report_wrapper.bat $project $tool "\"Gegenereerd vanuit de TestStraat\"" $baseline
+	. ./report_wrapper.sh $project $tool "\"Gegenereerd vanuit de TestStraat\"" $baseline
 	
 	# Check of rapport gegenereerd is en of er een errorcode is
 	if isfile $logdir_root/report/${project}_report.exitcode; then echo "Checking for errors..."; else aborttest "Warning, no error file found and therefore also no report generated!"; fi 
@@ -84,7 +85,7 @@ if [[ "$move_report" == "true" ]]; then
 
 	echo "Start copy report"
 
-    movedir_src=$logdir_root\\report
+    movedir_src=$loadtest_report
 	movedir_dst=$logbackupdir\\$testtag\\report
 	movedir_pub=$logbackupdir\\publish\\report
 	
@@ -116,7 +117,7 @@ if [[ "$generatereporthistory" == "true" ]]; then
 	echo "Copy report for publishing..."
 	
 	mkdir -p $reportpublishfolder
-	movedir_src=$logdir_root\\report
+	movedir_src=$loadtest_report
 	
 	# echo source: $movedir_src
 	# echo destination: $reportpublishfolder
@@ -143,7 +144,7 @@ if [[ "$committorepository" == "true" ]]; then
 	cd $repository_report_dir\\$Pworkload
 	
 	echo "repository log drive: $repository_log_drive"
-	echo "repository log drive: $repository_report_dir"
+	echo "repository log dir: $repository_report_dir"
 	
 	echo "Pull GIT just in case"
 	echo "GitCustomURL: $giturl"
@@ -160,8 +161,8 @@ if [[ "$committorepository" == "true" ]]; then
 	
 	# Start copying report to repository directory
 	echo "Start with copying report to the repository directory"
-	cp -f -r "$logdir_root\\report\\${project}_report.html" "$repository_report_dir\\$Pworkload\\index.html"
-	cp -f -r "$logdir_root\\report\\js" "$repository_report_dir\\$Pworkload"
+	cp -f -r "$loadtest_report\\${project}_report.html" "$repository_report_dir\\$Pworkload\\index.html"
+	#cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$Pworkload"
 	echo "Done with copying report to the repository Directory"
 	
 	# The true commit to the repository

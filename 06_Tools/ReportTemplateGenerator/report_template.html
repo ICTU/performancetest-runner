@@ -329,13 +329,24 @@ new Chart(document.getElementById("chart_counters"), {
 	  tooltips: {
 		callbacks: {
 			label: function(tooltipItem, data) {
-                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
-                }
+					var unit = "";
+					if (data.datasets[tooltipItem.datasetIndex].label == "Response time")
+						unit = " s";
+					if ((data.datasets[tooltipItem.datasetIndex].label == "Transaction rate") || (data.datasets[tooltipItem.datasetIndex].label == "Error rate"))
+						unit = " trs\/10s";
+					
+					if (data.datasets[tooltipItem.datasetIndex].label == "Active users")
+						unit = " users";
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + unit;
+                },
+			title: function(tooltipItem){
+                return 'at '+Math.floor((this._data.labels[tooltipItem[0].index])/60)+' minutes';
+            }
         }
 	  },
       title: {
         display: true,
-        text: 'Counters per interval (10s)'
+        text: 'Counters per 10s interval, x-axis is test progress in minutes'
       },
       scales: {
             yAxes: [{
@@ -361,6 +372,8 @@ new Chart(document.getElementById("chart_counters"), {
 			xAxes: [{
                 ticks: {
                     beginAtZero:true,
+					minRotation: 90,
+					maxRotation: 90,					
 					callback: function(dataLabel, index) {
 								return dataLabel%300 == 0 ? Math.floor((dataLabel)/60) : '';
 					}
@@ -386,8 +399,11 @@ new Chart(document.getElementById("chart_trend"), {
 	  tooltips: {
 		callbacks: {
 			label: function(tooltipItem, data) {
-                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
-                }
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + ' s';
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
         }
 	  },
 	  	  plugins: {
@@ -395,7 +411,7 @@ new Chart(document.getElementById("chart_trend"), {
 	  },
       title: {
         display: true,
-        text: 'Trend last 14 testruns'
+        text: 'Trend last ${maxtrendcount} testruns'
       },
       scales: {
             yAxes: [{
@@ -411,9 +427,7 @@ new Chart(document.getElementById("chart_trend"), {
 			xAxes: [{
 				type: 'category',
 				gridLines: { display: true },
-				ticks: {
-					minRotation: 20
-				}
+				ticks: { display: false	}
             }]
         }
     }

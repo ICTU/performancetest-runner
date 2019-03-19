@@ -18,16 +18,17 @@ reportsfolder_root="$root_sh\\05_Rapporten"										# Root folder for the repor
 reporthistory_root="$root_sh\\10_ReportHistory"
 
 scriptfolder="$scripts_root\\$project"											# Actual scriptfolder location
-
 logdir_root="$result_root\\$project"											# Root location where all the files for the test and the results are stored
-verification_logdir="$logdir_root\\verification_testresults"					# Location of the testresults of the verification run
+loadtest_report="$logdir_root\\report"											# Location of the generated report										
+loadtest_measures="$logdir_root\\measures"										# Location of the gathered measures of a test
 loadtest_logdir="$logdir_root\\testresults"										# Location of the performance test results
+verification_logdir="$logdir_root\\verification_testresults"					# Location of the testresults of the verification run
 logbackupdir="$resultsbackup_root\\$project"									# Location where the backup for the testresults are stored
 
 reporttoolfolder="$tools_root\\ReportTool"										# Location of the ReportTool
 
-reporttemplatefolder="$tools_root\\ReportTemplateGenerator"						# Location of the ReportTemplateGenerator
-resulttemplatefolder="$logdir_root\\report_templates"							# Location where the templates of the report are stored
+reporttemplategenerator_root="$tools_root\\ReportTemplateGenerator"				# Location of the ReportTemplateGenerator
+reporttemplatedestinationfolder="$logdir_root\\report_templates"				# Location where the templates of the report are stored
 
 generatereporthistory=true														# Set to true if you want to build a report history locally
 reportpublishfolder=$reporthistory_root\\$project\\$workload					# If the generatereporthistory is set to true, a report with timestamp will be placed in this location
@@ -42,13 +43,13 @@ freespaceEthreshold=10000 														# in MB
 movelogs=true																	# Should the logs be moved to the backup folder
 move_report=true																# Should the report be moved to backup and publish folder
 
-companylogoreference="https://www.ictu.nl/themes/custom/ictu_theme/assets/images/logo.svg"	#reference to compony logo inserted in report
+companylogoreference="<url location to logo>"									#reference to compony logo inserted in report
 
 #################################
 # Project variables?
 ######################
 checkforarguments="true" 														# Check if incomming arguments are correct (should be on by default)
-printoptions="true"		 														# Print the settings variables
+printoptions="false"	 														# Print the settings variables
 checkdiskspace="true"															# Check for available diskspace, if thresholds are exceeded, abort the test
 abortifverifyfailed="true"														# Abort the test if the verification run had errors (should be on by default)
 runmaintest="true"																# Run main test
@@ -75,5 +76,5 @@ committorepository=true															# Commit the report to a repository
 revision_control_tool=GIT														# Which revision control tool is used
 repository_log_drive="E:"														# Drive of the local repository
 repository_report_dir="$reportsfolder_root\\$project"							# Location of the local repository
-giturl="http://[user]:[password]@[urltoreposotory].git"	# Remote URL for the GIT repository
+giturl="http://[user]:[password]@[urltoreposotory].git"							# Remote URL for the GIT repository
 #################################
