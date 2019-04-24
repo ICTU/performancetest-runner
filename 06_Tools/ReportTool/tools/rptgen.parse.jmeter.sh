@@ -23,15 +23,15 @@ echo convert jtl to transaction csv: success only
 if [ $? -ne 0 ]; then aborttest "csv convert success trs"; fi
 
 echo Parse transactiondata to intermediate...
-$rpt_toolspath/srt.parsetransactions.exe parser=jmeter transactionfilecsv_success=$rpt_temppath/_transactions_success.csv transactionfilecsv_all=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.trs.csv
+dotnet $rpt_toolspath/rpg.parsetransactions.dll parser=jmeter transactionfilecsv_success=$rpt_temppath/_transactions_success.csv transactionfilecsv_all=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.trs.csv
 if [ $? -ne 0 ]; then aborttest "parse transactions"; fi
 
 echo Parse measures to intermediate...
-$rpt_toolspath/srt.parsemeasures.exe parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl intermediatefile=$rpt_temppath/_intermediate.msr.csv
+dotnet $rpt_toolspath/rpg.parsemeasures.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl intermediatefile=$rpt_temppath/_intermediate.msr.csv
 if [ $? -ne 0 ]; then aborttest "parse measures"; fi
 
 echo Parse variables to intermediate...
-$rpt_toolspath/srt.parsevariables.exe parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl transactionfilecsv=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.var.csv
+dotnet $rpt_toolspath/rpg.parsevariables.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl transactionfilecsv=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.var.csv
 if [ $? -ne 0 ]; then aborttest "parse variables"; fi
 
 echo "Parse [JMeter] DONE"

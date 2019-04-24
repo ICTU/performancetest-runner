@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "rpg.console": {
+      "commandName": "Project",
+      "commandLineArgs": "listtestruns project=LRK database=localhost:postgres:postgres"
+    }
+  }
+}
