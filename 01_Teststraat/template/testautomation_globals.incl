@@ -72,7 +72,8 @@ threshold_duurtest=25200														# Default timeout for the endurancetest ru
 threshold_stresstest=4000														# Default timeout for the stresstest run
 threshold_default=4000
 #################################	
-committorepository=true															# Commit the report to a repository
+getfromrepository="false"														# Should the scripts be pulled from a repository
+committorepository="false"														# If the report should be pushed to a repository
 revision_control_tool=GIT														# Which revision control tool is used
 repository_log_drive="E:"														# Drive of the local repository
 repository_report_dir="$reportsfolder_root\\$project"							# Location of the local repository

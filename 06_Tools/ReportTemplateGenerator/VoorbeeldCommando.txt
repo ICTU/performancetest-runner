@@ -1,6 +1,6 @@
 # Onderstaande commando uitvoeren vanuit de root van de ReportTemplateGenerator (waar ook dit bestand staat)
-# parameter 1 = Project naam zoals deze ook door de teststraat gebruikt word
-# parameter 2 = Transactions file
+# param 1 = Project naam zoals deze ook door de teststraat gebruikt word
+# param 2 = Transactions file
 
 # Voorbeeld 1: Niet ingevuld
 ./generateTemplate.sh [project] ../../[project]/[transactieFile]
