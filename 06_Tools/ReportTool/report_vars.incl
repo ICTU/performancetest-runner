@@ -24,6 +24,7 @@ rpt_reporttargetpath=$loadtest_report
 rpt_toolspath=$reporttoolfolder\\tools # local structure
 rpt_temppath=$reporttoolfolder\\temp # local structure
 rpt_companylogoreference=$companylogoreference
+rpt_reportdbconnectstring=$reportdbconnectstring
 
 echo resultroot=$rpt_resultroot
 echo resultpath=$rpt_resultpath
