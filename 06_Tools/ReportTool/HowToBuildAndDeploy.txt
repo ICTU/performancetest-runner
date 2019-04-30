@@ -11,3 +11,4 @@ Alternative for copy deployment (steps 2, 3 and 4) is synchronize via github
 
 Prerequisites:
 .Net Core v2.1 on Windows or Linux
+<reboot>
