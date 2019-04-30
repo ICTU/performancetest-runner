@@ -1,11 +1,14 @@
 Compile binaries Reportgenerator and deploy
 
-1) Run _builddeploy.bat (or _build.bat and _deploy.bat) - this prepares binaries in build folder
-2) Run _release.bat - this creates deployment in release folder
-3) Zip directory release
+1) Run _builddeploy.sh
+  runs: _build.sh (build sources to binaries in sources/build folder)
+  runs: _deploy.sh (copy binaries form build folder to runtime location)
+2) Run _release.bat - this copies deployment to release folder
+3) Zip directory release for copy-deployment purposes
+4) Deploy (unzip) <zip>\release to ..\06_Tools\ReportTool\
 
-Deploy
-6) Deploy (unzip) <zip>\release to ..\06_Tools\ReportTool\
+Alternative for copy deployment (steps 2, 3 and 4) is synchronize via github
 
 Prerequisites:
 .Net Core v2.1 on Windows or Linux
+<reboot>
