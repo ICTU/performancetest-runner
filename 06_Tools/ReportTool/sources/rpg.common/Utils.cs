@@ -186,14 +186,15 @@ namespace rpg.common
             name = name.Replace(":", "|");
             // remove '#'
             //name = name.Replace('#','_'); // not yet, used in default transaction names
-            // remove '<'
+            // remove < and >
             name = name.Replace("<", "");
-            // remove '>'
             name = name.Replace(">", "");
-            // remove "
+            // remove " and '
             name = name.Replace("\"", "");
-            // remove '
             name = name.Replace("\'", "");
+            // remove [ and ]
+            name = name.Replace("[", "");
+            name = name.Replace("]", "");
 
             return name;
         }
