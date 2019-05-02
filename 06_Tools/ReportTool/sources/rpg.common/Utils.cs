@@ -40,6 +40,7 @@ namespace rpg.common
                     return result;
                 }
             }
+            Log.WriteLine("WARNING did not find value pattern ["+valuePattern+"]");
             return result;
         }
 
@@ -76,7 +77,6 @@ namespace rpg.common
             long ts_epoch = long.Parse(s);
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return dt.AddMilliseconds(ts_epoch).ToLocalTime(); // mwn12032018
-
         }
 
         /// <summary>

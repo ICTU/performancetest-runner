@@ -1,6 +1,7 @@
 ﻿using rpg.common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace rpg.parsetransactions
@@ -14,6 +15,7 @@ namespace rpg.parsetransactions
         public const string AGGREGATEDTRSNAME = "AGGREGATED";
         // transaction name pattern for aggregation
         public const string REPORTTRANSACTIONNAMEPATTERN = @"\d\d_"; // TODO naar app config
+        public const string TRANSACTIONNAMESFILENAME = "Transactions.csv";
 
         public virtual void Parse(ParamInterpreter parameters)
         {
@@ -127,7 +129,10 @@ namespace rpg.parsetransactions
             _transactionDetails.WriteToFile(fileName);
 
             // Extra: file with only headers
-            _transactionDetails.WriteToFileDef(fileName, "fieldnames", string.Join(TransactionValue.LISTSEPARATOR.ToString(), TransactionValue.fieldnames));
+            _transactionDetails.WriteToFileFieldDefinitions(fileName, "fieldnames", string.Join(TransactionValue.LISTSEPARATOR.ToString(), TransactionValue.fieldnames));
+
+            // Extra: file with all transactionnames
+            _transactionDetails.WriteToFileTranactionnames(fileName);
         }
 
         /// <summary>

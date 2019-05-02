@@ -3,6 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <FileVersion>4.1.0.0</FileVersion>
+    <Company>ICTU</Company>
+    <Product>Report Generator - Load intermediate</Product>
+    <Copyright>ICTU</Copyright>
+    <Version>4.1</Version>
+    <Authors>ICTU</Authors>
   </PropertyGroup>
 
   <ItemGroup>

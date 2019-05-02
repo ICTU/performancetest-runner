@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace rpg.common
 {
@@ -15,7 +11,6 @@ namespace rpg.common
         /// <summary> intermediate item list </summary>
         public Intermediate items = new Intermediate();
 
-        private string baseFilename;
         /// <summary> keyvaluepair separator </summary>
         public const char KEYVALUESEPARATOR = '=';
         
@@ -50,7 +45,6 @@ namespace rpg.common
         /// <param name="fileName"></param>
         public void WriteToFile(string fileName)
         {
-            baseFilename = fileName;
             using (StreamWriter sw = new StreamWriter(fileName))
             {
                 foreach (KeyValuePair<string, string> item in items)
@@ -66,13 +60,29 @@ namespace rpg.common
         /// <param name="fileName"></param>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void WriteToFileDef(string fileName, string key, string value)
+        public void WriteToFileFieldDefinitions(string fileName, string key, string value)
         {
+            Log.WriteLine("write .definitions file...");
             File.WriteAllText(fileName+".definitions", key + KEYVALUESEPARATOR + value);
         }
 
-        //public int NumOfCustomTrs;
+        /// <summary>
+        /// Write all transactionnames to csv file, compatible with reporttemplategenerator Transactions.csv
+        /// </summary>
+        /// <param name="v"></param>
+        public void WriteToFileTranactionnames(string fileName)
+        {
+            Log.WriteLine("write .transactionnames file...");
 
+            string targetFileName = fileName + ".transactionnames";
+            using (StreamWriter sw = new StreamWriter(targetFileName))
+            {
+                foreach (KeyValuePair<string, string> item in items)
+                {
+                    sw.WriteLine(item.Key);
+                }
+            }
+        }
 
     }
 }

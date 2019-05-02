@@ -3,6 +3,10 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>4.1</Version>
+    <Product>Report Generator - Merge</Product>
+    <Company>ICTU</Company>
+    <Authors>ICTU</Authors>
   </PropertyGroup>
 
   <ItemGroup>
