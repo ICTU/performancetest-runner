@@ -59,7 +59,7 @@ namespace rpg.parsetransactions
             // scrape and aggregate data from transaction data
             TransactionValueAggregate aggregateValue = new TransactionValueAggregate();
 
-            // foreach transacitonlines
+            // foreach transactionlines
             foreach (string transactionName in _transactionNames)
             {
                 // only include in agggregation if transactionname matches 'report transacton name pattern'
@@ -101,7 +101,7 @@ namespace rpg.parsetransactions
             {
                 if (trsRegex.IsMatch(line)) // let op: moet ook goed gaan als trs alleen fout gegaan is, dus niet alleen trsBusyOk
                 {
-                    string trsName = trsRegex.Match(line).Groups[1].Value;
+                    string trsName = Utils.NormalizeTransactionName(trsRegex.Match(line).Groups[1].Value);
                     if (!transactionNames.Contains(trsName)) // we willen zowel project- als standaard transacties meenemen (incl #overall en TInit)
                     {
                         //Log.WriteLine("tranaction name identified: " + trsName);

@@ -84,7 +84,7 @@ namespace rpg.parsetransactions
 
             foreach (string line in lines)
             {
-                trsName = line.Split(',')[0];
+                trsName = Utils.NormalizeTransactionName(line.Split(',')[0]);
                 if (trsNames.Contains(trsName))
                 {
                     TransactionValue value = ExtractTrsDetailsCSV(line);

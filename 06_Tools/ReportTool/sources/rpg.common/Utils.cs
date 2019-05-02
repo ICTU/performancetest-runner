@@ -170,5 +170,33 @@ namespace rpg.common
 
         }
 
+        /// <summary>
+        /// Correct transaction name so guarantee a problem-free merging process
+        /// </summary>
+        /// <param name="suggestedName"></param>
+        /// <returns></returns>
+        public static string NormalizeTransactionName(string suggestedName)
+        {
+            string name = suggestedName;
+            // remove '/'
+            //name = name.Replace('/','_'); // should be fine
+            // remove '\'
+            //name = name.Replace('\\','_'); // should be fine
+            // remove ':'
+            name = name.Replace(":", "|");
+            // remove '#'
+            //name = name.Replace('#','_'); // not yet, used in default transaction names
+            // remove '<'
+            name = name.Replace("<", "");
+            // remove '>'
+            name = name.Replace(">", "");
+            // remove "
+            name = name.Replace("\"", "");
+            // remove '
+            name = name.Replace("\'", "");
+
+            return name;
+        }
+
     }
 }
