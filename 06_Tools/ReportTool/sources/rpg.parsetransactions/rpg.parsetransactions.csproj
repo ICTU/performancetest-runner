@@ -4,9 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Version>4.1</Version>
-    <Authors>ICTU</Authors>
+    <Authors>ISR</Authors>
     <Company>ICTU</Company>
-    <Product>Report Generator - Parse transactions</Product>
+    <Product>Report Generator</Product>
+    <Copyright>ICTU 2019</Copyright>
+    <PackageId>Parse Transactions</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

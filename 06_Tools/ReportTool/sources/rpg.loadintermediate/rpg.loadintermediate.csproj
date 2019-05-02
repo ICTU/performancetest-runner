@@ -6,10 +6,11 @@
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
     <FileVersion>4.1.0.0</FileVersion>
     <Company>ICTU</Company>
-    <Product>Report Generator - Load intermediate</Product>
-    <Copyright>ICTU</Copyright>
+    <Product>Report Generator</Product>
+    <Copyright>ICTU 2019</Copyright>
     <Version>4.1</Version>
-    <Authors>ICTU</Authors>
+    <Authors>ISR</Authors>
+    <PackageId>Load Intermediate</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
