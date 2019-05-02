@@ -414,23 +414,33 @@ namespace rpg.merge
             Regex regexRepeat = new Regex(REPEATPATTERN);
             string newTemplateLine = templateLine;
 
-            // repeat for every expandpattern snippet found in this line
-            foreach (Match match in regexRepeat.Matches(templateLine))
+            try
             {
-                string variable = ExtractVariableNames(match.Groups[1].Value)[0];
-                // only expand template pattern for variables found in the intermediate variablelist
-                if (intermediate.ContainsKey(variable))
+                // repeat for every expandpattern snippet found in this line
+                foreach (Match match in regexRepeat.Matches(templateLine))
                 {
-                    string newPart = "";
-                    for (int i = 0 ; i < intermediate.NumOfValues(variable); i++)
+                    string variable = ExtractVariableNames(match.Groups[1].Value)[0];
+                    // only expand template pattern for variables found in the intermediate variablelist
+                    if (intermediate.ContainsKey(variable))
                     {
-                        // duplicate pattern for each occurence of value, replacing # by value indexer
-                        newPart = newPart+(match.Groups[1].Value).Replace("#", i.ToString()); // TODO mwn patroon :# moet vervangen worden, niet # (kan deel van trsnaam zijn)
+                        string newPart = "";
+                        for (int i = 0; i < intermediate.NumOfValues(variable); i++)
+                        {
+                            // duplicate pattern for each occurence of value, replacing # by value indexer
+                            // TODO mwn patroon :# moet vervangen worden, niet # (kan deel van trsnaam zijn)
+                            // workaround: niet # maar :# vervangen
+                            newPart = newPart + (match.Groups[1].Value).Replace(":#", ':' + i.ToString());
+                        }
+                        newTemplateLine = newTemplateLine.Replace(match.Groups[0].Value, newPart);
+                        Log.WriteLine("expanding template for " + variable);
                     }
-                    newTemplateLine = newTemplateLine.Replace( match.Groups[0].Value, newPart);
-                    Log.WriteLine("expanding template for " + variable);
                 }
             }
+            catch (Exception e)
+            {
+                Log.WriteLine("WARNING expanding of variable repeat pattern failed (skipped) ["+templateLine+"]");
+            }
+
             return newTemplateLine;
         }
 
