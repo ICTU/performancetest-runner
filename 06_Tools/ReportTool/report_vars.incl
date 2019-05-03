@@ -47,4 +47,3 @@ rpt_reporttemplatefilename=$rpt_reporttemplatepath\\"$rpt_projectname"_report_te
 rpt_reporttemptargetfile=$rpt_temppath\\work.html
 rpt_reporterrorfile=$rpt_reporttargetpath\\"$rpt_projectname"_report.exitcode
 rpt_runinfopath=$rpt_resultroot
-
