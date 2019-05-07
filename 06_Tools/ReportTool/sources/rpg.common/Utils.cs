@@ -179,11 +179,13 @@ namespace rpg.common
         {
             string name = suggestedName;
             // remove '/'
-            //name = name.Replace('/','_'); // should be fine
+            name = name.Replace('/','|'); // dangerous for sed statement in templategenerator (for now)
             // remove '\'
-            //name = name.Replace('\\','_'); // should be fine
+            name = name.Replace('\\','|'); // dangerous for sed statement in templategenerator (for now)
             // remove ':'
-            name = name.Replace(":", "|");
+            name = name.Replace(":", "-");
+            // remove '.'
+            name = name.Replace(".", ""); // dangerous for sed statement in templategenerator (for now)
             // remove '#'
             //name = name.Replace('#','_'); // not yet, used in default transaction names
             // remove < and >
@@ -193,8 +195,8 @@ namespace rpg.common
             name = name.Replace("\"", "");
             name = name.Replace("\'", "");
             // remove [ and ]
-            name = name.Replace("[", "");
-            name = name.Replace("]", "");
+            name = name.Replace("[", "(");
+            name = name.Replace("]", ")");
 
             return name;
         }

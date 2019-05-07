@@ -6,7 +6,7 @@ Replaces platform dependent (x86) Silk Result Tools (srt)
 2-5-2019	measure parser made insensitive to order of attributes in Jmeter log (IES demand)
 2-5-2019	transaction parser outputs transactionnames file, dynamic transactions made possible by optional copy of this file to template generator (IES demand)
 2-5-2019	remove potentially harmfull characters from transactionnames (replaced where usefull)
-
+7-5-2019	potentially harmfull characters added: \ / . (replaced)
 
 4.0.0.0
 24-4-2019	Extraction of TOTALs from Jmeter CSV convert made independent from number format

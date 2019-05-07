@@ -55,7 +55,7 @@ namespace rpg.parsemeasures
         {
             // Time
             string s = Utils.ExtractValueByPatternFirst(jtlTrsLines, @"ts=(\d+)");
-            Log.WriteLine("DEBUG processing: ["+s+"]");
+            //Log.WriteLine("DEBUG processing: ["+s+"]");
             _measureDetails.Add(STARTTIMEKEY, Utils.ParseJMeterEpoch(s).ToString(DATETIMETIMEFORMAT));
 
             // Interval;
