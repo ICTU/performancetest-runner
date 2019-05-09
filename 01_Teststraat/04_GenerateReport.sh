@@ -5,7 +5,7 @@ echo "-----------------------------------------------------------------------"
 echo "Start with setting and checking incomming variables"
 
 testtag=$1
-Pworkload=$2
+workload=$2
 baseline=$3
 
 # even aanzetten om te testen
@@ -16,7 +16,7 @@ loadGlobals
 . $projectfolder_root/$project/vars.incl || aborttest "Could not include project variables"
 
 test_variable "testtag" $testtag
-test_variable "Pworkload" $Pworkload
+test_variable "workload" $workload
 test_variable "baseline" $baseline
 
 echo "Done with setting and checking incomming variables"
@@ -141,7 +141,7 @@ if [[ "$committorepository" == "true" ]]; then
 	echo "Start with commiting to Repository"
 	
 	cd $repository_log_drive
-	cd $repository_report_dir\\$Pworkload
+	cd $repository_report_dir\\$workload
 	
 	echo "repository log drive: $repository_log_drive"
 	echo "repository log dir: $repository_report_dir"
@@ -161,8 +161,8 @@ if [[ "$committorepository" == "true" ]]; then
 	
 	# Start copying report to repository directory
 	echo "Start with copying report to the repository directory"
-	cp -f -r "$loadtest_report\\${project}_report.html" "$repository_report_dir\\$Pworkload\\index.html"
-	#cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$Pworkload"
+	cp -f -r "$loadtest_report\\${project}_report.html" "$repository_report_dir\\$workload\\index.html"
+	#cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$workload"
 	echo "Done with copying report to the repository Directory"
 	
 	# The true commit to the repository
