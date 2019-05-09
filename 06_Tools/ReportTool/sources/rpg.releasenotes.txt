@@ -2,7 +2,11 @@
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
-4.1.0
+
+4.2.0.0
+
+
+4.1.0.0 (Release IES reporting final 9-5-2019)
 2-5-2019	measure parser made insensitive to order of attributes in Jmeter log (IES demand)
 2-5-2019	transaction parser outputs transactionnames file, dynamic transactions made possible by optional copy of this file to template generator (IES demand)
 2-5-2019	remove potentially harmfull characters from transactionnames (replaced where usefull)

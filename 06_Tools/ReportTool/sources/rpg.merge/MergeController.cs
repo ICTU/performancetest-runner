@@ -427,8 +427,7 @@ namespace rpg.merge
                         for (int i = 0; i < intermediate.NumOfValues(variable); i++)
                         {
                             // duplicate pattern for each occurence of value, replacing # by value indexer
-                            // TODO mwn patroon :# moet vervangen worden, niet # (kan deel van trsnaam zijn)
-                            // workaround: niet # maar :# vervangen
+                            // patroon :# moet vervangen worden, niet # (kan deel van trsnaam zijn)
                             newPart = newPart + (match.Groups[1].Value).Replace(":#", ':' + i.ToString());
                         }
                         newTemplateLine = newTemplateLine.Replace(match.Groups[0].Value, newPart);
@@ -436,7 +435,7 @@ namespace rpg.merge
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 Log.WriteLine("WARNING expanding of variable repeat pattern failed (skipped) ["+templateLine+"]");
             }

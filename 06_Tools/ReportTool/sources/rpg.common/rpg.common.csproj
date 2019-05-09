@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>4.1</Version>
+    <Version>4</Version>
     <Company>ICTU</Company>
-    <Product>Report Generator</Product>
+    <Product>Report Generator - common, shared library</Product>
     <Authors>ISR</Authors>
     <Copyright>ICTU 2019</Copyright>
     <ApplicationIcon />
@@ -12,7 +12,8 @@
     <StartupObject />
     <AssemblyVersion>4.1.0.0</AssemblyVersion>
     <FileVersion>4.1.0.0</FileVersion>
-    <PackageId>Common, shared library</PackageId>
+    <PackageId></PackageId>
+    <Description></Description>
   </PropertyGroup>
 
   <ItemGroup>
