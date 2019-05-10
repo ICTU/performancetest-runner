@@ -42,19 +42,19 @@ echo "-----------------------------------------------------------------------"
 if [[ "$create_run_log" == "true" ]]; then
 	
 	echo "Start with creation of runinfo"
-	echo svntag=$taglabel > "$logdir_root\\runinfo.txt"
+	echo svntag=$taglabel > "$logdir_root/runinfo.txt"
 	echo "Done with creation of runinfo"
 	
 	echo "Add workload to runinfo"
-	echo workload=$prodload >> "$logdir_root\\runinfo.txt"
+	echo workload=$prodload >> "$logdir_root/runinfo.txt"
 	echo "Done with adding workload to runinfo"
 	
 	echo "Add application version to runinfo"
 	echo $applicatieversie
 	if [[ -n $applicatieversie ]]; then
-		echo appversion=$applicatieversie >> "$logdir_root\\runinfo.txt"
+		echo appversion=$applicatieversie >> "$logdir_root/runinfo.txt"
 	else
-		echo appversion="" >> "$logdir_root\\runinfo.txt"
+		echo appversion="" >> "$logdir_root/runinfo.txt"
 	fi
 	echo "Done with adding application version to runinfo"
 
@@ -71,13 +71,13 @@ if [[ "$movelogs" == "true" ]]; then
 	echo "Start copying result logs for backup"
 
 	movelogs_src=$loadtest_logdir
-	movelogs_dst=$logbackupdir\\$testtag\\testresults
+	movelogs_dst=$logbackupdir/$testtag/testresults
 	
 	echo source: $movelogs_src
 	echo destination: $movelogs_dst
 	
 	mkdir -p $movelogs_dst
-	cp -f -r $movelogs_src\\. $movelogs_dst\\
+	cp -f -r $movelogs_src/. $movelogs_dst/
 	
 	echo "Done copying logs for backup"
 else
