@@ -99,9 +99,7 @@ kill_jmeter() {
 			echo "Error Jmeter/Java not stopped"
 			exit 1
 		fi
-	fi
-
-	if [[ $OS == "linux" ]]; then
+	elif [[ $OS == "linux" ]]; then
 		echo "Dit moet nog gemaakt worden!"
 	fi
 	echo "Done with killing Jmeter/Java"
@@ -294,7 +292,6 @@ run_jmeter() {
 		if [[ $threshold -gt $tdiff ]]; then
 			if [[ $OS == "windows" ]]; then
 				process=$(ps -a | grep Java | awk '{print $1}' | head -1)
-			fi
 			elif [[ $OS == "linux" ]]; then
 				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 			fi
@@ -304,7 +301,6 @@ run_jmeter() {
 			
 			if [[ $OS == "windows" ]]; then
 				taskkill /F /IM Java.exe 2>/dev/null
-			fi
 			elif [[ $OS == "linux" ]]; then
 				kill -9 jmeter.sh
 			fi
