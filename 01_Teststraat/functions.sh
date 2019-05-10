@@ -86,24 +86,25 @@ kill_jmeter() {
 	#Kill al process of silk (2>null redirects the error output to null), 
 	#Dit is gedaan omdat je anders een error terug krijgt dat het silk process niet bestond
 	echo "Start with killing Jmeter (Java), could be too destructive"
-	
-	#Controller cleanup
-	taskkill /F /IM Java.exe 2>/dev/null
-	sleep 5 #Kill command duurt even
-	
-	stopJmeter=$(ps -W | grep Java | awk '{print $1}')
-	
-	# echo $stopJmeter
-	if [[ $stopJemeter != "" ]]; then
-		echo "Error Jmeter/Java not stopped"
-		exit 1
+	if [[ $OS == "windows" ]]; then
+
+		#Controller cleanup
+		taskkill /F /IM Java.exe 2>/dev/null
+		sleep 5 #Kill command duurt even
+		
+		stopJmeter=$(ps -W | grep Java | awk '{print $1}')
+		
+		# echo $stopJmeter
+		if [[ $stopJemeter != "" ]]; then
+			echo "Error Jmeter/Java not stopped"
+			exit 1
+		fi
 	fi
-	
+
+	if [[ $OS == "linux" ]]; then
+		echo "Dit moet nog gemaakt worden!"
+	fi
 	echo "Done with killing Jmeter/Java"
-	
-	#echo "Start with removing Jmeter Error logs"
-	#rm -f -r "C:\Users\Public\Documents\Silk Performer 16.0\Logs"
-	#echo "Done with removing Silk Error logs"
 }
 
 # Function to test if variables are not null or empty
@@ -253,16 +254,6 @@ run_jmeter() {
 	
 	if isfile $scriptfolder/${projectname}_$workload.jmx; then echo "Script found for $workload workload, continuing..."; else aborttest "Script not found for $workload workload. Aborting!"; fi  
 	
-	#echo
-	#echo $scriptfolder
-	#echo $projectname
-	#echo $workload
-	#echo $logdir
-	#echo $threshold	
-	#echo "\"$scriptfolder/$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir\""
-	#echo "$scriptfolder/${projectname}_$workload.jmx $logdir"
-	#echo
-	
 	cd ${loadgendir_jmeter}
 	#cd /cygdrive/e/"06_Tools/jmeter/bin"
 	
@@ -274,8 +265,13 @@ run_jmeter() {
 	sleep 10
 	
 	# Get the ProcessID for silkperformer to see if it is still running
-	processStart=$(ps -a | grep Java | awk '{print $1}' | head -1)
-	process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+	if [[ $OS == "windows" ]]; then
+		processStart=$(ps -a | grep Java | awk '{print $1}' | head -1)
+		process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+	elif [[ $OS == "linux" ]]; then
+		processStart=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+		process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+	fi
 	
 	if [[ $process == "" ]]; then
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -296,11 +292,22 @@ run_jmeter() {
 		
 		# Prep for next while loop and make sure Jmeter does not run for too long
 		if [[ $threshold -gt $tdiff ]]; then
-			process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+			if [[ $OS == "windows" ]]; then
+				process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+			fi
+			elif [[ $OS == "linux" ]]; then
+				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+			fi
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
-			taskkill /F /IM Java.exe 2>/dev/null
+			
+			if [[ $OS == "windows" ]]; then
+				taskkill /F /IM Java.exe 2>/dev/null
+			fi
+			elif [[ $OS == "linux" ]]; then
+				kill -9 jmeter.sh
+			fi
 			
 			# Making a copy of the JMeter log for reference
 			cp ${loadgendir_jmeter}/jmeter.log $logdir_root/jmeter_${workload}.log

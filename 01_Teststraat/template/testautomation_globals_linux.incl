@@ -1,5 +1,6 @@
 #!/bin/bash
 #################################
+OS="linux"
 root_sh="E:"																	# root for shell
 root_cygwin="/cygdrive/e"														# root for cygwin
 
