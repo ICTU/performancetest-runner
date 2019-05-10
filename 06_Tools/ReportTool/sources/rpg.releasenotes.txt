@@ -2,6 +2,17 @@
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+
+4.2.0.0
+
+
+4.1.0.0 (Release IES reporting final 9-5-2019)
+2-5-2019	measure parser made insensitive to order of attributes in Jmeter log (IES demand)
+2-5-2019	transaction parser outputs transactionnames file, dynamic transactions made possible by optional copy of this file to template generator (IES demand)
+2-5-2019	remove potentially harmfull characters from transactionnames (replaced where usefull)
+7-5-2019	potentially harmfull characters added: \ / . (replaced)
+9-5-2019	trim transactionnames and remove double spaces from transactionnames
+
 4.0.0.0
 24-4-2019	Extraction of TOTALs from Jmeter CSV convert made independent from number format
 12-3-2019	Tools migrated from .Net Framework 4 to .Net Core 2.1 with Postgress Npgsql drivers

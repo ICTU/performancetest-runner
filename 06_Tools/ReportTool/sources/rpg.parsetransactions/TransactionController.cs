@@ -1,6 +1,7 @@
 ﻿using rpg.common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace rpg.parsetransactions
@@ -14,6 +15,7 @@ namespace rpg.parsetransactions
         public const string AGGREGATEDTRSNAME = "AGGREGATED";
         // transaction name pattern for aggregation
         public const string REPORTTRANSACTIONNAMEPATTERN = @"\d\d_"; // TODO naar app config
+        public const string TRANSACTIONNAMESFILENAME = "Transactions.csv";
 
         public virtual void Parse(ParamInterpreter parameters)
         {
@@ -57,7 +59,7 @@ namespace rpg.parsetransactions
             // scrape and aggregate data from transaction data
             TransactionValueAggregate aggregateValue = new TransactionValueAggregate();
 
-            // foreach transacitonlines
+            // foreach transactionlines
             foreach (string transactionName in _transactionNames)
             {
                 // only include in agggregation if transactionname matches 'report transacton name pattern'
@@ -99,7 +101,7 @@ namespace rpg.parsetransactions
             {
                 if (trsRegex.IsMatch(line)) // let op: moet ook goed gaan als trs alleen fout gegaan is, dus niet alleen trsBusyOk
                 {
-                    string trsName = trsRegex.Match(line).Groups[1].Value;
+                    string trsName = Utils.NormalizeTransactionName(trsRegex.Match(line).Groups[1].Value);
                     if (!transactionNames.Contains(trsName)) // we willen zowel project- als standaard transacties meenemen (incl #overall en TInit)
                     {
                         //Log.WriteLine("tranaction name identified: " + trsName);
@@ -127,7 +129,10 @@ namespace rpg.parsetransactions
             _transactionDetails.WriteToFile(fileName);
 
             // Extra: file with only headers
-            _transactionDetails.WriteToFileDef(fileName, "fieldnames", string.Join(TransactionValue.LISTSEPARATOR.ToString(), TransactionValue.fieldnames));
+            _transactionDetails.WriteToFileFieldDefinitions(fileName, "fieldnames", string.Join(TransactionValue.LISTSEPARATOR.ToString(), TransactionValue.fieldnames));
+
+            // Extra: file with all transactionnames
+            _transactionDetails.WriteToFileTranactionnames(fileName);
         }
 
         /// <summary>

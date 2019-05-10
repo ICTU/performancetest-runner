@@ -40,6 +40,7 @@ namespace rpg.common
                     return result;
                 }
             }
+            Log.WriteLine("WARNING did not find value pattern ["+valuePattern+"]");
             return result;
         }
 
@@ -76,7 +77,6 @@ namespace rpg.common
             long ts_epoch = long.Parse(s);
             DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return dt.AddMilliseconds(ts_epoch).ToLocalTime(); // mwn12032018
-
         }
 
         /// <summary>
@@ -168,6 +168,41 @@ namespace rpg.common
             // if not: return false
             return false;
 
+        }
+
+        /// <summary>
+        /// Correct transaction name so guarantee a problem-free merging process
+        /// </summary>
+        /// <param name="suggestedName"></param>
+        /// <returns></returns>
+        public static string NormalizeTransactionName(string suggestedName)
+        {
+            string name = suggestedName;
+            // remove '/'
+            name = name.Replace('/','|');   // dangerous for sed statement in templategenerator (for now)
+            // remove '\'
+            name = name.Replace('\\','|');  // dangerous for sed statement in templategenerator (for now)
+            // remove ':'
+            name = name.Replace(":", "-");
+            // remove '.'
+            name = name.Replace(".", "");   // dangerous for sed statement in templategenerator (for now)
+            // remove '#'
+            //name = name.Replace('#','_'); // not yet, used in default transaction names
+            // remove < and >
+            name = name.Replace("<", "");
+            name = name.Replace(">", "");
+            // remove " and '
+            name = name.Replace("\"", "");
+            name = name.Replace("\'", "");
+            // remove [ and ]
+            name = name.Replace("[", "(");
+            name = name.Replace("]", ")");
+            // remove end whitespaces
+            name = name.Trim();             // just more beautiful
+            // remove double whitespaces
+            name = name.Replace("  "," ");  // template generator is failing on this
+
+            return name;
         }
 
     }

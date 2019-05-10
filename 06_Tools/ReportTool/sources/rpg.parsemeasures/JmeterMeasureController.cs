@@ -1,6 +1,6 @@
-﻿using System;
+﻿using rpg.common;
+using System;
 using System.Collections.Generic;
-using rpg.common;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -55,8 +55,9 @@ namespace rpg.parsemeasures
         {
             // Time
             string s = Utils.ExtractValueByPatternFirst(jtlTrsLines, @"ts=(\d+)");
+            //Log.WriteLine("DEBUG processing: ["+s+"]");
             _measureDetails.Add(STARTTIMEKEY, Utils.ParseJMeterEpoch(s).ToString(DATETIMETIMEFORMAT));
-            
+
             // Interval;
             _measureDetails.Add(INTERVALKEY, JMAGGREGATEPERIOD.ToString());
         }
@@ -68,7 +69,7 @@ namespace rpg.parsemeasures
         {
             //<sample t="18" it="0" lt="0" ts="1509550962840" s="true" lb="setUp: regex tbv uitwerking beoordeling" rc="200" rm="OK" tn="setUp: 05-06_gir_inspecteren 3-1" dt="text" by="59" ng="1" na="3"/>
             //<httpSample t="97" it="0" lt="96" ts="1509550966125" s="true" lb="gbr_gebruikerbeheer" rc="200" rm="OK" tn="setUp: standaardgebruikers 1-1" dt="text" by="13469" ng="1" na="1">
-            Log.WriteLine("Extract measure data...");
+            Log.WriteLine(string.Format("Extract measure data ({0} lines)...", lines.Length));
 
             MeasureAggregate resptime_agg = new MeasureAggregate(); // resptime (t=time)
             MeasureAggregate errors_agg = new MeasureAggregate(); // errors (s=success)
@@ -84,24 +85,28 @@ namespace rpg.parsemeasures
             // build aggregated timeseries
             foreach (string line in lines)
             {
+                //Log.WriteLine("DEBUG processing line: " + line);
                 if (IsSeriesLine(line))
                 {
+                    //Log.WriteLine("DEBUG is series line, processing: "+line);
                     // extract transactiedata naar aggregatie objecten
                     try // gevoelig stuk
                     {
-                        string[] values = JmeterLine.Parse(line);
+                        Dictionary<string, string> values = JmeterLineClean.Parse(line);
                         valueCnt++;
 
+                        //Log.WriteLine("DEBUG gaat parsen naar long: "+ values["ts"]);
                         // ts = timestamp
-                        timestamp = long.Parse(values[1]);
-
-                        // optellen voor de aggregatieperiode
+                        timestamp = long.Parse(values["ts"]);
+                        
                         // t = response time (int milliseconds)
-                        resptime_agg.Add(int.Parse(values[2]));
+                        resptime_agg.Add(int.Parse(values["t"])); // optellen voor de aggregatieperiode
+
                         // errors
-                        errors_agg.Add(bool.Parse(values[3]) ? 0 : 1); // if success: err=0, else: 1
+                        errors_agg.Add(bool.Parse(values["s"]) ? 0 : 1); // if success: err=0, else: 1
+
                         //concurrent threads
-                        numofthreads_agg.Add(int.Parse(values[4])); 
+                        numofthreads_agg.Add(int.Parse(values["na"]));
                     }
                     catch (Exception e)
                     {
@@ -211,41 +216,42 @@ namespace rpg.parsemeasures
         }
 
         /// <summary>
-        /// Read measures from jtl: ts= lb=|x| t= na= s= 
+        /// Read measures from jtl to clean line format: ts= lb=|x| t= na= s= 
         /// </summary>
         /// <param name="jtlFileName"></param>
         private string[] ReadMeasureDataText(string jtlFileName)
         {
             Log.WriteLine(string.Format("read measure data (as text) from {0}...", jtlFileName));
 
-            string[] inLines = ReadLinesFromFile(jtlFileName, "ample t=");
+            //string[] inLines = ReadLinesFromFile(jtlFileName, "ample t="); // gevaarlijk (volgorde), TODO
+            string[] inLines = ReadLinesFromFile(jtlFileName, JmeterLineRaw.SamplePattern);
             List<string> outLines = new List<string>();
-            Regex regex = new Regex("t=\"(\\d+)\".+ts=\"(\\d+)\".+s=\"(\\w+)\".+lb=\"(.+)\".rc.+na=\"(\\d+)\"");
+
+            // TODO dit is erg gevoelig, IES struikelt hierover. beter checks op aanwezigheid attributes anders doen
+            // zodat ontbreken van tags en volgorde niet belangrijk zijn
+            //Regex regex = new Regex("t=\"(\\d+)\".+ts=\"(\\d+)\".+s=\"(\\w+)\".+lb=\"(.+)\".rc.+na=\"(\\d+)\"");
 
             int cnt = 0;
 
             foreach (string line in inLines)
             {
                 cnt++;
-                //if (cnt<10)
-                //    Log.WriteLine("DEBUG line="+ line);
+                if (cnt<10)
+                    Log.WriteLine("1st 10 input: "+ line);
 
-                Match match = regex.Match(line);
+                Dictionary<string, string> attributes = JmeterLineRaw.GetSampleAttributes(line);
 
-                if (match.Success)
-                {
-                    string outLine = string.Format("ts={0} t={1} na={2} s={3} lb={4}",
-                        match.Groups[2].Value, // ts
-                        match.Groups[1].Value, // t
-                        match.Groups[5].Value, // na
-                        match.Groups[3].Value, // s
-                        match.Groups[4].Value); // lb
+                string outLine = string.Format("ts={0} t={1} na={2} s={3} lb={4}",
+                    attributes["ts"],
+                    attributes["t"],
+                    attributes["na"],
+                    attributes["s"],
+                    attributes["lb"]);
 
-                    outLines.Add(outLine);
+                outLines.Add(outLine);
 
-                    //if (cnt<10)
-                    //    Log.WriteLine("DEBUG out="+ outLine);
-                }
+                if (cnt<10)
+                    Log.WriteLine("1st 10 extraction: " + outLine);
             }
 
             Log.WriteLine( string.Format("{0} lines out of {1} selected for evaluation", outLines.Count, inLines.Length) );

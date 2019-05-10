@@ -239,8 +239,8 @@ namespace rpg.common
         /// </summary>
         public void ToConsole()
         {
-            Log.WriteLine("args: " + this.ArgumentsStr());
-            Log.WriteLine("number of args: " + this.NumOfArguments());
+            //Log.WriteLine("args: " + this.ArgumentsStr()); // prevent database login from being in log
+            Log.WriteLine("number of argsuments: " + this.NumOfArguments());
             Log.WriteLine("function option = " + Function);
             Log.WriteLine("function switch = " + Switch);
             foreach (KeyValuePair<string, string> pair in _argumentList)

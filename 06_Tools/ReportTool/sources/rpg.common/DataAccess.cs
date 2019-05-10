@@ -156,7 +156,7 @@ namespace rpg.common
             {
                 if (ex.InnerException.Message.Contains("unique constraint"))
                 {
-                    Log.WriteLine("database prevented insertion of duplicate data");
+                    Log.WriteLine("duplicate data, not inserted");
                 }
                 else
                 {

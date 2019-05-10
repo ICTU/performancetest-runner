@@ -3,13 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>4.0.0.0</Version>
-    <Authors></Authors>
+    <Version>4</Version>
+    <Authors>ISR</Authors>
     <Company>ICTU</Company>
-    <Product>Report Generator - Console</Product>
+    <Product>Report Generator - Console tool</Product>
     <Copyright>ICTU 2019</Copyright>
     <ApplicationIcon />
     <StartupObject />
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <PackageId></PackageId>
+    <FileVersion>4.1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

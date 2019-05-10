@@ -3,6 +3,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>ISR</Authors>
+    <Company>ICTU</Company>
+    <Product>Report Generator - Parse measures</Product>
+    <Version>4</Version>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <FileVersion>4.1.0.0</FileVersion>
+    <Copyright>ICTU 2019</Copyright>
+    <PackageId></PackageId>
   </PropertyGroup>
 
   <ItemGroup>
