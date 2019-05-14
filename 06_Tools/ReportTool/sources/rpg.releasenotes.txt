@@ -3,7 +3,8 @@
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
 
-4.2.0.0
+4.1.1.0
+14-5-2019	ordering of projects(id), testruns(name) and thresholds(id) fixed
 
 
 4.1.0.0 (Release IES reporting final 9-5-2019)

@@ -174,7 +174,7 @@ namespace rpg.common
         /// </summary>
         private void RefreshRefProject(string projectName)
         {
-            List<project> projects = _database.project.Where(p => p.name.Contains(projectName.ToUpper())).ToList();
+            List<project> projects = _database.project.Where(p => p.name.Contains(projectName.ToUpper())).OrderBy(p => p.id).ToList();
 
             if (projects.Count > 0)
                 _projectId = projects.First().id;
@@ -449,8 +449,7 @@ namespace rpg.common
                 CreateGenericThresholds();
             }
 
-            // TODO deze query moet anders, volgorde van evaluatie moet van buitenaf kunnen worden bepaald
-            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.pattern).ToList();
+            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.id).ToList();
 
             foreach (threshold th in thresholds)
             {
@@ -505,7 +504,7 @@ namespace rpg.common
         /// <returns></returns>
         public List<object> GetThresholdData(string column)
         {
-            var thresholds = _database.threshold.Where(t => t.project_id == _projectId);
+            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.id);
 
             List<object> returnValues = new List<object>();
             foreach (threshold th in thresholds)
@@ -628,7 +627,8 @@ namespace rpg.common
             // andersom (via testrun) doorlopen, dit lijkt het snelst te convergeren
             var testruns = _database.testrun
                 .Where(t => t.project_id == _projectId)
-                .Where(t => t.enabled == 1).ToList();
+                .Where(t => t.enabled == 1)
+                .OrderBy(t => t.name).ToList();
 
             // zoeken in alle testruns bij dit project
             foreach(var _testrun in testruns)

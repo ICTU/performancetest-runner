@@ -10,7 +10,7 @@
     <Copyright>ICTU 2019</Copyright>
     <ApplicationIcon />
     <StartupObject />
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
     <PackageId></PackageId>
     <FileVersion>4.1.0.0</FileVersion>
   </PropertyGroup>

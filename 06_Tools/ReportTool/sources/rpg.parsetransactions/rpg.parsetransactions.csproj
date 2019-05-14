@@ -9,8 +9,8 @@
     <Product>Report Generator - Parse transactions</Product>
     <Copyright>ICTU 2019</Copyright>
     <PackageId></PackageId>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
-    <FileVersion>4.1.0.0</FileVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <FileVersion>4.1.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
