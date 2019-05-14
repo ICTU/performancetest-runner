@@ -42,7 +42,11 @@ freespaceEthreshold=10000 														# in MB
 movelogs="true"																	# Should the logs be moved to the backup folder
 move_report="true"																# Should the report be moved to backup and publish folder
 
-companylogoreference="<url location to logo>"									#reference to compony logo inserted in report
+#################################
+# Reporting
+#################################
+companylogoreference="<url location to logo>"									# reference to compony logo inserted in report
+reportdbconnectstring=<hostname>:<username>:<password>							# reference to rptgen database, to configure different port, use <hostname>:<port>:<username>:<password>								#reference to compony logo inserted in report
 
 #################################
 # Project variables?
