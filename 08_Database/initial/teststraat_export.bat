@@ -1,4 +1,4 @@
-set pgdumppath="E:\Program Files (x86)\PostgreSQL\9.3\bin"
+set pgdumppath="C:\Program Files (x86)\PostgreSQL\9.3\bin"
 
 set dumpfile="teststraat.dump"
 set dbname=teststraat
