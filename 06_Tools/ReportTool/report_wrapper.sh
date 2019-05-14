@@ -20,6 +20,6 @@ rpt_loglocation=$rpt_reporttargetpath
 echo [REPORT WRAPPER] LOG LOCATION [$rpt_loglocation]
 
 echo [REPORT WRAPPER] EXECUTE REPORT GENERATE...
-. report_generate.sh > $rpt_loglocation\\"$rpt_projectname"_report.log 2>&1
+. report_generate.sh > $rpt_loglocation/"$rpt_projectname"_report.log 2>&1
 
 echo [REPORT WRAPPER] DONE
