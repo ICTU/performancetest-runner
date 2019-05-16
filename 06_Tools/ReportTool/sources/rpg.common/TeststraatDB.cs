@@ -89,7 +89,8 @@ namespace rpg.common
         public string pattern { get; set; }
         public float th1 { get; set; }
         public float th2 { get; set; }
-        
+        public int sort { get; set; }
+
         // foreign key to project
         public int project_id { get; set; }
     }

@@ -3,14 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>4</Version>
-    <Product>Report Generator - Merge</Product>
+    <Version>4.2</Version>
+    <Product>Report Generator - merge</Product>
     <Company>ICTU</Company>
     <Authors>ISR</Authors>
     <PackageId></PackageId>
     <Copyright>ICTU 2019</Copyright>
-    <AssemblyVersion>4.1.1.0</AssemblyVersion>
-    <FileVersion>4.1.1.0</FileVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <FileVersion>4.2.0.0</FileVersion>
+    <Description>Merge reportgenerator data from database into HTML template</Description>
   </PropertyGroup>
 
   <ItemGroup>

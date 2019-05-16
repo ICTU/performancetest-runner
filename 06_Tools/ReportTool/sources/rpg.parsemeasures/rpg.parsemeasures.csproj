@@ -5,12 +5,13 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Authors>ISR</Authors>
     <Company>ICTU</Company>
-    <Product>Report Generator - Parse measures</Product>
-    <Version>4</Version>
-    <AssemblyVersion>4.1.1.0</AssemblyVersion>
-    <FileVersion>4.1.1.0</FileVersion>
+    <Product>Report Generator - parse measures</Product>
+    <Version>4.2</Version>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <FileVersion>4.2.0.0</FileVersion>
     <Copyright>ICTU 2019</Copyright>
     <PackageId></PackageId>
+    <Description>Parse raw loadgenerator measure data into intermediate format (file based)</Description>
   </PropertyGroup>
 
   <ItemGroup>

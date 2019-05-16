@@ -438,7 +438,7 @@ namespace rpg.common
 
 
         /// <summary>
-        /// Get Threshold values for current project
+        /// Get Threshold values for current project, order by sort, id
         /// </summary>
         public List<object> GetThresholds()
         {
@@ -449,7 +449,7 @@ namespace rpg.common
                 CreateGenericThresholds();
             }
 
-            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.id).ToList();
+            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.sort).ThenBy(t => t.id).ToList();
 
             foreach (threshold th in thresholds)
             {
@@ -504,7 +504,7 @@ namespace rpg.common
         /// <returns></returns>
         public List<object> GetThresholdData(string column)
         {
-            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.id);
+            var thresholds = _database.threshold.Where(t => t.project_id == _projectId).OrderBy(t => t.sort).ThenBy(t => t.id);
 
             List<object> returnValues = new List<object>();
             foreach (threshold th in thresholds)
