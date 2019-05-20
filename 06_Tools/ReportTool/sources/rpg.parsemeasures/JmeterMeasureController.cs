@@ -237,7 +237,7 @@ namespace rpg.parsemeasures
             {
                 cnt++;
                 if (cnt<10)
-                    Log.WriteLine("1st 10 input: "+ line);
+                    Log.WriteLine("first 10 input: "+ line);
 
                 Dictionary<string, string> attributes = JmeterLineRaw.GetSampleAttributes(line);
 

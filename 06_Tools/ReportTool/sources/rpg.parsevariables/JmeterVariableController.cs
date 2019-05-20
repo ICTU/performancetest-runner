@@ -6,7 +6,7 @@ namespace rpg.parsevariables
 {
     class JmeterVariableController: VariableController
     {
-        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+(\d+[,.]\d+)%"; //@"TOTAL.*""(\d+,\d+)%";
+        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+""(\d+[,.]\d+)%"; //@"TOTAL.*""(\d+,\d+)%";
         private const string TESTENDTIMEPATTERN = @"ts=""(\d+)";
         private const string TESTSTARTTIMEPATTERN = @"ts=""(\d+)";
         private const string MERGEDUSERSPATTERN = @"na=""(\d+)""";
@@ -100,16 +100,6 @@ namespace rpg.parsevariables
             catch { }
 
             return val.Replace(",", ".");
-        }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns></returns>
-        public override string ParseRelStdDev()
-        {
-            Log.WriteLine("parse std deviation... (disabled)");
-            return "";
         }
 
 

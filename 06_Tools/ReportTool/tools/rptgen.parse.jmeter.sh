@@ -13,7 +13,10 @@ aborttest() {
 }
 
 echo Convert Jmeter log to csv...
+
+orgpath=$('pwd')
 cd $rpt_loadgendir
+
 echo convert jtl to transaction csv: all
 . JMeterPluginsCMD.sh --generate-csv $rpt_temppath/_transactions_all.csv --input-jtl $rpt_temppath/_transactions.jtl --plugin-type AggregateReport
 if [ $? -ne 0 ]; then aborttest "csv convert all trs"; fi
@@ -21,6 +24,8 @@ if [ $? -ne 0 ]; then aborttest "csv convert all trs"; fi
 echo convert jtl to transaction csv: success only
 . JMeterPluginsCMD.sh --generate-csv $rpt_temppath/_transactions_success.csv --input-jtl $rpt_temppath/_transactions.jtl --plugin-type AggregateReport --success-filter true
 if [ $? -ne 0 ]; then aborttest "csv convert success trs"; fi
+
+cd $orgpath
 
 echo Parse transactiondata to intermediate...
 dotnet $rpt_toolspath/rpg.parsetransactions.dll parser=jmeter transactionfilecsv_success=$rpt_temppath/_transactions_success.csv transactionfilecsv_all=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.trs.csv

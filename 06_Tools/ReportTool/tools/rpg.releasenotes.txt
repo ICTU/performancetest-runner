@@ -3,8 +3,13 @@
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
 
+4.2.1.0
+20-5-2019	faultpercentage two digit (tens) match fault fixed
+20-5-2019	version numbering assemblies changed: only binaries that change will increase versionnumber, package version number will reflect highest binary version
+20-5-2019	parse relstddev variable removed (non-working left over from earlier experiment)
+
 4.2.0.0
-16.5.2019	ordering of thresholds customizable via sort field in threshold table
+16-5-2019	ordering of thresholds customizable via sort field in threshold table
 
 4.1.1.0
 14-5-2019	ordering of projects(id), testruns(name) and thresholds(id) fixed
