@@ -3,7 +3,7 @@
           data: [$[${||TransactionName||:#:0.000:null},]],
 		  fill: false,
 		  lineTension: 0.1,
-		  pointRadius: 1,
+		  pointRadius: 2,
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 

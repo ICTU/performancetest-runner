@@ -320,7 +320,7 @@ namespace rpg.parsetransactions
 
             TransactionValue value = new TransactionValue( _transactionDetails.items[trsName] );
             // 50, 90 and 99 percentiles are the most used and easily available, the rest can be calculated by interpolation
-            value.p50 = Regex.Match(xml, @"nr=""50""><Height>(.*?)</Height").Groups[1].Value.TrimEnd('0');
+            value.median = Regex.Match(xml, @"nr=""50""><Height>(.*?)</Height").Groups[1].Value.TrimEnd('0');
             value.p90 = Regex.Match(xml, @"nr=""90""><Height>(.*?)</Height").Groups[1].Value.TrimEnd('0');
             value.p95 = Regex.Match(xml, @"nr=""95""><Height>(.*?)</Height").Groups[1].Value.TrimEnd('0');
 

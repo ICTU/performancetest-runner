@@ -98,7 +98,7 @@ namespace rpg.common
         /// Convert Jmeter time to intermediate seconds
         /// </summary>
         /// <returns></returns>
-        public static string NormalizeTime(string jmValueStr)
+        public static string jmeterTimeToSeconds(string jmValueStr)
         {
             //values: 01003_linkhelp,87,58,20,29,91,385,14,2445,0.00,0.1,17.8,262.78
             float f;
@@ -113,9 +113,20 @@ namespace rpg.common
             }
             catch
             {
+                Log.WriteLine(string.Format("WARNING cannot parse value [{0}]", jmValueStr));
                 return jmValueStr;
             }
             return f.ToString("0.000");
+        }
+
+        /// <summary>
+        /// Number format to report measure format (. as decimal)
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static string ToMeasureFormat(string val)
+        {
+            return val.Replace(",", ".");
         }
 
         /// <summary>

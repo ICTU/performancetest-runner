@@ -9,6 +9,8 @@ namespace rpg.parsetransactions
     abstract class TransactionController
     {
         public TransactionDetails _transactionDetails = new TransactionDetails();
+        public Intermediate _variables = new Intermediate();
+
         public string[] _transactionNames;
 
         public const string STANDARDTRSTOTALKEY = "#Overall Response Time#";
@@ -16,6 +18,13 @@ namespace rpg.parsetransactions
         // transaction name pattern for aggregation
         public const string REPORTTRANSACTIONNAMEPATTERN = @"\d\d_"; // TODO naar app config
         public const string TRANSACTIONNAMESFILENAME = "Transactions.csv";
+
+        public const string AVGOF90PERCENTILES = "avgof90percentiles";
+        public const string AVGOFMEDIAN = "avgofmedians";
+        public const string AVGOF95PERCENTILES = "avgof95percentiles";
+        public const string AVGOFAVERAGES = "avgofaverages";
+        public const string TRANSACTIONSTOTAL = "transactionstotal";
+        public const string TRANSACTIONSFAILED = "transactionsfailed";
 
         public virtual void Parse(ParamInterpreter parameters)
         {
@@ -57,7 +66,7 @@ namespace rpg.parsetransactions
             int cnt = 0;
             Log.WriteLine("generate aggregated data...");
             // scrape and aggregate data from transaction data
-            TransactionValueAggregate aggregateValue = new TransactionValueAggregate();
+            TransactionValueAggregate transactionAggregate = new TransactionValueAggregate();
 
             // foreach transactionlines
             foreach (string transactionName in _transactionNames)
@@ -66,12 +75,22 @@ namespace rpg.parsetransactions
                 if (IsSummarizeTransaction(transactionName) && _transactionDetails.items.ContainsKey(transactionName))
                 {
                     TransactionValue trs = new TransactionValue(_transactionDetails.items[transactionName]);
-                    aggregateValue.Evaluate(trs);
+                    transactionAggregate.AddTransaction(trs);
                     cnt++;
                 }
             }
-            aggregateValue.Aggregate();
-            _transactionDetails.Add(AGGREGATEDTRSNAME, aggregateValue.ToString());
+            transactionAggregate.Aggregate();
+
+            // write aggregated transaction line
+            _transactionDetails.Add(AGGREGATEDTRSNAME, transactionAggregate.ToString());
+
+            // isolate most important values as variable for history graph -> measure format (later to variable category?)
+            _variables.Add(AVGOF90PERCENTILES, Utils.ToMeasureFormat(transactionAggregate.p90));
+            _variables.Add(AVGOFMEDIAN, Utils.ToMeasureFormat(transactionAggregate.median));
+            _variables.Add(AVGOF95PERCENTILES, Utils.ToMeasureFormat(transactionAggregate.p95));
+            _variables.Add(AVGOFAVERAGES, Utils.ToMeasureFormat(transactionAggregate.avg));
+            _variables.Add(TRANSACTIONSTOTAL, transactionAggregate.cnt);
+            _variables.Add(TRANSACTIONSFAILED, transactionAggregate.fail);
 
             Log.WriteLine(string.Format("{0} of {1} transactions aggregated", cnt, _transactionNames.Length));
         }
@@ -123,9 +142,9 @@ namespace rpg.parsetransactions
         {
             Log.WriteLine("Writing intermediate file...");
 
+            // write transaction data
             string fileName = parameters.Value("intermediatefile");
-            Log.WriteLine( fileName );
-
+            Log.WriteLine("transaction data: "+fileName );
             _transactionDetails.WriteToFile(fileName);
 
             // Extra: file with only headers
@@ -133,6 +152,11 @@ namespace rpg.parsetransactions
 
             // Extra: file with all transactionnames
             _transactionDetails.WriteToFileTranactionnames(fileName);
+
+            // write transaction variables
+            string varFileName = parameters.Value("intermediatefilevars");
+            Log.WriteLine("transaction variable data: " + varFileName);
+            _variables.WriteToFile(varFileName);
         }
 
         /// <summary>

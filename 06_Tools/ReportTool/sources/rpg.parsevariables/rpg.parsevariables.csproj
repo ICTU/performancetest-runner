@@ -9,8 +9,8 @@
     <Product>Report Generator - parse variables</Product>
     <PackageId></PackageId>
     <Copyright>ICTU 2019</Copyright>
-    <AssemblyVersion>4.2.1.0</AssemblyVersion>
-    <FileVersion>4.2.1.0</FileVersion>
+    <AssemblyVersion>4.3.0.0</AssemblyVersion>
+    <FileVersion>4.3.0.0</FileVersion>
     <Description>Parse raw loadgenerator variable data into intermediate format (file based)</Description>
   </PropertyGroup>
 

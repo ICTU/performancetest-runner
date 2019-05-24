@@ -62,15 +62,6 @@ namespace rpg.parsevariables
 
         public abstract string ParseFaultPercentage();
 
-        // TODO implement
-        //public abstract string ParseAvgOfAverages();
-        //public abstract string ParseAvgOf90Percentiles();
-        //public abstract string ParseThresholdViolations();
-        //public abstract string ParseSuccess();
-        //public abstract string ParseFailed();
-        //public abstract string ParseTrendbreakRampup();
-        //public abstract string ParseTrendbreakStability();
-
         /// <summary>
         /// Current date/time
         /// </summary>

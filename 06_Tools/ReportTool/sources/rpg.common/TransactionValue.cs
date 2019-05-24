@@ -12,6 +12,8 @@ namespace rpg.common
     {
         /// <summary>Separating values in the list</summary>
         public static char LISTSEPARATOR = ';';
+        public string AGGREGATE_FLOATFORMAT = "0.000";
+
         /// <summary>Raw value list </summary>
         public string[] raw = new string[10];
 
@@ -32,8 +34,8 @@ namespace rpg.common
         public int idx_fail = 5;
         /// <summary> index of 'cancel' </summary>
         public int idx_cancel = 6;
-        /// <summary> index of 'p50' </summary>
-        public int idx_p50 = 7;
+        /// <summary> index of 'median' </summary>
+        public int idx_median = 7;
         /// <summary> index of 'p95' </summary>
         public int idx_p95 = 8;
         /// <summary> index of 'stddev' </summary>
@@ -53,8 +55,8 @@ namespace rpg.common
         public string fail { get { return raw[idx_fail]; } set { raw[idx_fail] = value; } }
         /// <summary> cancel = num of canceled </summary>
         public string cancel { get { return raw[idx_cancel]; } set { raw[idx_cancel] = value; } }
-        /// <summary> p50 = 50th percentile </summary>
-        public string p50 { get { return raw[idx_p50]; } set { raw[idx_p50] = value; } }
+        /// <summary> median = 50th/median percentile </summary>
+        public string median { get { return raw[idx_median]; } set { raw[idx_median] = value; } }
         /// <summary> p95 = 95th percentile </summary>
         public string p95 { get { return raw[idx_p95]; } set { raw[idx_p95] = value; } }
         /// <summary> stddev = atandard Deviation </summary>
@@ -89,7 +91,7 @@ namespace rpg.common
             catch { };
             try { cancel = arr[6]; }
             catch { };
-            try { p50 = arr[7]; }
+            try { median = arr[7]; }
             catch { };
             try { p95 = arr[8]; }
             catch { };
@@ -131,7 +133,7 @@ namespace rpg.common
         private double raw_p90 = 0;
         private Int32 raw_fail = 0;
         private Int32 raw_cancel = 0;
-        private double raw_p50 = 0;
+        private double raw_median = 0;
         private double raw_p95 = 0;
         private double raw_stdev = 0;
         
@@ -209,14 +211,14 @@ namespace rpg.common
         /// Evaluate all values for aggregation purposes
         /// </summary>
         /// <param name="value"></param>
-        public void Evaluate(TransactionValue value)
+        public void AddTransaction(TransactionValue value)
         {
             eval_cnt++; // num of evaluated transactions
             raw_cnt = AddStrInt(raw_cnt, value.cnt);
             raw_min = LowestStrDouble(raw_min, value.min);
             raw_avg = AddStrDouble(raw_avg, value.avg);
             raw_max = HighestStrDouble(raw_max, value.max);
-            raw_p50 = AddStrDouble(raw_p50, value.p50);
+            raw_median = AddStrDouble(raw_median, value.median);
             raw_p90 = AddStrDouble(raw_p90, value.p90);
             raw_p95 = AddStrDouble(raw_p95, value.p95);
             raw_fail = AddStrInt(raw_fail, value.fail);
@@ -229,16 +231,16 @@ namespace rpg.common
         /// </summary>
         public void Aggregate()
         {
-            cnt = raw_cnt.ToString();
-            min = raw_min.ToString();
-            avg = (raw_avg / eval_cnt).ToString();
-            max = raw_max.ToString();
-            p50 = (raw_p50 / eval_cnt).ToString();
-            p90 = (raw_p90 / eval_cnt).ToString();
-            p95 = (raw_p95 / eval_cnt).ToString();
+            cnt = raw_cnt.ToString(); // cnt
+            min = raw_min.ToString(); // min of min
+            avg = (raw_avg / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of average
+            max = raw_max.ToString(); // max of max
+            median = (raw_median / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            p90 = (raw_p90 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            p95 = (raw_p95 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
             fail = raw_fail.ToString();
             cancel = raw_cancel.ToString();
-            stdev = (raw_stdev / eval_cnt).ToString();
+            stdev = (raw_stdev / eval_cnt).ToString(AGGREGATE_FLOATFORMAT);
         }
     }
 }

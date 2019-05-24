@@ -2,6 +2,9 @@
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+4.3.0.0
+21-5-2019	variables that were parsed during transaction- and measure parse process now saved as variable (not as transactions/measures)
+21-5-2019	introduction of variable trends in 4 separate graph
 
 4.2.1.0
 20-5-2019	faultpercentage two digit (tens) match fault fixed

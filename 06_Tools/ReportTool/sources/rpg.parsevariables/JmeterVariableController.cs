@@ -87,7 +87,7 @@ namespace rpg.parsevariables
         /// <returns></returns>
         public override string ParseFaultPercentage()
         {
-            Log.WriteLine("calculate faultpercentage...");
+            Log.WriteLine("parse faultpercentage...");
             // 10th position of
             //TOTAL,82726,314,90,634,1122,2277,0,435097,"0,25%","22,8","940,6","3480,81"
             string val = "0";
@@ -99,9 +99,8 @@ namespace rpg.parsevariables
             }
             catch { }
 
-            return val.Replace(",", ".");
+            return Utils.ToMeasureFormat(val); //val.Replace(",", ".");
         }
-
 
     }
 }

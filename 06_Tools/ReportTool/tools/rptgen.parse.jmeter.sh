@@ -28,11 +28,11 @@ if [ $? -ne 0 ]; then aborttest "csv convert success trs"; fi
 cd $orgpath
 
 echo Parse transactiondata to intermediate...
-dotnet $rpt_toolspath/rpg.parsetransactions.dll parser=jmeter transactionfilecsv_success=$rpt_temppath/_transactions_success.csv transactionfilecsv_all=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.trs.csv
+dotnet $rpt_toolspath/rpg.parsetransactions.dll parser=jmeter transactionfilecsv_success=$rpt_temppath/_transactions_success.csv transactionfilecsv_all=$rpt_temppath/_transactions_all.csv intermediatefile=$rpt_temppath/_intermediate.trs.csv intermediatefilevars=$rpt_temppath/_intermediate.var.trs.csv
 if [ $? -ne 0 ]; then aborttest "parse transactions"; fi
 
 echo Parse measures to intermediate...
-dotnet $rpt_toolspath/rpg.parsemeasures.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl intermediatefile=$rpt_temppath/_intermediate.msr.csv
+dotnet $rpt_toolspath/rpg.parsemeasures.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.jtl intermediatefile=$rpt_temppath/_intermediate.msr.csv intermediatefilevars=$rpt_temppath/_intermediate.var.msr.csv
 if [ $? -ne 0 ]; then aborttest "parse measures"; fi
 
 echo Parse variables to intermediate...

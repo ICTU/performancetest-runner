@@ -278,15 +278,21 @@ namespace rpg.parsemeasures
             // let op: dit is foutgevoelig, jmeter parser wordt met formatteren naar std formaat van DateTime bronwaarde, onderstaande is geknutsel
 
             // format start time value
-            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(":", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
-            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(".", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
-            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(" ", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
-            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(",0", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+//            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(":", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+//            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(".", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+//            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(" ", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+//            _measureDetails.items[STARTTIMEKEY] = _measureDetails.items[STARTTIMEKEY].Replace(",0", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+            _variables[STARTTIMEKEY] = _variables[STARTTIMEKEY].Replace(":", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+            _variables[STARTTIMEKEY] = _variables[STARTTIMEKEY].Replace(".", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+            _variables[STARTTIMEKEY] = _variables[STARTTIMEKEY].Replace(" ", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
+            _variables[STARTTIMEKEY] = _variables[STARTTIMEKEY].Replace(",0", MeasureDetails.MEASURETFIELDSEPARATOR.ToString());
 
             // format measure interval value
-            double d = double.Parse(_measureDetails.items[INTERVALKEY]);
-            _measureDetails.items[INTERVALKEY] = Math.Truncate(Math.Round(d*1000)).ToString();
-         }
+            //double d = double.Parse(_measureDetails.items[INTERVALKEY]);
+            //_measureDetails.items[INTERVALKEY] = Math.Truncate(Math.Round(d*1000)).ToString();
+            double d = double.Parse(_variables[INTERVALKEY]);
+            _variables[INTERVALKEY] = Math.Truncate(Math.Round(d * 1000)).ToString();
+        }
 
     }
 }
