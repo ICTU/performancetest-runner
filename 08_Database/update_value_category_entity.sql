@@ -7,5 +7,3 @@ update value set category='var', entity='trs' where key='avgof90percentiles';
 update value set category='var', entity='msr' where key='trendbreakstabilitypercentage';
 update value set category='var', entity='msr' where key='trendbreakrampupusers';
 update value set category='var', entity='msr' where key='trendbreakrampuppercentage';
-update value set category='var', entity='msr' where key='Interval';
-update value set category='var', entity='msr' where key='Time';
