@@ -14,7 +14,7 @@ loadGlobals() {
 		. ./testautomation_globals_location.incl
 	else 
 		echo "Could not find ./testautomation_globals_location creating it now"
-		echo "testautomation_globals_location=\"E:\\00_Globals\\testautomation_globals.incl\"" > testautomation_globals_location.incl
+		echo "testautomation_globals_location=\"E:/00_Globals/testautomation_globals.incl\"" > testautomation_globals_location.incl
 		aborttest
 	fi
 		
@@ -61,18 +61,6 @@ kill_silk() {
 	taskkill /F /IM PerfExp.exe 2> /dev/null
 	sleep 5 #Kill command duurt even
 	
-	#LG1 cleanup
-	# taskkill /S 10.19.55.140 /u WINPERF-2\win2-gebruiker /p Qwerty123! /F /IM PerfRun.exe 2> /dev/null
-	# sleep 10 #Remote kill command duurt even
-	# taskkill /S 10.19.55.140 /u WINPERF-2\win2-gebruiker /p Qwerty123! /F /IM PerfLtcAgent.exe.exe 2> /dev/null
-	# sleep 10 #Remote kill command duurt even
-	
-	#LG2 cleanup
-	# taskkill /S 10.19.55.141 /u WINPERF-3\win3-gebruiker /p Qwerty123! /F /IM PerfRun.exe 2> /dev/null
-	# sleep 10 #Remote kill command duurt even
-	# taskkill /S 10.19.55.141 /u WINPERF-3\win3-gebruiker /p Qwerty123! /F /IM PerfLtcAgent.exe 2> /dev/null	
-	# sleep 10 #Remote kill command duurt even
-	
 	stopSilk=$(ps -W | grep Performer.exe | awk '{print $1}')
 	stopPExp=$(ps -W | grep PerfExp.exe | awk '{print $1}')
 	
@@ -98,24 +86,23 @@ kill_jmeter() {
 	#Kill al process of silk (2>null redirects the error output to null), 
 	#Dit is gedaan omdat je anders een error terug krijgt dat het silk process niet bestond
 	echo "Start with killing Jmeter (Java), could be too destructive"
-	
-	#Controller cleanup
-	taskkill /F /IM Java.exe 2>/dev/null
-	sleep 5 #Kill command duurt even
-	
-	stopJmeter=$(ps -W | grep Java | awk '{print $1}')
-	
-	# echo $stopJmeter
-	if [[ $stopJemeter != "" ]]; then
-		echo "Error Jmeter/Java not stopped"
-		exit 1
+	if [[ $OS == "windows" ]]; then
+
+		#Controller cleanup
+		taskkill /F /IM Java.exe 2>/dev/null
+		sleep 5 #Kill command duurt even
+		
+		stopJmeter=$(ps -W | grep Java | awk '{print $1}')
+		
+		# echo $stopJmeter
+		if [[ $stopJemeter != "" ]]; then
+			echo "Error Jmeter/Java not stopped"
+			exit 1
+		fi
+	elif [[ $OS == "linux" ]]; then
+		echo "Dit moet nog gemaakt worden!"
 	fi
-	
 	echo "Done with killing Jmeter/Java"
-	
-	#echo "Start with removing Jmeter Error logs"
-	#rm -f -r "C:\Users\Public\Documents\Silk Performer 16.0\Logs"
-	#echo "Done with removing Silk Error logs"
 }
 
 # Function to test if variables are not null or empty
@@ -156,10 +143,10 @@ run_silk() {
 		echo "Max test duration is $threshold (${!threshold})"
 	fi
 	
-	#option 1: $(grep -q "<Workload active=\"true\" name=\"Verificatie\"" "$projectpad\\$projectname")
-	#option 2: $(grep -q "Workload name=\"$workload\"" "$projectpad\\$projectname")
+	#option 1: $(grep -q "<Workload active=\"true\" name=\"Verificatie\"" "$projectpad/$projectname")
+	#option 2: $(grep -q "Workload name=\"$workload\"" "$projectpad/$projectname")
 	
-	if $(grep -iq "Workload name=\"$workload\"" "$projectpad\\$projectname") || $(grep -iq "<Workload active=\"true\" name=\"Verificatie\"" "$projectpad\\$projectname"); then
+	if $(grep -iq "Workload name=\"$workload\"" "$projectpad/$projectname") || $(grep -iq "<Workload active=\"true\" name=\"Verificatie\"" "$projectpad/$projectname"); then
 		echo "Workload: $workload found, continuing..."
 	else
 		aborttest "Workload: $workload not found. Aborting!"
@@ -171,17 +158,17 @@ run_silk() {
 	# echo $workload
 	# echo $logdir
 	# echo $threshold	
-	echo "\"$scriptfolder\\$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir\""
+	echo "\"$scriptfolder/$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir\""
 	# echo
 	
 	
 	
 	# Running Silk
 	if [[ "$workload" == "Verificatie" ]]; then
-		cygstart performer "$scriptfolder\\$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir"
-		# cygstart performer "$scriptfolder\\$projectname /Automation 10 /Wl:$workload"
+		cygstart performer "$scriptfolder/$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir"
+		# cygstart performer "$scriptfolder/$projectname /Automation 10 /Wl:$workload"
 	else
-		cygstart performer "$scriptfolder\\$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir /StartMonitor"
+		cygstart performer "$scriptfolder/$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir /StartMonitor"
 	fi
 	
 	
@@ -263,31 +250,26 @@ run_jmeter() {
 	
 	echo "Projectname: $projectname"
 	
-	if isfile $scriptfolder\\${projectname}_$workload.jmx; then echo "Script found for $workload workload, continuing..."; else aborttest "Script not found for $workload workload. Aborting!"; fi  
-	
-	#echo
-	#echo $scriptfolder
-	#echo $projectname
-	#echo $workload
-	#echo $logdir
-	#echo $threshold	
-	#echo "\"$scriptfolder\\$projectname /Automation 10 /Wl:$workload /Resultsdir:$logdir\""
-	#echo "$scriptfolder\\${projectname}_$workload.jmx $logdir"
-	#echo
+	if isfile $scriptfolder/${projectname}_$workload.jmx; then echo "Script found for $workload workload, continuing..."; else aborttest "Script not found for $workload workload. Aborting!"; fi  
 	
 	cd ${loadgendir_jmeter}
 	#cd /cygdrive/e/"06_Tools/jmeter/bin"
 	
 
 	# Run jmeter
-	./jmeter/bin/jmeter.sh -t "$scriptfolder\\${projectname}_$workload.jmx" -Jresultfile=$logdir\\result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
+	./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
 	
 	# Start and wait 10 for process to show
 	sleep 10
 	
 	# Get the ProcessID for silkperformer to see if it is still running
-	processStart=$(ps -a | grep Java | awk '{print $1}' | head -1)
-	process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+	if [[ $OS == "windows" ]]; then
+		processStart=$(ps -a | grep Java | awk '{print $1}' | head -1)
+		process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+	elif [[ $OS == "linux" ]]; then
+		processStart=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+		process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+	fi
 	
 	if [[ $process == "" ]]; then
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -308,18 +290,27 @@ run_jmeter() {
 		
 		# Prep for next while loop and make sure Jmeter does not run for too long
 		if [[ $threshold -gt $tdiff ]]; then
-			process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+			if [[ $OS == "windows" ]]; then
+				process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+			elif [[ $OS == "linux" ]]; then
+				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+			fi
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
-			taskkill /F /IM Java.exe 2>/dev/null
+			
+			if [[ $OS == "windows" ]]; then
+				taskkill /F /IM Java.exe 2>/dev/null
+			elif [[ $OS == "linux" ]]; then
+				kill -9 jmeter.sh
+			fi
 			
 			# Making a copy of the JMeter log for reference
 			cp ${loadgendir_jmeter}/jmeter.log $logdir_root/jmeter_${workload}.log
 			cp ${loadgendir_jmeter}/jmeter.log $logbackupdir/$testtag/jmeter_${workload}.log
 
 			# Making a copy of the testresults for reference
-			cp -f -r $loadtest_logdir\\. $logbackupdir\\$testtag\\testresults\\
+			cp -f -r $loadtest_logdir/. $logbackupdir/$testtag/testresults/
 			
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			exit 1
@@ -349,26 +340,26 @@ run_jmeter() {
 
 # check of silk resultaten gegenereerd zijn
 succescheck_silk () {
-	if isfile $loadtest_logdir\\detailedReport.xml; then echo "Found the results file, continuing..."; else aborttest "Results not found! Test run failed? Aborting run"; fi 
+	if isfile $loadtest_logdir/detailedReport.xml; then echo "Found the results file, continuing..."; else aborttest "Results not found! Test run failed? Aborting run"; fi 
 }
 
 # check of JMeter resultaten gegenereerd zijn
 succescheck_jmeter () {
-	echo "$loadtest_logdir\\result.jtl"
-	if isfile $loadtest_logdir\\result.jtl; then echo "Found the results file, continuing..."; else aborttest "Results not found! Test run failed? Aborting run"; fi 
+	echo "$loadtest_logdir/result.jtl"
+	if isfile $loadtest_logdir/result.jtl; then echo "Found the results file, continuing..."; else aborttest "Results not found! Test run failed? Aborting run"; fi 
 }
 
 # Extract faults Silk
 extractfault_silk () {
 
-	if isfile $verification_logdir\\baselineReport.brp; then echo "Found the file containing error information, checking results now"; else aborttest "File containig errors not found, cannot display errors. Aborting test"; fi 
+	if isfile $verification_logdir/baselineReport.brp; then echo "Found the file containing error information, checking results now"; else aborttest "File containig errors not found, cannot display errors. Aborting test"; fi 
 	
 	# Print output van baselineReport
 	# Filter zodat alleen stuk tussen MessageList overblijft (hier staan de fouten in het rapport)
 	# Filter hier de transactions uit
 	# Pak de text tussen <Transaction> en </Transaction>
 	# Dedupliceer
-	foutetransactions=$(cat $verification_logdir\\baselineReport.brp | sed -n "/<MessageList>/,/<\/MessageList>/p" | grep -e "<Transaction>" | sed -e 's/<Transaction>\(.*\)<\/Transaction>/\1/' | uniq)
+	foutetransactions=$(cat $verification_logdir/baselineReport.brp | sed -n "/<MessageList>/,/<\/MessageList>/p" | grep -e "<Transaction>" | sed -e 's/<Transaction>\(.*\)<\/Transaction>/\1/' | uniq)
 	echo "-------------------------"
 	echo "The following transaction(s) are reporting an error"
 	echo $foutetransactions
@@ -378,7 +369,7 @@ extractfault_silk () {
 # Extract faults JMeter
 extractfault_jmeter () {
 	
-	if isfile $verification_logdir\\result.jtl; then echo "Found the file containing error information, checking results now"; else aborttest "File containig errors not found, cannot display errors. Aborting test"; fi 
+	if isfile $verification_logdir/result.jtl; then echo "Found the file containing error information, checking results now"; else aborttest "File containig errors not found, cannot display errors. Aborting test"; fi 
 	
 	# Print output van results.jtl
 	# Filter op gefaalde transacties
@@ -386,28 +377,28 @@ extractfault_jmeter () {
 	# Dedupliceer
 	echo "-------------------------"
 	echo "The following transaction(s) are reporting an error"
-	cat $verification_logdir\\result.jtl | grep  "s=\"false\"" | sed -e 's/.*lb=\"\(.*\)" rc.*/\1/' | uniq
+	cat $verification_logdir/result.jtl | grep  "s=\"false\"" | sed -e 's/.*lb=\"\(.*\)" rc.*/\1/' | uniq
 	echo "-------------------------"
 }
 
 # check of Silk validatie resultaten gegenereerd zijn
 validation_check_silk () {
 	## Check if validation run ran without failed transactions
-	if isfile $verification_logdir\\detailedReport.xml; then echo "Found the results file, checking results now"; else aborttest "Results not found Verification run failed? Aborting test"; fi 
+	if isfile $verification_logdir/detailedReport.xml; then echo "Found the results file, checking results now"; else aborttest "Results not found Verification run failed? Aborting test"; fi 
 	
 	#----test----
 	movelogs_src=$verification_logdir
-	movelogs_dst=$logbackupdir\\$testtag\\verification_testresults
+	movelogs_dst=$logbackupdir/$testtag/verification_testresults
 	
 	echo source: $movelogs_src
 	echo destination: $movelogs_dst
 	
 	mkdir -p $movelogs_dst
-	cp -f -r $movelogs_src\\. $movelogs_dst\\
+	cp -f -r $movelogs_src/. $movelogs_dst/
 	#------------
 	
 	
-	failedorsucces=$(grep -E -o '<TransactionsFailed>.*</TransactionsFailed>' $verification_logdir\\detailedReport.xml | grep -E -o '[0-9]+' | awk '{ SUM += $1} END { print SUM }')
+	failedorsucces=$(grep -E -o '<TransactionsFailed>.*</TransactionsFailed>' $verification_logdir/detailedReport.xml | grep -E -o '[0-9]+' | awk '{ SUM += $1} END { print SUM }')
 	echo "Errors found: "$failedorsucces
 	
 	## Check if the loadtestResult was generated
@@ -436,21 +427,21 @@ validation_check_silk () {
 # check of JMeter validatie resultaten gegenereerd zijn
 validation_check_jmeter () {
 	## Check if validation run ran without failed transactions
-	#echo "$verification_logdir\\result.jtl"
-	if isfile $verification_logdir\\result.jtl; then echo "Found the results file, checking results now"; else aborttest "Results not found Verification run failed? Aborting test"; fi 
+	#echo "$verification_logdir/result.jtl"
+	if isfile $verification_logdir/result.jtl; then echo "Found the results file, checking results now"; else aborttest "Results not found Verification run failed? Aborting test"; fi 
 	
 	#----test----
 	movelogs_src=$verification_logdir
-	movelogs_dst=$logbackupdir\\$testtag\\verification_testresults
+	movelogs_dst=$logbackupdir/$testtag/verification_testresults
 	
 	echo source: $movelogs_src
 	echo destination: $movelogs_dst
 	
 	mkdir -p $movelogs_dst
-	cp -f -r $movelogs_src\\. $movelogs_dst\\
+	cp -f -r $movelogs_src/. $movelogs_dst/
 	#------------
 	
-	failedorsucces=$(cat $verification_logdir\\result.jtl | grep s=\"false\" | wc -l)
+	failedorsucces=$(cat $verification_logdir/result.jtl | grep s=\"false\" | wc -l)
 	echo "Errors found: "$failedorsucces
 	
 	if [[ "0" != "$failedorsucces" ]]; then
@@ -499,7 +490,7 @@ commit_to_GIT () {
 	echo " -- Commit results to GIT"
 	
 	cd $repository_log_drive
-	cd $repository_report_dir\\$workload
+	cd $repository_report_dir/$workload
 	
 	echo " -- Start adding files to git"
 	git add .

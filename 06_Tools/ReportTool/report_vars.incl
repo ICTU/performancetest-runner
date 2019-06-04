@@ -4,7 +4,7 @@ rpt_maxtrendcount=14
 
 project=$rpt_projectname  # input for globals for building globals path variables
 
-. ..\\..\\00_Globals\\testautomation_globals.incl
+. ../../00_Globals/testautomation_globals.incl
 
 # -----------------------------------------------------------------------------------------
 
@@ -21,8 +21,8 @@ rpt_resultpath=$loadtest_logdir # path to  resultsdir\project\testresults (loadg
 rpt_measureresultpath=$loadtest_measures
 rpt_reporttemplatepath=$reporttemplatedestinationfolder
 rpt_reporttargetpath=$loadtest_report
-rpt_toolspath=$reporttoolfolder\\tools # local structure
-rpt_temppath=$reporttoolfolder\\temp # local structure
+rpt_toolspath=$reporttoolfolder/tools # local structure
+rpt_temppath=$reporttoolfolder/temp # local structure
 rpt_companylogoreference=$companylogoreference
 rpt_reportdbconnectstring=$reportdbconnectstring
 
@@ -42,8 +42,8 @@ fi
 echo loadgendir=$rpt_loadgendir
 
 # report targets
-rpt_reporttargetfilebase=$rpt_reporttargetpath\\$rpt_projectname
-rpt_reporttemplatefilename=$rpt_reporttemplatepath\\"$rpt_projectname"_report_template.html
-rpt_reporttemptargetfile=$rpt_temppath\\work.html
-rpt_reporterrorfile=$rpt_reporttargetpath\\"$rpt_projectname"_report.exitcode
+rpt_reporttargetfilebase=$rpt_reporttargetpath/$rpt_projectname
+rpt_reporttemplatefilename=$rpt_reporttemplatepath/"$rpt_projectname"_report_template.html
+rpt_reporttemptargetfile=$rpt_temppath/work.html
+rpt_reporterrorfile=$rpt_reporttargetpath/"$rpt_projectname"_report.exitcode
 rpt_runinfopath=$rpt_resultroot

@@ -37,7 +37,7 @@ removeIfExists() {
 	#echo "Check if $1 exists"
 	if [ -f $1 ] ; then 
 		echo "Removing $1"
-		rm $1
+		rm -f $1
 	fi
 }
 
@@ -103,7 +103,7 @@ vervangProjectNaamEnVerplaats(){
 }
 
 removeDOSCarriageReturn(){
-	sed -e 's/\r$//' $Transactions > ${Transactions}.tmp && mv ${Transactions}.tmp $Transactions
+	sed -e 's/\r$//' $Transactions > ${Transactions}.tmp && mv -f ${Transactions}.tmp $Transactions
 }
 
 #------------------------------------------------------------
