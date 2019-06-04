@@ -39,7 +39,7 @@ if [[ "$generatereport" == "true" ]]; then
 
 	# Kopieeren report template naar folder
 	mkdir -p $reporttemplatedestinationfolder
-	cp -f -v "${reporttemplategenerator_root}\\templates\\${project}_report_template.html" "${reporttemplatedestinationfolder}"
+	cp -f -v "${reporttemplategenerator_root}/templates/${project}_report_template.html" "${reporttemplatedestinationfolder}"
 	
 	# Genereren report
 	mkdir -p $loadtest_report
@@ -86,8 +86,8 @@ if [[ "$move_report" == "true" ]]; then
 	echo "Start copy report"
 
     movedir_src=$loadtest_report
-	movedir_dst=$logbackupdir\\$testtag\\report
-	movedir_pub=$logbackupdir\\publish\\report
+	movedir_dst=$logbackupdir/$testtag/report
+	movedir_pub=$logbackupdir/publish/report
 	
 	echo source: $movedir_src
 	echo destination: $movedir_dst
@@ -96,12 +96,12 @@ if [[ "$move_report" == "true" ]]; then
 	
 	mkdir -p $movedir_dst
 	if isdirectory $movedir_dst; then echo "Backup report dir created"; else aborttest "Could not create $movedir_dst - abort test"; fi 
-	cp -f -r $movedir_src\\. $movedir_dst\\
+	cp -f -r $movedir_src/. $movedir_dst/
 
 	
 		
 	#echo create index from ${project}_report.html
-	#cp -f -r $movedir_src\\${project}_report.html $movedir_dst\\index.html
+	#cp -f -r $movedir_src/${project}_report.html $movedir_dst/index.html
 
 	echo "Done copy report"
 fi
@@ -124,10 +124,10 @@ if [[ "$generatereporthistory" == "true" ]]; then
 	
 	# copy to pushish for publishing purpose
 	if isdirectory $reportpublishfolder; then echo "Publish report dir created"; else aborttest "Could not create $reportpublishfolder - abort test"; fi 
-	cp -f -r $movedir_src\\. $reportpublishfolder\\	
+	cp -f -r $movedir_src/. $reportpublishfolder/	
 	
 else
-	echo "Commiting to Repository is disabled"
+	echo "Generate Report History is disabled"
 fi
 echo "-----------------------------------------------------------------------"
 echo
@@ -141,7 +141,7 @@ if [[ "$committorepository" == "true" ]]; then
 	echo "Start with commiting to Repository"
 	
 	cd $repository_log_drive
-	cd $repository_report_dir\\$workload
+	cd $repository_report_dir/$workload
 	
 	echo "repository log drive: $repository_log_drive"
 	echo "repository log dir: $repository_report_dir"
@@ -161,8 +161,8 @@ if [[ "$committorepository" == "true" ]]; then
 	
 	# Start copying report to repository directory
 	echo "Start with copying report to the repository directory"
-	cp -f -r "$loadtest_report\\${project}_report.html" "$repository_report_dir\\$workload\\index.html"
-	#cp -f -r "$loadtest_report\\js" "$repository_report_dir\\$workload"
+	cp -f -r "$loadtest_report/${project}_report.html" "$repository_report_dir/$workload/index.html"
+	#cp -f -r "$loadtest_report/js" "$repository_report_dir/$workload"
 	echo "Done with copying report to the repository Directory"
 	
 	# The true commit to the repository

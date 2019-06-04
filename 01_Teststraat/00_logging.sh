@@ -152,7 +152,7 @@ if [[ "$removelogfolders" == "true" ]]; then
  
 	# Cleaning previous logs
 	echo "Start removing result and logging folders"
-	rm -f -r "$logdir_root\\"
+	rm -f -r "$logdir_root/"
 	echo "Done removing result and logging folders"
 
 else
@@ -170,8 +170,8 @@ if [[ "$rebuild_directories" == "true" ]]; then
  
 	echo "Start with rebuilding directories"
 		
-		mkdir -p "$logbackupdir\\$testtag"
-		if isdirectory $logbackupdir\\$testtag; then echo "$logbackupdir\\$testtag created"; else aborttest "Could not create \"$logbackupdir\\$testtag\" abort test"; fi 		
+		mkdir -p "$logbackupdir/$testtag"
+		if isdirectory $logbackupdir/$testtag; then echo "$logbackupdir/$testtag created"; else aborttest "Could not create \"$logbackupdir/$testtag\" abort test"; fi 		
 		
 		mkdir -p "$loadtest_measures"	
 		if isdirectory $loadtest_measures; then echo "$loadtest_measures created"; else aborttest "Could not create \"$loadtest_measures\" abort test"; fi
