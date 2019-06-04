@@ -1,4 +1,4 @@
-﻿using rpg.common;
+using rpg.common;
 using System;
 using System.Collections.Generic;
 using System.IO;
