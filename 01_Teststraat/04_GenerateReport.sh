@@ -127,7 +127,7 @@ if [[ "$generatereporthistory" == "true" ]]; then
 	cp -f -r $movedir_src/. $reportpublishfolder/	
 	
 else
-	echo "Commiting to Repository is disabled"
+	echo "Generate Report History is disabled"
 fi
 echo "-----------------------------------------------------------------------"
 echo
