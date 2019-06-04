@@ -18,7 +18,6 @@ namespace rpg.parsevariables
         public const string LGTYPEKEY = "loadgeneratortype";
         public const string TESTDURATIONKEY = "testduration";
         public const string FAULTPERCENTAGEKEY = "faultpercentage";
-        public const string RELSTDDEVKEY = "relstddev";
 
         public const string DATETIMEPTFORMAT = "yyyy.MM.dd.HH.mm.ss"; // printableTime output format with leading 0 and . separator
         public const string DURATIONTIMEFORMAT = @"hh\:mm\:ss"; // time format (testrun duration)
@@ -48,9 +47,6 @@ namespace rpg.parsevariables
             _variables.Add(FAULTPERCENTAGEKEY, ParseFaultPercentage());
             Log.WriteLine(FAULTPERCENTAGEKEY + "=" + _variables[FAULTPERCENTAGEKEY]);
 
-            _variables.Add(RELSTDDEVKEY, ParseRelStdDev());
-            Log.WriteLine(RELSTDDEVKEY + "=" + _variables[RELSTDDEVKEY]);
-
             WriteIntermediate( p.Value("intermediatefile") );
         }
 
@@ -65,8 +61,6 @@ namespace rpg.parsevariables
         public abstract string ParseTestDuration(string reference);
 
         public abstract string ParseFaultPercentage();
-
-        public abstract string ParseRelStdDev();
 
         /// <summary>
         /// Current date/time

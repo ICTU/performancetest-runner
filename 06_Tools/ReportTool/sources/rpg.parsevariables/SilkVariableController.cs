@@ -121,15 +121,5 @@ namespace rpg.parsevariables
             return faultPercentage.ToString("0.00").Replace(",",".");
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns></returns>
-        public override string ParseRelStdDev()
-        {
-            Log.WriteLine("parse relative std deviation... (disabled)");
-            return "";
-        }
-
     }
 }

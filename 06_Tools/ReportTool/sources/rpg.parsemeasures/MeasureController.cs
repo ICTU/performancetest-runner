@@ -9,6 +9,7 @@ namespace rpg.parsemeasures
     {
         public MeasureDetails _measureDetails = new MeasureDetails();
         public string[] _measureNames; // measure name tags
+        public Intermediate _variables = new Intermediate();
 
         public const string STARTTIMEKEY = "Time";
         public const string DATETIMETIMEFORMAT = "yyyy,M,d,H,m,s"; // Time output format (highcharts)
@@ -22,7 +23,6 @@ namespace rpg.parsemeasures
         public const string OVERALLTIMESERIESKEY = "measuretimeseries";
 
         public const string TRENDBREAKSTABILITYPRCKEY = "trendbreakstabilitypercentage";
-
         public const string TRENDBREAKRAMPUPPRCKEY = "trendbreakrampuppercentage";
         public const string TRENDBREAKRAMPUPUSRKEY = "trendbreakrampupusers";
 
@@ -54,7 +54,7 @@ namespace rpg.parsemeasures
             Postprocess();
 
             // Write intermediate file
-            WriteIntermediate(p.Value("intermediatefile"));
+            WriteIntermediate(p);
         }
 
         // Implemented by derived classes (standard returns false to force override)
@@ -68,12 +68,17 @@ namespace rpg.parsemeasures
         /// Definitions and measures -> 1 file
         /// </summary>
         /// <param name="filename"></param>
-        public void WriteIntermediate(string filename)
+        public void WriteIntermediate(ParamInterpreter p)
         {
             Log.WriteLine("write intermediate data...");
-            Log.WriteLine(filename);
 
-            _measureDetails.items.WriteToFile(filename);
+            string fileName = p.Value("intermediatefile");
+            Log.WriteLine("measure data to "+fileName);
+            _measureDetails.items.WriteToFile(fileName);
+
+            fileName = p.Value("intermediatefilevars");
+            Log.WriteLine("measure data vars to " + fileName);
+            _variables.WriteToFile(fileName);
         }
 
         /// <summary>
@@ -155,8 +160,8 @@ namespace rpg.parsemeasures
                 // search for trend break if stable ramp-up is expected (stress testing)
                 trendAnalyzer.DetectTrendBreak_Rampup(throughput_values);
 
-                _measureDetails.Add(TRENDBREAKRAMPUPPRCKEY, trendAnalyzer.GetBreakPercentage_Reference().ToString("0"));
-                _measureDetails.Add(TRENDBREAKRAMPUPUSRKEY, trendAnalyzer.GetBreakReferenceValue().ToString());
+                _variables.Add(TRENDBREAKRAMPUPPRCKEY, trendAnalyzer.GetBreakPercentage_Reference().ToString("0"));
+                _variables.Add(TRENDBREAKRAMPUPUSRKEY, trendAnalyzer.GetBreakReferenceValue().ToString());
 
                 Log.WriteLine(string.Format("trend break RAMP UP: break on percentage={0:0}% users={1}", trendAnalyzer.GetBreakPercentage_Reference(), trendAnalyzer.GetBreakReferenceValue()));
             }
@@ -195,7 +200,7 @@ namespace rpg.parsemeasures
                 int breakResult = (breakThroughput < breakErrors) ? breakThroughput : breakErrors;
                 trendAnalyzer.BreakIndex = breakResult;
 
-                _measureDetails.Add(TRENDBREAKSTABILITYPRCKEY, trendAnalyzer.GetBreakPercentage_Progress().ToString("0"));
+                _variables.Add(TRENDBREAKSTABILITYPRCKEY, trendAnalyzer.GetBreakPercentage_Progress().ToString("0"));
 
                 Log.WriteLine(string.Format("trend break STABILITY: break on percentage={0:0}%", trendAnalyzer.GetBreakPercentage_Progress()));
             }

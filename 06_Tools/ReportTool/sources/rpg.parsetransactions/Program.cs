@@ -7,10 +7,7 @@ namespace rpg.parsetransactions
     {
         static void Main(string[] args)
         {
-            Log.WriteLine("### rpg.parsetransactions <in:parser [jmeter|silkperformer]> <parameters>");
-            Log.WriteLine("parameters silkperformer: <in:transactionfilebrp> <in:transactionfilecsv> <out:intermediatefile>");
-            Log.WriteLine("parameters jmeter: <in:transactionfilecsv> <out:intermediatefile>");
-            
+            Log.WriteLine("### rpg.parsetransactions <in:parser [jmeter|silkperformer]> <parameters (ask)>");
             ParamInterpreter parameters = new ParamInterpreter();
 
             parameters.Initialize(args);

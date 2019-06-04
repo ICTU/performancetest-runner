@@ -137,6 +137,7 @@ namespace rpg.common
 
         /// <summary>
         /// Find LAST threshold that matches the key
+        ///   so general patterns should be first in list, specific patterns at the end
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -153,6 +154,7 @@ namespace rpg.common
                 Regex re = new Regex(threshold.eval);
                 if (re.IsMatch(key))
                 {
+                    // find last matching threshold
                     result = threshold;
                 }
             }

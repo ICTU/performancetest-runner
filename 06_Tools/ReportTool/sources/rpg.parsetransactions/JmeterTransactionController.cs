@@ -111,16 +111,17 @@ namespace rpg.parsetransactions
 
             value.cnt = parts[1];
             string cntExecuted = parts[1];
-            value.avg = Utils.NormalizeTime(parts[2]);
-            value.p90 = Utils.NormalizeTime(parts[4]);
-            value.p95 = Utils.NormalizeTime(parts[5]);
+            value.avg = Utils.jmeterTimeToSeconds(parts[2]);
+            value.median = Utils.jmeterTimeToSeconds(parts[3]);
+            value.p90 = Utils.jmeterTimeToSeconds(parts[4]);
+            value.p95 = Utils.jmeterTimeToSeconds(parts[5]);
             //6=99p not present in csv but not really useable as an application perf metric
-            value.min = Utils.NormalizeTime(parts[7]);
-            value.max = Utils.NormalizeTime(parts[8]);
+            value.min = Utils.jmeterTimeToSeconds(parts[7]);
+            value.max = Utils.jmeterTimeToSeconds(parts[8]);
 
             // convert fail from % to count
             value.fail = NormalizeFail(Utils.NormalizeFloat(parts[9].TrimEnd('%')), cntExecuted);
-            value.stdev = Utils.NormalizeTime(parts[12]);
+            value.stdev = Utils.jmeterTimeToSeconds(parts[12]);
 
             return value;
         }

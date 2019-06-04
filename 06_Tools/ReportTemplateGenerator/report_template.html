@@ -239,6 +239,15 @@
 	<td style="min-width: 600px; min-height: 400px"><canvas id="chart_counters"></canvas></td>
 	<td style="min-width: 600px; min-height: 400px"><canvas id="chart_trend"></canvas></td>
 </tr></table>
+
+<hr align="left" width="100%" size="1"/>
+
+<table width="100%"><tr>
+	<td width="25%"><canvas id="chart_trend_stats_1"></canvas></td>
+	<td width="25%"><canvas id="chart_trend_stats_2"></canvas></td>
+	<td width="25%"><canvas id="chart_trend_stats_3"></canvas></td>
+	<td width="25%"><canvas id="chart_trend_stats_4"></canvas></td>
+</tr></table>
 	
 <hr align="left" width="100%" size="1"/>
 
@@ -422,6 +431,277 @@ new Chart(document.getElementById("chart_trend"), {
 				scaleLabel: {
 					display: true,
 					labelString: 'response time (s)'
+					}
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: { display: false	}
+            }]
+        }
+    }
+});
+
+new Chart(document.getElementById("chart_trend_stats_1"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        {			
+          label: "Faults (%)",
+          data: [$[${faultpercentage:#::null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y2'
+},{			
+          label: "Users",
+          data: [$[${mergedusers:#::null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+}]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'General statistics (trend)'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'number'
+					}
+},{
+				id: 'Y2',
+				type: 'linear',
+				position: 'right',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'percentage'
+					}
+					
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: { display: false	}
+            }]
+        }
+    }
+});
+
+new Chart(document.getElementById("chart_trend_stats_2"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        {			
+          label: "Avg of 90 percentiles (s)",
+          data: [$[${avgof90percentiles:#::null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+},{
+          label: "Avg of averages (s)",
+          data: [$[${avgofaverages:#::null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+}]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'Response time grand averages (trend)'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: 'seconds'
+					}
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: { display: false	}
+            }]
+        }
+    }
+});
+
+new Chart(document.getElementById("chart_trend_stats_3"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        {			
+          label: "Transactions success",
+          data: [$[${transactionstotal:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+},{
+          label: "Transactions failed",
+          data: [$[${transactionsfailed:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+}]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'Number of transactions (trend)'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: false,
+					labelString: 'number'
+					}
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: { display: false	}
+            }]
+        }
+    }
+});
+
+
+new Chart(document.getElementById("chart_trend_stats_4"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        {			
+          label: "Trendbreak ramp-up (%)",
+          data: [$[${trendbreakrampuppercentage:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+},{
+          label: "Trendbreak stability (%)",
+          data: [$[${trendbreakstabilitypercentage:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+}]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'Trendbreak (trend)'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: false,
+					labelString: 'percentage'
 					}
 			}],
 			xAxes: [{

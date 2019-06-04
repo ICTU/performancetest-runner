@@ -2,9 +2,20 @@
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+4.3.0.0
+21-5-2019	variables that were parsed during transaction- and measure parse process now saved as variable (not as transactions/measures)
+21-5-2019	introduction of variable trends in 4 separate graph
+
+4.2.1.0
+20-5-2019	faultpercentage two digit (tens) match fault fixed
+20-5-2019	version numbering assemblies changed: only binaries that change will increase versionnumber, package version number will reflect highest binary version
+20-5-2019	parse relstddev variable removed (non-working left over from earlier experiment)
 
 4.2.0.0
+16-5-2019	ordering of thresholds customizable via sort field in threshold table
 
+4.1.1.0
+14-5-2019	ordering of projects(id), testruns(name) and thresholds(id) fixed
 
 4.1.0.0 (Release IES reporting final 9-5-2019)
 2-5-2019	measure parser made insensitive to order of attributes in Jmeter log (IES demand)
@@ -17,6 +28,10 @@ Replaces platform dependent (x86) Silk Result Tools (srt)
 24-4-2019	Extraction of TOTALs from Jmeter CSV convert made independent from number format
 12-3-2019	Tools migrated from .Net Framework 4 to .Net Core 2.1 with Postgress Npgsql drivers
 12-3-2019	<tool>.exe.Config eliminated, database connect data moved to parameter "database" (.config data moved ot global.incl)
+
+Install firstn: .Net Core SDK 2.2(.106)
+
+Included in solution (installed or referenced to core framework):
 Based on (SDK):
   Microsoft.NETCore.App (2.1.0)
 Included in solution package (NuGet):
