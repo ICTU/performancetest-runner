@@ -1,4 +1,4 @@
-﻿using rpg.common;
+using rpg.common;
 
 namespace rpg.loadintermediate
 {

@@ -1,4 +1,4 @@
-﻿RPG (RePortGenerator tools) release notes
+RPG (RePortGenerator tools) release notes
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
