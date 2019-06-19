@@ -2,6 +2,9 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+4.4.0.0
+19-6-2019	exit the report generator if an exception is raised (loadintermediate & shell script exception handling fixed), this will change behaviour of tests wrap-ups!
+
 4.3.0.0
 21-5-2019	variables that were parsed during transaction- and measure parse process now saved as variable (not as transactions/measures)
 21-5-2019	introduction of variable trends in 4 separate graph

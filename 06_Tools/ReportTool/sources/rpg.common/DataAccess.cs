@@ -156,7 +156,8 @@ namespace rpg.common
             {
                 if (ex.InnerException.Message.Contains("unique constraint"))
                 {
-                    Log.WriteLine("duplicate data, not inserted");
+                    Log.WriteLine("EXCEPTION duplicate data, not inserted");
+                    throw ex;
                 }
                 else
                 {
