@@ -193,8 +193,9 @@ namespace rpg.common
             name = name.Replace('/','|');   // dangerous for sed statement in templategenerator (for now)
             // remove '\'
             name = name.Replace('\\','|');  // dangerous for sed statement in templategenerator (for now)
-            // remove ':'
+            // remove ':' and '='
             name = name.Replace(":", "-");
+            name = name.Replace("=", "-");
             // remove '.'
             name = name.Replace(".", "");   // dangerous for sed statement in templategenerator (for now)
             // remove '#'
