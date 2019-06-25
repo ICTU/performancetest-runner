@@ -79,6 +79,15 @@ namespace rpg.parsetransactions
                     cnt++;
                 }
             }
+
+            // give up if no summarizable transactions found (try to prevent weird crashes lateron)
+            if (0 == cnt)
+            {
+                string msg = "no transaction names found that meet naming convention (" + REPORTTRANSACTIONNAMEPATTERN + ")";
+                Log.WriteLine("EXCEPTION: " + msg);
+                throw new Exception(msg);
+            }
+
             transactionAggregate.Aggregate();
 
             // write aggregated transaction line
