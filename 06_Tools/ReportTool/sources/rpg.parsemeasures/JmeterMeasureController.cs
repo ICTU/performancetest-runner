@@ -143,6 +143,15 @@ namespace rpg.parsemeasures
                 }
             }
 
+            // if no matching transaction found: exit with readable message
+            // TODO move this check to level up (to have all types of logs comply)
+            if (valueCnt == 0)
+            {
+                string msg = "no transaction names found that meet naming convention (" + REPORTTRANSACTIONNAMEPATTERN + ")";
+                Log.WriteLine("SEVERE: " + msg);
+                throw new Exception(msg);
+            }
+
             // only collect rest aggregation data if samples are added
             if (resptime_agg.Count() > 0)
             {

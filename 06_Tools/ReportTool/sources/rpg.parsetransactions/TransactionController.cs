@@ -41,6 +41,9 @@ namespace rpg.parsetransactions
             // perform loadgen specific parse (in derived classes)
             DoParse(parameters);
 
+            // check if parsed data is usable for further processing
+            CheckDataViable(parameters);
+
             // generate aggregated data (faultperc)
             GenerateAggregates(parameters);
 
@@ -84,7 +87,7 @@ namespace rpg.parsetransactions
             if (0 == cnt)
             {
                 string msg = "no transaction names found that meet naming convention (" + REPORTTRANSACTIONNAMEPATTERN + ")";
-                Log.WriteLine("EXCEPTION: " + msg);
+                Log.WriteLine("SEVERE: " + msg);
                 throw new Exception(msg);
             }
 
@@ -102,6 +105,16 @@ namespace rpg.parsetransactions
             _variables.Add(TRANSACTIONSFAILED, transactionAggregate.fail);
 
             Log.WriteLine(string.Format("{0} of {1} transactions aggregated", cnt, _transactionNames.Length));
+        }
+
+        /// <summary>
+        /// Check if pased data is enough to work with, generic check
+        /// checks are now implemented in technology parts (aggregate part), but has to move to generic level here (TODO)
+        /// </summary>
+        /// <param name=""></param>
+        public void CheckDataViable(ParamInterpreter parameters)
+        {
+            //
         }
 
         /// <summary>
