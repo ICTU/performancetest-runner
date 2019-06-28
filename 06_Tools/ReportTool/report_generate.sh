@@ -19,8 +19,9 @@ rpt_exitcode=0
 
 #error handling
 aborttest_generate() {
+	rpt_exitcode=$1
 	echo "store errorcode and abort script"
-	echo $rpt_exitcodeprefix=$1 > $rpt_reporterrorfile
+	echo "$rpt_exitcodeprefix=$rpt_exitcode ($2)" > $rpt_reporterrorfile
 	#exit 1 replaced with return (teststraat will check reporterrorfile)
 }
 
@@ -42,7 +43,7 @@ if [[ $rpt_partial == *"2"* ]]; then
 
 		if [[ ! -e $rpt_resultpath/baselineReport.brp ]]; then
 			echo "exit reporting, testresult (.brp) not found at $rpt_resultpath"
-			aborttest_generate "2 (missing file) .brp"
+			aborttest_generate "2" "missing file [.brp]"
 			return
 		else
 			echo "collect silk testresult (tsd + brp) from $rpt_resultpath..."
@@ -62,7 +63,7 @@ if [[ $rpt_partial == *"2"* ]]; then
 
 		if [[ ! -e $rpt_resultpath/result.jtl ]]; then
 			echo "exit reporting, testresult (.jtl) not found at $rpt_resultpath"
-			aborttest_generate "2 (missing file) jtl"
+			aborttest_generate "2" "missing file [jtl]"
 			return
 		else
 			echo "collect jmeter result (jtl) from $rpt_resultpath..."
@@ -73,7 +74,7 @@ if [[ $rpt_partial == *"2"* ]]; then
 	# Copy testdata: runinfo files...
 	if [[ ! -e $rpt_runinfopath/runinfo.txt ]]; then
 		echo "exit reporting, runinfo file not found at $rpt_runinfopath"
-		aborttest_generate "2 (missing file) runinfo"
+		aborttest_generate "2" "missing file [runinfo]"
 		return
 	else
 		echo "collect runinfo from $rpt_runinfopath..."
@@ -85,28 +86,28 @@ if [[ $rpt_partial == *"3"* ]]; then
   echo
   echo "* Phase 3: Convert and parse for $rpt_loadgen"
   . $rpt_toolspath/rptgen.parse."$rpt_loadgen".sh
-  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "3 (parse error)"; return; fi
+  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "3" "parse error"; return; fi
 fi
 
 if [[ $rpt_partial == *"4"* ]]; then
   echo
   echo "* Phase 4: Import parsed data"
   . $rpt_toolspath/rptgen.import.sh
-  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "4 (import error)"; return; fi
+  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "4" "import error"; return; fi
 fi
 
 if [[ $rpt_partial == *"5"* ]]; then
   echo
   echo "* Phase 5: Merge"
   . $rpt_toolspath/rptgen.merge.sh
-  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "5 (merge error)"; return; fi
+  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "5" "merge error"; return; fi
 fi
 
 if [[ $rpt_partial == *"6"* ]]; then
   echo
   echo "* Phase 6: Copy result report"
   . $rpt_toolspath/rptgen.copytotarget.sh
-  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "6 (copy to target error)"; return; fi
+  if [ $rpt_exitcode -ne 0 ]; then aborttest_generate "6" "copy to target error"; return; fi
 fi
 
 #wrap up, success
