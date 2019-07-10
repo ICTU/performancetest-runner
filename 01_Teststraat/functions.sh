@@ -264,11 +264,11 @@ run_jmeter() {
 	
 	# Get the ProcessID for silkperformer to see if it is still running
 	if [[ $OS == "windows" ]]; then
-		processStart=$(ps -a | grep Java | awk '{print $1}' | head -1)
-		process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+		processStart=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
+		process=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
 	elif [[ $OS == "linux" ]]; then
-		processStart=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
-		process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+		processStart=$(ps -a | grep -i jmeter.sh | awk '{print $1}' | head -1)
+		process=$(ps -a | grep -i jmeter.sh | awk '{print $1}' | head -1)
 	fi
 	
 	if [[ $process == "" ]]; then
@@ -291,9 +291,9 @@ run_jmeter() {
 		# Prep for next while loop and make sure Jmeter does not run for too long
 		if [[ $threshold -gt $tdiff ]]; then
 			if [[ $OS == "windows" ]]; then
-				process=$(ps -a | grep Java | awk '{print $1}' | head -1)
+				process=$(ps -a | -i grep Java | awk '{print $1}' | head -1)
 			elif [[ $OS == "linux" ]]; then
-				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
+				process=$(ps -a | grep -i jmeter.sh | awk '{print $1}' | head -1)
 			fi
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
