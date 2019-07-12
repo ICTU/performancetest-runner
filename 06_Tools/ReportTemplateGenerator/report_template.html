@@ -65,6 +65,26 @@
 			text-align: left;
 			vertical-align: left;
 		}
+		
+		
+		/* Rotation */		
+		th.rotate {
+			height: 170px;
+			white-space: nowrap;
+		}
+
+		th.rotate > div {
+			transform: 
+				translate(0px, 55px)
+				rotate(270deg);
+			width: 40px;
+		}
+		
+		th.rotate > div > span {
+			border-bottom: 1px solid #ccc;
+			padding: 1px 1px;
+		}
+		
 
 		table.details tr th.blank {
 			font-weight: bold;
@@ -128,23 +148,7 @@
 			color: red;
 		}
 		
-/* Rotation */		
-		th.rotate {
-			height: 170px;
-			white-space: nowrap;
-		}
 
-		th.rotate > div {
-			transform: 
-				translate(0px, 55px)
-				rotate(270deg);
-			width: 40px;
-		}
-		
-		th.rotate > div > span {
-			border-bottom: 1px solid #ccc;
-			padding: 1px 1px;
-		}
 
 	</style>
 	
@@ -297,7 +301,7 @@
 	<th>Transaction</th>$[<th class="rotate"><div><span>${testrundatetime:#}<br>${appversion:#}</span></div></th>]
 	</tr>
 	||BLOK3||
-	<th/>$[<th>${dummy:#}</th>>]
+	<th/>$[<th>${dummy:#}</th>]
 	</tr>
 </table>
 
