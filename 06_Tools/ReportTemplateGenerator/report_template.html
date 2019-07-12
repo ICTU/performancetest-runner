@@ -126,6 +126,25 @@
 			font-weight: bold;
 			color: red;
 		}
+		
+/* Rotation */		
+		th.rotate {
+			height: 170px;
+			white-space: nowrap;
+		}
+
+		th.rotate > div {
+			transform: 
+				translate(0px, 55px)
+				rotate(270deg);
+			width: 40px;
+		}
+		
+		th.rotate > div > span {
+			border-bottom: 1px solid #ccc;
+			padding: 1px 1px;
+		}
+
 	</style>
 	
 </head>
@@ -274,10 +293,10 @@
 <h2>Trend (ms)</h2>
 <table cellspacing="2" cellpadding="5" border="0" class="details">
 	<tr valign="top">
-	<th>Transaction</th>$[<th>${testrundatetime:#}<br>${appversion:#}</th>]
+	<th>Transaction</th>$[<th class="rotate"><div><span>${testrundatetime:#}<br>${appversion:#}</span></div></th>]
 	</tr>
 	||BLOK3||
-	<th>Transaction</th>$[<th>${testrundatetime:#}</th>]
+	<th/>$[<th/>]
 	</tr>
 </table>
 
