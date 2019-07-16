@@ -1,1 +1,1 @@
-<th>Transaction</th>$[<th id="${testrundatetime:#}"></th>]
+<th>Transaction</th>$[<th>${Test_01_transaction:#:0.000}</th>]
