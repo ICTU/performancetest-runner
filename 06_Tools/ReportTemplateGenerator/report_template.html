@@ -469,14 +469,6 @@ new Chart(document.getElementById("chart_trend_stats_1"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Faults (%)",
-          data: [$[${faultpercentage:#::null},]],
-		  fill: false,
-		  lineTension: 0.1,
-		  pointRadius: 2,
-		  borderWidth: 2,
-		  yAxisID: 'Y2'
-},{			
           label: "Users",
           data: [$[${mergedusers:#::null},]],
 		  fill: false,
@@ -484,6 +476,14 @@ new Chart(document.getElementById("chart_trend_stats_1"), {
 		  pointRadius: 2,
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
+},{			
+          label: "Faults (%)",
+          data: [$[${faultpercentage:#::null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y2'
 }]
     },
     options: {
