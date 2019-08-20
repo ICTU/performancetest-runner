@@ -209,6 +209,9 @@ namespace rpg.common
             // remove [ and ]
             name = name.Replace("[", "(");
             name = name.Replace("]", ")");
+            // remove { and }
+            name = name.Replace('{', '|'); // sed in template generator is sensitive to curly brackets (replaces initial fix in post
+            name = name.Replace('}', '|');
             // remove end whitespaces
             name = name.Trim();             // just more beautiful
             // remove double whitespaces
