@@ -9,8 +9,9 @@ namespace rpg.parsevariables
         static void Main(string[] args)
         {
             Log.WriteLine("### rpg.parsevariables parser=[jmeter|silkperformer] <...> <out:intermediatefile>");
-            Log.WriteLine("silkperformer: <transactionfilecsv> <transactionfilebrp>");
-            Log.WriteLine("jmeter: <transactionfilejtl> <transactionfilecsv>");
+            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            //Log.WriteLine("silkperformer: <transactionfilecsv> <transactionfilebrp>");
+            //Log.WriteLine("jmeter: <transactionfilejtl> <transactionfilecsv>");
 
             ParamInterpreter parameters = new ParamInterpreter();
             parameters.Initialize(args);

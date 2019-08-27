@@ -11,6 +11,7 @@ namespace rpg.parsemeasures
         static void Main(string[] args)
         {
             Log.WriteLine("### rpg.parsemeasures parser=[jmeter, silkperformer] <parameters (ask)>");
+            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter parameters = new ParamInterpreter();
             parameters.Initialize(args);

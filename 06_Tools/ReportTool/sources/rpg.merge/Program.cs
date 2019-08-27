@@ -21,6 +21,8 @@ namespace rpg.merge
         static void Main(string[] args)
         {
             Log.WriteLine("### rpg.merge [h (help), i (intermediate), v (variable), j (join), t (threshold), +t (with threshold), +d (with diff), +b (with baseline)] <templatefilename:name>");
+            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+
             ParamInterpreter _params = new ParamInterpreter();
             _params.Initialize(args);
             _params.ToConsole();

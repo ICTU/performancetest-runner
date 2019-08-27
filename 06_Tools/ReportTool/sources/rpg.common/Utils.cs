@@ -217,6 +217,18 @@ namespace rpg.common
             // remove double whitespaces
             name = name.Replace("  "," ");  // template generator is failing on this
 
+            // trial for testpurposes, not effective yet, appears only in log for now
+            string alternativeName = "";
+            foreach (char c in suggestedName)
+            {
+                // toegestane karakters: a-z A-Z 0-9 - _ rest vervangen door <spatie>, ook <spatie> toegestaan dus
+                if (Regex.IsMatch(c.ToString(), $"[a-zA-Z0-9-]"))
+                    alternativeName = string.Concat(alternativeName, c);
+                else
+                    alternativeName = string.Concat(alternativeName, '_');
+            }
+            Log.WriteLine(string.Format("normalize transactionname org=[{0}] new=[{1}] alt=[{2}]", suggestedName, name, alternativeName));
+
             return name;
         }
 

@@ -2,8 +2,12 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+4.5.1.1
+21-8-2019	added alternatative transaction name conversion to log (console.Utils), not effective yet
+21-8-2019	assembly version added to log
+
 4.5.1.0
-20-8-2019	characers { and } removed from transaction names (common.Utils), replaces temp fix in post-test script IES
+20-8-2019	characters { and } removed from transaction names (common.Utils), replaces temp fix in post-test script IES
 
 4.5.0.0
 25-6-2019	character '=' removed out of transaction names (common.Utils)

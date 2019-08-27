@@ -16,6 +16,7 @@ namespace rpg.loadintermediate
         {
 
             Log.WriteLine("### rpg.loadintermediate <project> <testrun> <category> <entity> <intermediatefile> <database>");
+            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter Params = new ParamInterpreter();
             Params.Initialize(args);
