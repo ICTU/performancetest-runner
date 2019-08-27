@@ -609,7 +609,7 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Transactions success",
+          label: "Success",
           data: [$[${transactionstotal:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
@@ -617,7 +617,7 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{
-          label: "Transactions failed",
+          label: "Failed",
           data: [$[${transactionsfailed:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
@@ -675,7 +675,7 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Trendbreak scalability (%)",
+          label: "Scalability (%)",
           data: [$[${trendbreakrampuppercentage:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
@@ -683,7 +683,7 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{
-          label: "Trendbreak stability (%)",
+          label: "Stability (%)",
           data: [$[${trendbreakstabilitypercentage:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
