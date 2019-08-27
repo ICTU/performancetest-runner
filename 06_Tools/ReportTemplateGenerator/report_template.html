@@ -544,7 +544,7 @@ new Chart(document.getElementById("chart_trend_stats_2"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Avg of 90 percentiles (s)",
+          label: "90 Percentiles (s)",
           data: [$[${avgof90percentiles:#::null},]],
 		  fill: false,
 		  lineTension: 0.1,
@@ -552,7 +552,7 @@ new Chart(document.getElementById("chart_trend_stats_2"), {
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{
-          label: "Avg of averages (s)",
+          label: "Averages (s)",
           data: [$[${avgofaverages:#::null},]],
 		  fill: false,
 		  lineTension: 0.1,
