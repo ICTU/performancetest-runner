@@ -83,6 +83,125 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Belasting" enabled="true"/>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_Verificatie" enabled="false">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="NOT" elementType="Argument">
+              <stringProp name="Argument.name">NOT</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Number of Threadss</stringProp>
+            </elementProp>
+            <elementProp name="RUP" elementType="Argument">
+              <stringProp name="Argument.name">RUP</stringProp>
+              <stringProp name="Argument.value">0</stringProp>
+              <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="DRN" elementType="Argument">
+              <stringProp name="Argument.name">DRN</stringProp>
+              <stringProp name="Argument.value">300</stringProp>
+              <stringProp name="Argument.desc">Duration of the test</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="SPM" elementType="Argument">
+              <stringProp name="Argument.name">SPM</stringProp>
+              <stringProp name="Argument.value">20.0</stringProp>
+              <stringProp name="Argument.desc">Samples per minute</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_productie" enabled="false">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="NOT" elementType="Argument">
+              <stringProp name="Argument.name">NOT</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Number of Threads</stringProp>
+            </elementProp>
+            <elementProp name="RUP" elementType="Argument">
+              <stringProp name="Argument.name">RUP</stringProp>
+              <stringProp name="Argument.value">5</stringProp>
+              <stringProp name="Argument.desc">Ramp up period (in seconds)</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="DRN" elementType="Argument">
+              <stringProp name="Argument.name">DRN</stringProp>
+              <stringProp name="Argument.value">300</stringProp>
+              <stringProp name="Argument.desc">Duration of the test</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="SPM" elementType="Argument">
+              <stringProp name="Argument.name">SPM</stringProp>
+              <stringProp name="Argument.value">30.0</stringProp>
+              <stringProp name="Argument.desc">Samples per minute</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_duurtest" enabled="false">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="NOT" elementType="Argument">
+              <stringProp name="Argument.name">NOT</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Number of Threadss</stringProp>
+            </elementProp>
+            <elementProp name="RUP" elementType="Argument">
+              <stringProp name="Argument.name">RUP</stringProp>
+              <stringProp name="Argument.value">5</stringProp>
+              <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="DRN" elementType="Argument">
+              <stringProp name="Argument.name">DRN</stringProp>
+              <stringProp name="Argument.value">300</stringProp>
+              <stringProp name="Argument.desc">Duration of the test</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="SPM" elementType="Argument">
+              <stringProp name="Argument.name">SPM</stringProp>
+              <stringProp name="Argument.value">30.0</stringProp>
+              <stringProp name="Argument.desc">Samples per minute</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_stresstest" enabled="false">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="NOT" elementType="Argument">
+              <stringProp name="Argument.name">NOT</stringProp>
+              <stringProp name="Argument.value">4</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">Number of Threadss</stringProp>
+            </elementProp>
+            <elementProp name="RUP" elementType="Argument">
+              <stringProp name="Argument.name">RUP</stringProp>
+              <stringProp name="Argument.value">0</stringProp>
+              <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="DRN" elementType="Argument">
+              <stringProp name="Argument.name">DRN</stringProp>
+              <stringProp name="Argument.value">300</stringProp>
+              <stringProp name="Argument.desc">Duration of the test</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="SPM" elementType="Argument">
+              <stringProp name="Argument.name">SPM</stringProp>
+              <stringProp name="Argument.value">30.0</stringProp>
+              <stringProp name="Argument.desc">Samples per minute</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+      </hashTree>
       <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
@@ -126,122 +245,6 @@
         <boolProp name="include_checkbox_state">false</boolProp>
         <boolProp name="exclude_checkbox_state">false</boolProp>
       </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
-      <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_verificatie" enabled="false">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="NOT" elementType="Argument">
-            <stringProp name="Argument.name">NOT</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Number of Threadss</stringProp>
-          </elementProp>
-          <elementProp name="RUP" elementType="Argument">
-            <stringProp name="Argument.name">RUP</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DRN" elementType="Argument">
-            <stringProp name="Argument.name">DRN</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
-            <stringProp name="Argument.desc">Duration of the test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SPM" elementType="Argument">
-            <stringProp name="Argument.name">SPM</stringProp>
-            <stringProp name="Argument.value">20.0</stringProp>
-            <stringProp name="Argument.desc">Samples per minute</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
-      <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_productie" enabled="false">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="NOT" elementType="Argument">
-            <stringProp name="Argument.name">NOT</stringProp>
-            <stringProp name="Argument.value">20</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Number of Threads</stringProp>
-          </elementProp>
-          <elementProp name="RUP" elementType="Argument">
-            <stringProp name="Argument.name">RUP</stringProp>
-            <stringProp name="Argument.value">5</stringProp>
-            <stringProp name="Argument.desc">Ramp up period (in seconds)</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DRN" elementType="Argument">
-            <stringProp name="Argument.name">DRN</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
-            <stringProp name="Argument.desc">Duration of the test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SPM" elementType="Argument">
-            <stringProp name="Argument.name">SPM</stringProp>
-            <stringProp name="Argument.value">30.0</stringProp>
-            <stringProp name="Argument.desc">Samples per minute</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
-      <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_duurtest" enabled="false">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="NOT" elementType="Argument">
-            <stringProp name="Argument.name">NOT</stringProp>
-            <stringProp name="Argument.value">20</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Number of Threadss</stringProp>
-          </elementProp>
-          <elementProp name="RUP" elementType="Argument">
-            <stringProp name="Argument.name">RUP</stringProp>
-            <stringProp name="Argument.value">5</stringProp>
-            <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DRN" elementType="Argument">
-            <stringProp name="Argument.name">DRN</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
-            <stringProp name="Argument.desc">Duration of the test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SPM" elementType="Argument">
-            <stringProp name="Argument.name">SPM</stringProp>
-            <stringProp name="Argument.value">30.0</stringProp>
-            <stringProp name="Argument.desc">Samples per minute</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
-      <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_stresstest" enabled="false">
-        <collectionProp name="Arguments.arguments">
-          <elementProp name="NOT" elementType="Argument">
-            <stringProp name="Argument.name">NOT</stringProp>
-            <stringProp name="Argument.value">4</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Number of Threadss</stringProp>
-          </elementProp>
-          <elementProp name="RUP" elementType="Argument">
-            <stringProp name="Argument.name">RUP</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">Ramp up in seconds</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DRN" elementType="Argument">
-            <stringProp name="Argument.name">DRN</stringProp>
-            <stringProp name="Argument.value">300</stringProp>
-            <stringProp name="Argument.desc">Duration of the test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SPM" elementType="Argument">
-            <stringProp name="Argument.name">SPM</stringProp>
-            <stringProp name="Argument.value">30.0</stringProp>
-            <stringProp name="Argument.desc">Samples per minute</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-        </collectionProp>
-      </Arguments>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
