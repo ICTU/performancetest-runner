@@ -66,6 +66,60 @@ namespace rpg.common
             return result;
         }
 
+        public static string ExtractValueByPatternLowest(string[] lines, string valuePattern)
+        {
+            string result = "";
+            Regex regex = new Regex(valuePattern);
+
+            DateTime newDT;
+            DateTime lowestDT = new DateTime();
+
+            foreach (string line in lines)
+            {
+                if (regex.IsMatch(line))
+                {
+                    // Steps
+                    // 1. Do interpretatio of value of string (should be match for datetime due to regex -> assumption)
+                    // 2. Compare value with previous value and pick the lowest
+                    newDT = ParseJMeterEpoch(line);
+                    if (lowestDT > newDT)
+                    {
+                        lowestDT = newDT;
+                    }
+                }
+            }
+            
+            result = lowestDT.ToString();
+            return result;
+        }
+
+        public static string ExtractValueByPatternHighest(string[] lines, string valuePattern)
+        {
+            string result = "";
+            Regex regex = new Regex(valuePattern);
+
+            DateTime newDT;
+            DateTime highestDT = new DateTime();
+
+            foreach (string line in lines)
+            {
+                if (regex.IsMatch(line))
+                {
+                    // Steps
+                    // 1. Do interpretatio of value of string (should be match for datetime due to regex -> assumption)
+                    // 2. Compare value with previous value and pick the lowest
+                    newDT = ParseJMeterEpoch(line);
+                    if (highestDT < newDT)
+                    {
+                        highestDT = newDT;
+                    }
+                }
+            }
+
+            result = highestDT.ToString();
+            return result;
+        }
+
         /// <summary>
         /// Convert Jmeter epoch (ms) to DateTime
         /// </summary>
