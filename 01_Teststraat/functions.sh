@@ -233,7 +233,7 @@ preparejmeterscript() {
 	sourcefilename=$scriptfolder/$projectname.jmx
 	targetfilename=$scriptfolder/"$projectname"_"$workload".jmx
 
-	echo "Prepare testscript from root, project [$projectname] workload [$workload]..."
+	echo "Prepare workload script from base script, project [$projectname] workload [$workload]..."
 
 	cp $sourcefilename $targetfilename
 
