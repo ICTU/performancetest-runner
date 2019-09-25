@@ -241,8 +241,6 @@ preparejmeterscript() {
 	sed -i "/testname=.WORKLOAD_/s/true/false/" "$targetfilename"
 
 	# enable configured workload
-	#sed -i "/testname=.WORKLOAD_$workload/s/false/true/" "$targetfilename"
-#wert dit? detecteert spatie na "
 	sed -i "/testname=.WORKLOAD_$workload.\s/s/false/true/" "$targetfilename"
 
 	# check if at least one workload is enabled
