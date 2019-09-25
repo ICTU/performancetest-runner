@@ -224,6 +224,44 @@ run_silk() {
 	
 }
 
+# Create a new testplan copy with the right workload enabled
+preparejmeterscript() {
+	projectname=$1
+	workload=$2
+	scriptfolder=$3
+	
+	sourcefilename=$scriptfolder/$projectname.jmx
+	targetfilename=$scriptfolder/"$projectname"_"$workload".jmx
+
+	echo "Prepare testscript from root, project [$projectname] workload [$workload]..."
+
+	cp $sourcefilename $targetfilename
+
+	# disable all workload configurations
+	sed -i "/testname=.WORKLOAD_/s/true/false/" "$targetfilename"
+
+	# enable configured workload
+	#sed -i "/testname=.WORKLOAD_$workload/s/false/true/" "$targetfilename"
+#wert dit? detecteert spatie na "
+	sed -i "/testname=.WORKLOAD_$workload.\s/s/false/true/" "$targetfilename"
+
+	# check if at least one workload is enabled
+	if grep -q 'WORKLOAD_.*true' $targetfilename
+	then
+		echo "Testplan generated to file [$targetfilename]"
+	else
+		echo "Fatal: could not create script [$targetfilename] from [$sourcefilename]"
+		
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo "Unable to prepare jmeter script"
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+			
+		exit 1
+	fi
+
+	echo "Done preparing testscript"
+}
+
 # Het runnen van een jmeter test
 run_jmeter() {
 	echo "_____________________________________________________"
@@ -249,6 +287,9 @@ run_jmeter() {
 	fi
 	
 	echo "Projectname: $projectname"
+	
+	# prepare new script from source with right workload enabled
+	preparejmeterscript $projectname $workload $scriptfolder
 	
 	if isfile $scriptfolder/${projectname}_$workload.jmx; then echo "Script found for $workload workload, continuing..."; else aborttest "Script not found for $workload workload. Aborting!"; fi  
 	
