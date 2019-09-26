@@ -2,6 +2,9 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform dependent (x86) Silk Result Tools (srt)
 
+4.6.0.0
+26-9-2019	transaction name normalization changed to: a-z A-Z 0-9 - _ (rest is replaced by _)
+
 4.5.1.1
 21-8-2019	added alternatative transaction name conversion to log (console.Utils), not effective yet
 21-8-2019	assembly version added to log
