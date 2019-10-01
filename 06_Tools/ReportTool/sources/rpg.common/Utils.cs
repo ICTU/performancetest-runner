@@ -66,49 +66,58 @@ namespace rpg.common
             return result;
         }
 
+        /// <summary>
+        /// Find lowest occurence of pattern in lines
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="valuePattern"></param>
+        /// <returns>lowest value in the list</returns>
         public static string ExtractValueByPatternLowest(string[] lines, string valuePattern)
         {
-            string result = "";
+            string result;
             Regex regex = new Regex(valuePattern);
 
-            DateTime newDT;
-            DateTime lowestDT = new DateTime();
+            long newDT;
+            long lowestDT = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
             foreach (string line in lines)
             {
                 if (regex.IsMatch(line))
                 {
-                    // Steps
-                    // 1. Do interpretatio of value of string (should be match for datetime due to regex -> assumption)
-                    // 2. Compare value with previous value and pick the lowest
-                    newDT = ParseJMeterEpoch(line);
+                    result = regex.Match(line).Groups[1].Value;
+                    newDT = Convert.ToInt64(result);
+                    Log.WriteLine("newDT: " + newDT);
                     if (lowestDT > newDT)
                     {
                         lowestDT = newDT;
                     }
                 }
             }
-            
+
             result = lowestDT.ToString();
             return result;
         }
 
+        /// <summary>
+        /// Find highest occurence of pattern in lines
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="valuePattern"></param>
+        /// <returns>highest value in the list</returns>
         public static string ExtractValueByPatternHighest(string[] lines, string valuePattern)
         {
-            string result = "";
+            string result;
             Regex regex = new Regex(valuePattern);
 
-            DateTime newDT;
-            DateTime highestDT = new DateTime();
+            long newDT;
+            long highestDT = new long();
 
             foreach (string line in lines)
             {
                 if (regex.IsMatch(line))
                 {
-                    // Steps
-                    // 1. Do interpretatio of value of string (should be match for datetime due to regex -> assumption)
-                    // 2. Compare value with previous value and pick the lowest
-                    newDT = ParseJMeterEpoch(line);
+                    result = regex.Match(line).Groups[1].Value;
+                    newDT = Convert.ToInt64(result);
                     if (highestDT < newDT)
                     {
                         highestDT = newDT;

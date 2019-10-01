@@ -8,6 +8,10 @@ dotnet build sources/ReportGeneratorTools.sln --configuration Release
 echo publish...
 dotnet publish sources/ReportGeneratorTools.sln --configuration Release
 
+echo create "sources/build if it doesn't exitst..."
+mkdir -p sources/build
+
+
 echo copy...
 rm -f sources/build/*.*
 cp sources/rpg.console/bin/Release/netcoreapp2.1/publish/*.* sources/build
