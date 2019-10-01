@@ -67,6 +67,69 @@ namespace rpg.common
         }
 
         /// <summary>
+        /// Find lowest occurence of pattern in lines
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="valuePattern"></param>
+        /// <returns>lowest value in the list</returns>
+        public static string ExtractValueByPatternLowest(string[] lines, string valuePattern)
+        {
+            string result;
+            Regex regex = new Regex(valuePattern);
+
+            long newDT;
+            long lowestDT = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+            foreach (string line in lines)
+            {
+                if (regex.IsMatch(line))
+                {
+                    result = regex.Match(line).Groups[1].Value;
+                    newDT = Convert.ToInt64(result);
+                    Log.WriteLine("newDT: " + newDT);
+                    if (lowestDT > newDT)
+                    {
+                        lowestDT = newDT;
+                    }
+                }
+            }
+
+            result = lowestDT.ToString();
+            return result;
+        }
+
+        /// <summary>
+        /// Find highest occurence of pattern in lines
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="valuePattern"></param>
+        /// <returns>highest value in the list</returns>
+        public static string ExtractValueByPatternHighest(string[] lines, string valuePattern)
+        {
+            string result;
+            Regex regex = new Regex(valuePattern);
+
+            long newDT;
+            long highestDT = new long();
+
+            foreach (string line in lines)
+            {
+                if (regex.IsMatch(line))
+                {
+                    result = regex.Match(line).Groups[1].Value;
+                    newDT = Convert.ToInt64(result);
+                    if (highestDT < newDT)
+                    {
+                        highestDT = newDT;
+                    }
+                }
+            }
+
+            result = highestDT.ToString();
+            return result;
+        }
+
+        /// <summary>
         /// Convert Jmeter epoch (ms) to DateTime
         /// </summary>
         /// <param name="s"></param>
