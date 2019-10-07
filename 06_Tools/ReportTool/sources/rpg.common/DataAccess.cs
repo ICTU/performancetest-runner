@@ -7,60 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace rpg.common
 {
-    ///// <summary>
-    ///// Static factory enabling reuse of one single connection throughout the session
-    ///// </summary>
-    //public static class Database
-    //{
-    //    private static TeststraatDB _instance = null;
-
-    //    /// <summary>
-    //    /// Create connection
-    //    /// </summary>
-    //    private static void Initialize()
-    //    {
-    //        _instance = new TeststraatDB();
-    //        _instance.
-    //        if (_instance == null)
-    //        {
-    //            string connectString = GetConnectString();
-    //            _instance = new NpgsqlConnection(connectString);
-    //            try
-    //            {
-    //                Log.WriteLine(string.Format("connect to database {0}...", _databaseDefault));
-    //                _instance.Open();
-    //            }
-    //            catch (Exception e)
-    //            {
-    //                Log.WriteLine(string.Format("FATAL: connect to database did not succeed [{0}]", connectString));
-    //                throw e;
-    //            }
-    //        }
-    //        return _instance;
-    //    }
-
-    //    /// <summary>
-    //    /// Build connect string
-    //    /// </summary>
-    //    /// <returns></returns>
-    //    private static string GetConnectString()
-    //    {
-    //        string[] connectstrArray = Globals.dbconnectstring.Split(':');
-
-    //        Log.WriteLine(string.Format("use database on {0}:{1}", connectstrArray[0], connectstrArray[1]));
-
-    //        string connectString = "Server=" + connectstrArray[0] 
-    //            + ";Port=" + connectstrArray[1] 
-    //            + ";User Id=" + connectstrArray[2] 
-    //            + ";Password=" + connectstrArray[3] 
-    //            + ";Database=" + _databaseDefault 
-    //            + ";Pooling=true";
-
-    //        //Log.WriteLine("connect string ["+connectString+"]"); // debug info
-    //        return connectString;
-    //    }
-    //}
-
 
     /// <summary>
     /// Data access layer
@@ -68,6 +14,7 @@ namespace rpg.common
     public class DataAccess
     {
         public TeststraatDB _database = null;
+        public string _projectName;
 
         private int _projectId; // we werken altijd vanuit een project, entry in reftabel
         private Hashtable _refTestrun = new Hashtable(); // referentietabel testruns
@@ -84,13 +31,13 @@ namespace rpg.common
         /// <param name="project"></param>
         public DataAccess(string project)
         {
+            _projectName = project;
             Initialize(project);
         }
 
         /// <summary>
         /// Object creation with initialization
         /// </summary>
-        /// <param name="project"></param>
         public DataAccess()
         {
             Initialize();
@@ -134,17 +81,17 @@ namespace rpg.common
         /// <param name="entity"></param>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void InsertValue(string ptestrun, string pcategory, string pentity, string pkey, string pvalue)
+        public void InsertValue(string pTestrun, string pCategory, string pEntity, string pKey, string pValue)
         {
-            int testrunId = GetTestrunId(ptestrun, true);
+            int testrunId = GetTestrunId(pTestrun, true);
 
             value v = new value()
             {
                 testrun_id = testrunId,
-                category = pcategory,
-                entity = pentity,
-                key = pkey,
-                _value = pvalue
+                category = pCategory,
+                entity = pEntity,
+                key = pKey,
+                _value = pValue
             };
 
             try

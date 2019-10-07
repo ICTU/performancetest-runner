@@ -1,6 +1,16 @@
 RPG (RePortGenerator tools) release notes
 
-Replaces platform dependent (x86) Silk Result Tools (srt)
+Replaces platform independent .NetCore Silk Result Tools (srt)
+
+
+4.8.0.0 (trending on threshold violations)
+7-10-2019	debug logging removed
+7-10-2019	thresholdviolations renamed and stored to database for trending
+7-10-2019	baselinewarnings renamed and stored to database for trending
+7-10-2019	variables _baselineref and _baselinereason renamed: _ prefix removed
+
+4.7.0.0
+x			search for first and last sample timestam improved, now searching for lowest and highest value (duration calculation fix)
 
 4.6.0.0
 26-9-2019	transaction name normalization changed to: a-z A-Z 0-9 - _ (rest is replaced by _)

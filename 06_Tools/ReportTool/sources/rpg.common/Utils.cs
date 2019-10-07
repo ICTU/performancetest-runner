@@ -5,12 +5,25 @@ using System.Text.RegularExpressions;
 
 namespace rpg.common
 {
+    static public class Category
+    {
+        public static string Variable = "var";
+        public static string Transaction = "trs";
+    }
+
+    static public class Entity
+    {
+        public static string None = "-";
+        public static string Runinfo = "runinfo";
+        public static string Generic = "generic";
+        public static string Transaction = "trs";
+    }
+
     /// <summary>
     /// Utilities
     /// </summary>
     static public class Utils
     {
-
         /// <summary>
         /// Test if given string (or character) is a numeric value or not
         /// </summary>
@@ -86,7 +99,7 @@ namespace rpg.common
                 {
                     result = regex.Match(line).Groups[1].Value;
                     newDT = Convert.ToInt64(result);
-                    Log.WriteLine("newDT: " + newDT);
+                    //Log.WriteLine("newDT: " + newDT);
                     if (lowestDT > newDT)
                     {
                         lowestDT = newDT;

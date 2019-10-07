@@ -36,6 +36,8 @@ namespace rpg.common
     /// </summary>
     public class Intermediate : Dictionary<string, string>
     {
+        public static string NOENTITY = "-";
+
         /// <summary> key-value pair separator </summary>
         public const char KEYVALUESEPARATOR = '=';
         /// <summary> list value separator character </summary>
@@ -51,6 +53,21 @@ namespace rpg.common
         private const string TAGKEY = "tag";
         /// <summary> generic key prefix </summary>
         public string keyPrefix;
+
+        private DataAccess dataAccess = null;
+
+        /// <summary>
+        /// Access method for dataAccess
+        /// </summary>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
+        private DataAccess GetDataAccess(string projectName)
+        {
+            if (dataAccess == null)
+                dataAccess = new DataAccess(projectName);
+
+            return dataAccess;
+        }
 
         /// <summary>
         /// Write intermediate to file
@@ -319,7 +336,8 @@ namespace rpg.common
             foreach (KeyValuePair<string, string> pair in intermediate)
             {
                 //Log.WriteLine("adding key=value {0}={1}", pair.Key, pair.Value);
-                this.Add(pair.Key, pair.Value);
+                if (!this.ContainsKey(pair.Key))
+                    this.Add(pair.Key, pair.Value);
             }
         }
 
@@ -486,6 +504,16 @@ namespace rpg.common
             return cnt;
         }
 
+        public void SaveToDatabase(string p_projectName, string p_testName, string p_category, string p_entity)
+        {
+            DataAccess da = GetDataAccess(p_projectName);
+
+            foreach (KeyValuePair<string, string> pair in this)
+            {
+                Log.WriteLine(string.Format("storing to database {0}|{1}|{2}|{3}|{4}...", p_projectName, p_testName, p_category, p_entity, pair.Key));
+                da.InsertValue(p_testName.Trim(), p_category.Trim(), p_entity.Trim(), pair.Key.Trim(), pair.Value.Trim());
+            }
+        }
     }
 
 

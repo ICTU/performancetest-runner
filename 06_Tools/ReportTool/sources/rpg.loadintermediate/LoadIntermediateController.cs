@@ -30,15 +30,7 @@ namespace rpg.loadintermediate
         /// <param name="entity"></param>
         public void StoreIntermediate(string projectName, string testName, string category, string entity)
         {
-            DataAccess da = new DataAccess(projectName);
-
-            foreach (KeyValuePair<string, string> pair in intermediate)
-            {
-                Log.WriteLine(string.Format("store {0}|{1}|{2}|{3}...", projectName, testName, category, pair.Key));
-                da.InsertValue(testName.Trim(), category.Trim(), entity.Trim(), pair.Key.Trim(), pair.Value.Trim());
-            }
-
-            da.DeInitialize();
+            intermediate.SaveToDatabase(projectName, testName, category, entity);
         }
     }
 }

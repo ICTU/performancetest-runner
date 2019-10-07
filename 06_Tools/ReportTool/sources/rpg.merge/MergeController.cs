@@ -9,6 +9,7 @@ namespace rpg.merge
     class MergeController
     {
         public Intermediate intermediate = new Intermediate();
+
         //public Intermediate intermediateAdded = new Intermediate();
         private Template template = new Template();
         private int counterValue = 0;
@@ -17,12 +18,11 @@ namespace rpg.merge
         private string testrun;
         private string category;
         private string entity;
-        private const string BASELINEREFVARNAME = "_baselineref";
-        private const string BASELINEREASONVARNAME = "_baselinereason";
-        private const string BASELINEWARNINGSKEY = "_baselinewarnings";
-        private const string THRESHOLDVIOLATIONSKEY = "_thresholdviolations";
+        private const string BASELINEREFVARNAME = "baselineref";
+        private const string BASELINEREASONVARNAME = "baselinereason";
+        private const string BASELINEWARNINGSKEY = "baselinewarnings";
+        private const string THRESHOLDVIOLATIONSKEY = "thresholdviolations";
         private const string BASELINEKEYPREFIX = "baseline.";
-        private const string VARIABLECATEGORY = "var";
 
         private const string REPEATPATTERN = @"\$\[(.*?)\]";
         
@@ -50,7 +50,7 @@ namespace rpg.merge
             this.entity = p_entity;
 
             // read intermediate from VALUE table (common intermediate source)
-            int cnt = intermediate.ReadFromDatabaseValue(project, testrun, category, entity);
+            int cnt = intermediate.ReadFromDatabaseValue(this.project, this.testrun, this.category, this.entity);
             Log.WriteLine(cnt+" lines/variables");
         }
 
@@ -466,7 +466,7 @@ namespace rpg.merge
         /// <param name="greenColorcode"></param>
         /// <param name="yellowColorcode"></param>
         /// <param name="redColorcode"></param>
-        public void GenerateThresholdValues(string greenColorcode, string yellowColorcode, string redColorcode)
+        public void GenerateThresholdValues(string greenColorcode, string yellowColorcode, string redColorcode, bool storeMetrics=false)
         {
             Log.WriteLine("generate threshold values...");
             // load threshold config from database
@@ -482,6 +482,10 @@ namespace rpg.merge
             // count threshold violations (add in separate series)
             Log.WriteLine("aggregate threshold violations...");
             Intermediate thresholdViolations = thValues.AggregateCount(THRESHOLDVIOLATIONSKEY, @"\d\d_.*_c$", redColorcode); // only evaluate script transactions!
+
+            if (storeMetrics)
+                thresholdViolations.SaveToDatabase(this.project, this.testrun, Category.Transaction, Entity.None);
+
             Log.WriteLine("adding threshold violations: " + thresholdViolations.GetValue(THRESHOLDVIOLATIONSKEY));
             this.intermediate.Add(thresholdViolations);
         }
@@ -515,7 +519,7 @@ namespace rpg.merge
         /// <param name="baselineTestrun"></param>
         /// <param name="colorcodeBetter"></param>
         /// <param name="colorcodeWorse"></param>
-        public void GenerateBaselineValues(string currentTestrun, string baselineTestrun, string colorcodeBetter, string colorcodeWorse)
+        public void GenerateBaselineValues(string currentTestrun, string baselineTestrun, string colorcodeBetter, string colorcodeWorse, bool storeMetrics=false)
         {
             Thresholds thresholds = new Thresholds(this.project);
 
@@ -548,8 +552,13 @@ namespace rpg.merge
             // Count baseline violations (add in separate series)
             Log.WriteLine("aggregate baseline warnings...");
             Intermediate baselineWarnings = baselineEvaluation.AggregateCount(BASELINEWARNINGSKEY, @"\d\d_.*_be_c", colorcodeWorse); // only evaluate script transactions!
+
+            Log.WriteLine("adding baseline warnings: " + baselineWarnings.GetValue(BASELINEWARNINGSKEY));
             this.intermediate.Add(baselineWarnings);
-            Log.WriteLine("result: " + baselineWarnings.GetValue(BASELINEWARNINGSKEY));
+
+            // store generated high-level stats
+            if (storeMetrics)
+                baselineWarnings.SaveToDatabase(this.project, this.testrun, Category.Transaction, Entity.None);
         }
 
         /// <summary>
@@ -601,7 +610,7 @@ namespace rpg.merge
 
             // add baseline variables
             Log.WriteLine(string.Format("get variables from baseline [{0}]...", baselineTestrunNameUsed));
-            if (intermediate.ReadFromDatabaseValue(this.project, baselineTestrunNameUsed, VARIABLECATEGORY, "*", BASELINEKEYPREFIX) == 0)
+            if (intermediate.ReadFromDatabaseValue(this.project, baselineTestrunNameUsed, Category.Variable, "*", BASELINEKEYPREFIX) == 0)
                 Log.WriteLine("WARNING: no variable data found for baseline");
 
             // add chosen baseline reference to intermediate (to be merged lateron) with reason

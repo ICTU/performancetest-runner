@@ -81,10 +81,10 @@ namespace rpg.merge
                 Log.WriteLine("Data post-processing phase...");
 
                 // intermediate verrijken met evaluatie items
-                if (_params.Switch == 't') mergeController.GenerateThresholdValues(colCodeBelowTh1, colCodeBetweenTh1Th2, colCodeAboveTh2); // threshold evaluatie -> kleurcodering (it= itermediate+threshold eval category x (trs))
+                if (_params.Switch == 't') mergeController.GenerateThresholdValues(colCodeBelowTh1, colCodeBetweenTh1Th2, colCodeAboveTh2, true); // threshold evaluatie -> kleurcodering (it= itermediate+threshold eval category x (trs))
                 if (_params.Switch == 'd') mergeController.GenerateDiffValues(colCodeHighlite); // diff evaluatie -> kleurcodering (id = intermediate+diff eval category x (params))
                 // auto keuze baseline komt alleen hier vandaan, dus baseline vars hier genereren
-                if (_params.Switch == 'b') mergeController.GenerateBaselineValues(_params.Value("testrun"), _params.Value("baselinetestrun"), colCodeBetterThanBaseline, colCodeWorseThanBaseline);
+                if (_params.Switch == 'b') mergeController.GenerateBaselineValues(_params.Value("testrun"), _params.Value("baselinetestrun"), colCodeBetterThanBaseline, colCodeWorseThanBaseline, true);
 
                 Log.WriteLine("Post-processing done, start merge...");
 
