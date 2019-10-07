@@ -266,10 +266,11 @@
 <hr align="left" width="100%" size="1"/>
 <h3>Trend last ${maxtrendcount} testruns</h3>
 <table width="100%"><tr>
-	<td width="25%"><canvas id="chart_trend_stats_1"></canvas></td>
-	<td width="25%"><canvas id="chart_trend_stats_2"></canvas></td>
-	<td width="25%"><canvas id="chart_trend_stats_3"></canvas></td>
-	<td width="25%"><canvas id="chart_trend_stats_4"></canvas></td>
+	<td width="20%"><canvas id="chart_trend_stats_1"></canvas></td>
+	<td width="20%"><canvas id="chart_trend_stats_2"></canvas></td>
+	<td width="20%"><canvas id="chart_trend_stats_3"></canvas></td>
+	<td width="20%"><canvas id="chart_trend_stats_4"></canvas></td>
+	<td width="20%"><canvas id="chart_trend_stats_5"></canvas></td>
 </tr></table>
 	
 <hr align="left" width="100%" size="1"/>
@@ -723,6 +724,71 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
 				scaleLabel: {
 					display: false,
 					labelString: 'percentage'
+					}
+			}],
+			xAxes: [{
+				type: 'category',
+				gridLines: { display: true },
+				ticks: { display: false	}
+            }]
+        }
+    }
+});
+
+new Chart(document.getElementById("chart_trend_stats_5"), {
+    type: 'line',
+    data: {
+      labels: [$['${testrundatetime:#}',]],
+      datasets: [
+        {			
+          label: "Threshold violations",
+          data: [$[${thresholdviolations:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+},{
+          label: "Baseline warnings",
+          data: [$[${baselinewarnings:#:0:null},]],
+		  fill: false,
+		  lineTension: 0.1,
+		  pointRadius: 2,
+		  borderWidth: 2,
+		  yAxisID: 'Y1'
+}]
+    },
+    options: {
+      legend: { 
+		display: true,
+		position: 'bottom'
+		},
+	  tooltips: {
+		callbacks: {
+			label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
+                },
+			title: function(tooltipItem){
+                return 'at testrun '+this._data.labels[tooltipItem[0].index];
+				}
+        }
+	  },
+	  	  plugins: {
+		colorschemes: { scheme: 'office.Parallax6' }
+	  },
+      title: {
+        display: true,
+        text: 'Relative performance'
+      },
+      scales: {
+            yAxes: [{
+				id: 'Y1',
+				type: 'linear',
+				position: 'left',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: false,
+					labelString: 'number'
 					}
 			}],
 			xAxes: [{
