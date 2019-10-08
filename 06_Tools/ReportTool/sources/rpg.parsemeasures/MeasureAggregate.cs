@@ -39,7 +39,7 @@ namespace rpg.parsemeasures
             }
             catch
             {
-                Log.WriteLine("WARNING: no sample count, cannot aggregate average");
+                //Log.WriteLine("WARNING: no sample count, cannot aggregate average");
                 return 0;
             }
         }

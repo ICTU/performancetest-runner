@@ -84,13 +84,17 @@ namespace rpg.parsemeasures
             long timespan = 0;
             long timeSeriesPoint = 0;
 
+
+            // Sort the list of lines based on ts (should always be the first field)
+            Array.Sort(lines);
+
             // build aggregated timeseries
             foreach (string line in lines)
             {
                 //Log.WriteLine("DEBUG processing line: " + line);
                 if (IsSeriesLine(line))
                 {
-                    //Log.WriteLine("DEBUG is series line, processing: "+line);
+                    //Log.WriteLine("DEBUG is series line, processing: " + line);
                     // extract transactiedata naar aggregatie objecten
                     try // gevoelig stuk
                     {
@@ -116,29 +120,32 @@ namespace rpg.parsemeasures
                     }
 
                     // TODO add individual transaction measures
-
+                    if (threshold == 0 ) { threshold = timestamp; } // set it for the first time to prevent large timejump
                     timespan = timestamp - threshold;
 
-                    // eens per periode aggregatie berekenen en door met vlg aggr blok
-                    if (timespan > JMAGGREGATEPERIOD)
+                    // eens per periode aggregatie berekenen en door met vlg aggr blok, als timespan negatief is dan klopt de sortering in het JTL bestand niet
+                    if (timespan > JMAGGREGATEPERIOD || timespan < 0)
                     {
-                        // agg -> measuredetails
-                        _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToSeconds( resptime_agg.Avg().ToString() )); // normalize
-                        _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
-                        _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
-                        _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
+                        for (int a = 0; a < (timespan / JMAGGREGATEPERIOD); ++a) //for each timebucket create a datapoint
+                        {
+                            // agg -> measuredetails
+                            _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToSeconds(resptime_agg.Avg().ToString())); // normalize
+                            _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
+                            _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
+                            _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
 
-                        // add timeseries sequence (in seconds)
-                        timeSeriesPoint = (int) aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
-                        _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
+                            // add timeseries sequence (in seconds)
+                            timeSeriesPoint = (int)aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
+                            _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
 
-                        // reset all
-                        resptime_agg.Reset();
-                        errors_agg.Reset();
-                        numofthreads_agg.Reset();
+                            // reset all
+                            resptime_agg.Reset();
+                            errors_agg.Reset();
+                            numofthreads_agg.Reset();
 
-                        threshold = timestamp;
-                        aggregateCnt++;
+                            threshold = timestamp;
+                            aggregateCnt++;
+                        }
                     }
                 }
             }
@@ -176,7 +183,7 @@ namespace rpg.parsemeasures
             names.Add(OVERALLTIMESERIESKEY);
 
             _measureNames = names.ToArray();
-            
+
             Log.WriteLine(string.Format("raw values: {0} aggregated: {1}", valueCnt, aggregateCnt));
         }
 
