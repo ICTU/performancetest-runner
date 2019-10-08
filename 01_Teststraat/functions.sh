@@ -235,6 +235,15 @@ preparejmeterscript() {
 
 	echo "Prepare workload script from base script, project [$projectname] workload [$workload]..."
 
+	# check if workload config is present	
+	if grep -q "WORKLOAD_$workload" "$sourcefilename"
+	then
+		echo "Workload [$workload] found in file [$sourcefilename]"
+	else
+		echo "Fatal: workload [$workload] not found in source file [$sourcefilename], exiting..."
+		exit 1
+	fi
+
 	cp $sourcefilename $targetfilename
 
 	# disable all workload configurations
@@ -246,7 +255,7 @@ preparejmeterscript() {
 	# check if at least one workload is enabled
 	if grep -q 'WORKLOAD_.*true' $targetfilename
 	then
-		echo "Testplan generated to file [$targetfilename]"
+		echo "Workload successfully enabled in file [$targetfilename]"
 	else
 		echo "Fatal: could not create script [$targetfilename] from [$sourcefilename]"
 		
