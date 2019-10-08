@@ -2,6 +2,8 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform independent .NetCore Silk Result Tools (srt)
 
+8-10-2019
+x 			Modified the measurement aggregation graph to include 0 values for empty time bucket. And therefore now should correctly display the test duration
 
 4.8.0.0 (trending on threshold violations)
 7-10-2019	debug logging removed
