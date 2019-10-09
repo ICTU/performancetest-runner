@@ -189,8 +189,8 @@
 
 <h3>Thresholds</h3>
 <table class="config">
-	<tr><td></td><td class="header">OK</td><td class="header">WARNING</td><td class="header">HIGH</tr>
-	$[<tr><td class="name">${threshold.pattern:#}</td><td class="green rightalign"></td><td class="yellow rightalign">${threshold.th1:#:0.0}</td><td class="red rightalign">${threshold.th2:#:0.0}</td></tr>]
+	<tr><td></td><td class="header">WARNING</td><td class="header">HIGH</tr>
+	$[<tr><td class="name">${threshold.pattern:#}</td><td class="yellow rightalign">${threshold.th1:#:0.0}</td><td class="red rightalign">${threshold.th2:#:0.0}</td></tr>]
 </table>
 
 </td><td>
@@ -208,26 +208,24 @@
 
 <h3>Legend</h3>
 <table class="config">
-	<tr><td class="name">'No data' value</td><td></td></tr>
-	<tr><td class="name">(st)</td><td>static data, not dynamically retrieved</td></tr>
-	<tr><td class="name">Evaluated</td><td>Requirements are evaluated against this value</td></tr>
-	<tr><td class="name">Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
-	<tr><td class="name">Current</td><td>This session's measurement (evaluated value)</td></tr>
-	<tr><td class="name">Delta %</td><td>
+	<tr><td class="name">Column Evaluated</td><td>Requirements are evaluated against this value</td></tr>
+	<tr><td class="name">Column Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
+	<tr><td class="name">Column Current</td><td>This session's measurement (evaluated value)</td></tr>
+	<tr><td class="name">Column Delta %</td><td>
 		Difference between current and baseline, in % compared to the baseline<br>
 		Shows if current or baseline exceeds a threshold (yellow or red)<br>
 		Shows if difference is substantial (>15%)<br>
 		Shows Red at performance degradation<br>
 		Shows Green at performance improvement</td></tr>
-	<tr><td class="name">Summary<br><td>
+	<tr><td class="name">Paragraph Summary<br><td>
 		Only transactions containing pattern '<2digitnumber>_' are evaluated</td></tr>
-	<tr><td class="name">Threshold violations<br><td>
-		Num of transactions exceeding 'red' threshold</td></tr>
-	<tr><td class="name">Baseline warnings<br><td>
-		Num of transactions with 'red' baseline delta% are evaluated</td></tr>
-	<tr><td class="name">Trendbreak 'scalability'<br><td>
+	<tr><td class="name">Metric Threshold violations<br><td>
+		Number of transactions exceeding 'red' threshold</td></tr>
+	<tr><td class="name">Metric Baseline warnings<br><td>
+		Number of 'red' transactions in column Delta%</td></tr>
+	<tr><td class="name">Metric Trendbreak 'scalability'<br><td>
 		Percentage of (max) users at which ramp-up of throughput breaks</td></tr>
-	<tr><td class="name">Trendbreak 'stability'<br><td>
+	<tr><td class="name">Metric Trendbreak 'stability'<br><td>
 		Progress of test at which stability of throughput or errorcount breaks</td></tr>
 </table>
 
