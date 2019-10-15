@@ -1,3 +1,3 @@
 <tr valign="top">
-	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${_baselineref}</th><th>${printableTime}</th><th>Delta %</th>
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${baselineref}</th><th>${testrundatetime}</th><th>Delta %</th>
 </tr>
