@@ -558,7 +558,13 @@ namespace rpg.merge
 
             // store generated high-level stats
             if (storeMetrics)
+            {
+                // store baseline warning variables
                 baselineWarnings.SaveToDatabase(this.project, this.testrun, Category.Transaction, Entity.None);
+
+                // store calculated baseline reference chosen
+                this.intermediate.SaveOneToDatabase(this.project, this.testrun, Category.Variable, Entity.Generic, BASELINEREFVARNAME);
+            }
         }
 
         /// <summary>

@@ -271,6 +271,8 @@ namespace rpg.common
                 this.Add(pair.Key, pair.Value);
         }
 
+        
+
         /// <summary>
         /// Get number of element from value list
         /// </summary>
@@ -504,16 +506,41 @@ namespace rpg.common
             return cnt;
         }
 
+        /// <summary>
+        /// Save all content of this intermediate to database
+        /// </summary>
+        /// <param name="p_projectName"></param>
+        /// <param name="p_testName"></param>
+        /// <param name="p_category"></param>
+        /// <param name="p_entity"></param>
         public void SaveToDatabase(string p_projectName, string p_testName, string p_category, string p_entity)
         {
-            DataAccess da = GetDataAccess(p_projectName);
+            //DataAccess da = GetDataAccess(p_projectName);
 
             foreach (KeyValuePair<string, string> pair in this)
             {
-                Log.WriteLine(string.Format("storing to database {0}|{1}|{2}|{3}|{4}...", p_projectName, p_testName, p_category, p_entity, pair.Key));
-                da.InsertValue(p_testName.Trim(), p_category.Trim(), p_entity.Trim(), pair.Key.Trim(), pair.Value.Trim());
+                SaveOneToDatabase(p_projectName, p_testName, p_category, p_entity, pair.Key);
+                //Log.WriteLine(string.Format("storing to database {0}|{1}|{2}|{3}|{4}...", p_projectName, p_testName, p_category, p_entity, pair.Key));
+                //da.InsertValue(p_testName.Trim(), p_category.Trim(), p_entity.Trim(), pair.Key.Trim(), pair.Value.Trim());
             }
         }
+
+        /// <summary>
+        /// Save just one key/value pair in this intermediate to database
+        /// </summary>
+        /// <param name="p_projectName"></param>
+        /// <param name="p_testName"></param>
+        /// <param name="p_category"></param>
+        /// <param name="p_entity"></param>
+        /// <param name="p_key"></param>
+        public void SaveOneToDatabase(string p_projectName, string p_testName, string p_category, string p_entity, string p_key)
+        {
+            DataAccess da = GetDataAccess(p_projectName);
+
+            Log.WriteLine(string.Format("storing to database {0}|{1}|{2}|{3}|{4}...", p_projectName, p_testName, p_category, p_entity, p_key));
+            da.InsertValue(p_testName.Trim(), p_category.Trim(), p_entity.Trim(), p_key.Trim(), this.GetValue(p_key).Trim());
+        }
+
     }
 
 
