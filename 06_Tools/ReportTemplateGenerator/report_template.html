@@ -208,9 +208,18 @@
 
 <h3>Legend</h3>
 <table class="config">
-	<tr><td class="name">Paragraph Summary<br><td>
-		Only transactions containing pattern '<2digitnumber>_' are evaluated</td></tr>
+	<tr><td class="name">Paragraph Summary</td><td>
+		Only transactions containing pattern '<2 digit number>_' are evaluated</td></tr>
+	<tr><td class="name">Metric Threshold violations</td><td>
+		Number of transactions exceeding 'red' threshold</td></tr>
+	<tr><td class="name">Metric Baseline warnings</td><td>
+		Number of 'red' transactions in column Delta%</td></tr>
+	<tr><td class="name">Metric Trendbreak 'scalability'</td><td>
+		Percentage of (max) users at which ramp-up of throughput breaks</td></tr>
+	<tr><td class="name">Metric Trendbreak 'stability'</td><td>
+		Progress of test at which stability of throughput or errorcount breaks</td></tr>
 <tr><td>&nbsp</td></tr>
+	<tr><td class="name">Paragraph Response times</td><td/></tr>
 	<tr><td class="name">Column Evaluated</td><td>Requirements are evaluated against this value</td></tr>
 	<tr><td class="name">Column Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Current</td><td>This session's measurement (evaluated value)</td></tr>
@@ -220,15 +229,6 @@
 		Shows if difference is substantial (>15%)<br>
 		Shows Red at performance degradation<br>
 		Shows Green at performance improvement</td></tr>
-<tr><td>&nbsp</td></tr>
-	<tr><td class="name">Metric Threshold violations</td><td>
-		Number of transactions exceeding 'red' threshold</td></tr>
-	<tr><td class="name">Metric Baseline warnings</td><td>
-		Number of 'red' transactions in column Delta%</td></tr>
-	<tr><td class="name">Metric Trendbreak 'scalability'</td><td>
-		Percentage of (max) users at which ramp-up of throughput breaks</td></tr>
-	<tr><td class="name">Metric Trendbreak 'stability'</td><td>
-		Progress of test at which stability of throughput or errorcount breaks</td></tr>
 </table>
 
 </td>
