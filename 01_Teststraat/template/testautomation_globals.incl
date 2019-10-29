@@ -1,6 +1,6 @@
 #!/bin/bash
 #################################
-OS="windows"																	# Either "windows" or "linux"
+OS_type="windows"																# Either "windows" or "linux"
 root="E:/Test/performancetest-runner"											# root of the performancetest-runner repository
 
 testautomation_root="$root/01_Teststraat"										# Root of the testautomation

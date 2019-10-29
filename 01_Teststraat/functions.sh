@@ -86,7 +86,7 @@ kill_jmeter() {
 	#Kill al process of silk (2>null redirects the error output to null), 
 	#Dit is gedaan omdat je anders een error terug krijgt dat het silk process niet bestond
 	echo "Start with killing Jmeter (Java), could be too destructive"
-	if [[ $OS == "windows" ]]; then
+	if [[ $OS_type == "windows" ]]; then
 
 		#Controller cleanup
 		taskkill /F /IM Java.exe 2>/dev/null
@@ -99,7 +99,7 @@ kill_jmeter() {
 			echo "Error Jmeter/Java not stopped"
 			exit 1
 		fi
-	elif [[ $OS == "linux" ]]; then
+	elif [[ $OS_type == "linux" ]]; then
 		echo "Dit moet nog gemaakt worden!"
 	fi
 	echo "Done with killing Jmeter/Java"
@@ -285,6 +285,8 @@ run_jmeter() {
 	logdir=$4
 	threshold="threshold_$workload"
 	
+	test_variable "OS_type variable" $OS_type
+	
 	# verify if threshold is set for this workload, if not: use default setting
 	if [[ -z ${!threshold} ]]; then
 		threshold="threshold_default"
@@ -305,16 +307,20 @@ run_jmeter() {
 	
 
 	# Run jmeter
-	./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
+	if [[ $OS_type == "windows" || $OS_type == "linux" ]]; then
+		./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
+	else
+		aborttest "\$OS_type in globals is not windows or linux but is: \"$OS_type\", aborting test..."
+	fi
 	
 	# Start and wait 10 for process to show
 	sleep 10
 	
 	# Get the ProcessID for silkperformer to see if it is still running
-	if [[ $OS == "windows" ]]; then
+	if [[ $OS_type == "windows" ]]; then
 		processStart=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
 		process=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
-	elif [[ $OS == "linux" ]]; then
+	elif [[ $OS_type == "linux" ]]; then
 		processStart=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 		process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 	fi
@@ -338,18 +344,18 @@ run_jmeter() {
 		
 		# Prep for next while loop and make sure Jmeter does not run for too long
 		if [[ $threshold -gt $tdiff ]]; then
-			if [[ $OS == "windows" ]]; then
+			if [[ $OS_type == "windows" ]]; then
 				process=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
-			elif [[ $OS == "linux" ]]; then
+			elif [[ $OS_type == "linux" ]]; then
 				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 			fi
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
 			
-			if [[ $OS == "windows" ]]; then
+			if [[ $OS_type == "windows" ]]; then
 				taskkill /F /IM Java.exe 2>/dev/null
-			elif [[ $OS == "linux" ]]; then
+			elif [[ $OS_type == "linux" ]]; then
 				kill -9 jmeter.sh
 			fi
 			
