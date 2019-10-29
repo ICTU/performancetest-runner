@@ -291,7 +291,10 @@ namespace rpg.common
                 else
                     newName = string.Concat(newName, '_');
             }
-            Log.WriteLine(string.Format("normalize transactionname org=[{0}] new=[{1}]", suggestedName, newName));
+
+            // only log message if transaction name is changed
+            if (string.Compare(suggestedName, newName) > 0 )
+                Log.WriteLine(string.Format("transaction name normalized org=[{0}] new=[{1}]", suggestedName, newName));
 
             return newName;
         }

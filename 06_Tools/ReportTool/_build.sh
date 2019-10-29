@@ -8,7 +8,7 @@ dotnet build sources/ReportGeneratorTools.sln --configuration Release
 echo publish...
 dotnet publish sources/ReportGeneratorTools.sln --configuration Release
 
-echo create "sources/build if it doesn't exitst..."
+echo create build folder...
 mkdir -p sources/build
 
 

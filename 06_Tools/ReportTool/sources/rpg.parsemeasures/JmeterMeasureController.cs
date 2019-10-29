@@ -271,7 +271,7 @@ namespace rpg.parsemeasures
                 }
                 else
                 {
-                    Log.WriteLine("WARNING corrupted jtl line skipped: " + line);
+                    Log.WriteLine("WARNING useless jtl line skipped: " + line);
                 }
             }
 

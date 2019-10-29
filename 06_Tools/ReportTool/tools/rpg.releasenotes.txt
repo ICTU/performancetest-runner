@@ -2,6 +2,10 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform independent .NetCore Silk Result Tools (srt)
 
+4.9.1.0
+29-10-2019	parse raw jtl lines: unusable lines for measures not parsed
+29-10-2019	parse transaction name normalization logs only if normalization changed something (minor)
+
 4.9.0.0
 15-10-2019	baseline reference found in merge stage stored in database for historic use
 

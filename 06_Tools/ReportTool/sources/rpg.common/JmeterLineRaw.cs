@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace rpg.parsemeasures
+namespace rpg.common
 {
     public class JmeterLineRaw
     {

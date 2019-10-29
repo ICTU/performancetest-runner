@@ -87,6 +87,26 @@ namespace rpg.parsevariables
         }
 
         /// <summary>
+        /// Overload ReadLinesFromFile, but filter JTL lines on validity
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public string[] ReadLinesFromFileJTL(string fileName)
+        {
+            string[] orgLines = ReadLinesFromFile(fileName);
+
+            Log.WriteLine("filter only usable JTL lines...");
+            List<string> validLines = new List<string>();
+
+            foreach (string orgLine in orgLines)
+            {
+                if (JmeterLineRaw.IsUsableLine(orgLine))
+                    validLines.Add(orgLine);
+            }
+            return validLines.ToArray();
+        }
+
+        /// <summary>
         /// Extract variable=value from source
         /// </summary>
         /// <param name="lines"></param>

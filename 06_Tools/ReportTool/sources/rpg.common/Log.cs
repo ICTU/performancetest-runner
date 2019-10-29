@@ -17,7 +17,7 @@ namespace rpg.common
         public static string GetTimestamp()
         {
             //return DateTime.Now.ToString("s");  MM/dd/yy H:mm:ss zzz
-            return DateTime.Now.ToString("yyMMddTHHmmss");
+            return DateTime.Now.ToString("[yyMMddTHHmmss]");
         }
 
         /// <summary>

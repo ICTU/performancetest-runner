@@ -25,7 +25,7 @@ namespace rpg.parsevariables
 
         public override void ReadLinesFromFile(ParamInterpreter p)
         {
-            jtlLines = ReadLinesFromFile(p.Value(TRANSACTIONIFILEJTL));
+            jtlLines = ReadLinesFromFileJTL(p.Value(TRANSACTIONIFILEJTL));
             csvLines = ReadLinesFromFile(p.Value(TRANSACTIONFILECSV));
         }
 
@@ -49,6 +49,7 @@ namespace rpg.parsevariables
             // first sample from jtl has ts= (timestamp)
             //string grabValue = Utils.ExtractValueByPatternFirst(jtlLines, TESTSTARTTIMEPATTERN); // first is test starttime
             string grabValue = Utils.ExtractValueByPatternLowest(jtlLines, TESTSTARTTIMEPATTERN); // lowest is test starttime
+
             string returnValue = Utils.ParseJMeterEpoch(grabValue).ToString(DATETIMEPTFORMAT);
 
             return returnValue;
