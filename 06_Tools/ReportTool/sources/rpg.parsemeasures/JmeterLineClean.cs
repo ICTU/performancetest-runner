@@ -4,6 +4,9 @@ using rpg.common;
 
 namespace rpg.parsemeasures
 {
+    /// <summary>
+    /// Handle cleaned up jtl line (parsed by JmeterLineRaw)
+    /// </summary>
     class JmeterLineClean
     {
         /// <summary>

@@ -23,10 +23,6 @@ namespace rpg.parsemeasures
         {
             // inlezen bruikbare jtl regels
             p.VerifyFileExists(TRSJTLFILETAG);
-
-            // read data (this can potentially blow up your memory resource!)
-            //jtlTrsLines = ReadMeasureData(p.Value(TRSJTLFILETAG));
-
             jtlTrsLines = ReadMeasureDataText(p.Value(TRSJTLFILETAG));
 
             // ruwe measure data aggregeren
@@ -253,23 +249,30 @@ namespace rpg.parsemeasures
 
             foreach (string line in inLines)
             {
-                cnt++;
-                if (cnt<10)
-                    Log.WriteLine("first 10 input: "+ line);
+                if (JmeterLineRaw.IsUsableLine(line))
+                {
+                    cnt++;
+                    if (cnt < 10)
+                        Log.WriteLine("first 10 input: " + line);
 
-                Dictionary<string, string> attributes = JmeterLineRaw.GetSampleAttributes(line);
+                    Dictionary<string, string> attributes = JmeterLineRaw.GetSampleAttributes(line);
 
-                string outLine = string.Format("ts={0} t={1} na={2} s={3} lb={4}",
-                    attributes["ts"],
-                    attributes["t"],
-                    attributes["na"],
-                    attributes["s"],
-                    attributes["lb"]);
+                    string outLine = string.Format("ts={0} t={1} na={2} s={3} lb={4}",
+                        attributes["ts"],
+                        attributes["t"],
+                        attributes["na"],
+                        attributes["s"],
+                        attributes["lb"]);
 
-                outLines.Add(outLine);
+                    outLines.Add(outLine);
 
-                if (cnt<10)
-                    Log.WriteLine("1st 10 extraction: " + outLine);
+                    if (cnt < 10)
+                        Log.WriteLine("1st 10 extraction: " + outLine);
+                }
+                else
+                {
+                    Log.WriteLine("WARNING corrupted jtl line skipped: " + line);
+                }
             }
 
             Log.WriteLine( string.Format("{0} lines out of {1} selected for evaluation", outLines.Count, inLines.Length) );

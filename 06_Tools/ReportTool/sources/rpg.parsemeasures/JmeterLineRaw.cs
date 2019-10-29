@@ -29,6 +29,23 @@ namespace rpg.parsemeasures
 
             return attributes;
         }
+
+        /// <summary>
+        /// Is the raw jtl line useable for processing? Check on primary fields
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public static bool IsUsableLine(string line)
+        {
+            bool result = true;
+
+            if (line.Contains("ts=\"0\"")) // ts="0" mag niet
+                result = false;
+            else if (line.Contains("lb=\"\"")) // lb="" (leeg)
+                result = false;
+
+            return result;
+        }
     }
 
 }
