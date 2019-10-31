@@ -308,7 +308,8 @@ run_jmeter() {
 
 	# Run jmeter
 	if [[ $OS_type == "windows" || $OS_type == "linux" ]]; then
-		./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
+		./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true -Djavax.net.ssl.keyStore=$jm_keystore -Djavax.net.ssl.keyStorePassword=$jm_keyStorePassword &
+#		./jmeter/bin/jmeter.sh -t "$scriptfolder/${projectname}_$workload.jmx" -Jresultfile=$logdir/result.jtl -n -Dsummariser.name=summary -Dsummariser.interval=60 -Dsummariser.log=true -Dsummariser.out=true &
 	else
 		aborttest "\$OS_type in globals is not windows or linux but is: \"$OS_type\", aborting test..."
 	fi

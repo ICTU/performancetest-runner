@@ -7,4 +7,7 @@ tool="jmeter"	   					# Tool that should be used to run the test options are 'si
 ######################
 # Overwrite globals
 kill_project_tool="false"			# 2018-11-15 EPO: Disabled to not disrupt other people on the test environment
+
+#jm_keystore=e:/02_Scripts/gpbs/keystore.p12
+#jm_keyStorePassword=gkd!KEYSTORE
 ######################
