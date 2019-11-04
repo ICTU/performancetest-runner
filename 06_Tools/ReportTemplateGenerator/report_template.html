@@ -311,7 +311,7 @@ new Chart(document.getElementById("chart_counters"), {
       labels: [${measuretimeseries}],
       datasets: [
         {
-          label: "Response time",
+          label: "Response time (avg)",
           data: [${Transaction#Overall_Response_Time#Trans.(busy)_ok[s]}],
 		  fill: false,
 		  lineTension: 0.1,
@@ -321,7 +321,7 @@ new Chart(document.getElementById("chart_counters"), {
 		  yAxisID: 'Y1'
         },
 		{
-          label: "Transaction rate",
+          label: "Transaction rate (count)",
           data: [${Summary_General---Transactions}],
 		  fill: false,
 		  lineTension: 0.1,
@@ -331,7 +331,7 @@ new Chart(document.getElementById("chart_counters"), {
 		  yAxisID: 'Y2'
         },
 		{
-          label: "Error rate",
+          label: "Error rate (sum)",
           data: [${Summary_General---Errors}],
 		  fill: false,
 		  lineTension: 0.1,
@@ -341,7 +341,7 @@ new Chart(document.getElementById("chart_counters"), {
 		  yAxisID: 'Y2'
         },
 		{
-          label: "Active users",
+          label: "Active users (max)",
           data: [${Summary_General---Active_users}],
 		  fill: false,
 		  lineTension: 0.1,
@@ -360,12 +360,12 @@ new Chart(document.getElementById("chart_counters"), {
 		callbacks: {
 			label: function(tooltipItem, data) {
 					var unit = "";
-					if (data.datasets[tooltipItem.datasetIndex].label == "Response time")
+					if (data.datasets[tooltipItem.datasetIndex].label == "Response time (avg)")
 						unit = " s";
-					if ((data.datasets[tooltipItem.datasetIndex].label == "Transaction rate") || (data.datasets[tooltipItem.datasetIndex].label == "Error rate"))
+					if ((data.datasets[tooltipItem.datasetIndex].label == "Transaction rate (count)") || (data.datasets[tooltipItem.datasetIndex].label == "Error rate (sum)"))
 						unit = " trs\/10s";
 					
-					if (data.datasets[tooltipItem.datasetIndex].label == "Active users")
+					if (data.datasets[tooltipItem.datasetIndex].label == "Active users (max)")
 						unit = " users";
                     return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + unit;
                 },
