@@ -116,6 +116,10 @@ else
 	echo "Printing of options is disabled"
 fi
 
+if [[ "$cleanbackupfolder" == "true" ]]; then
+	cleanbackupfolder
+fi
+
 # Het doen van project specifieke checks
 if [[ "$project_specific_checks" == "true" ]]; then
 	

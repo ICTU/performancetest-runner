@@ -35,7 +35,9 @@ reportpublishfolder="$reporthistory_root/$project/$workload"					# If the genera
 
 usedspacethreshold="90" 														# percentage
 freespaceCthreshold=5000 														# in MB
-freespaceEthreshold=10000 														# in MB
+freespaceEthreshold=10000														# in MB
+maxbackfoldersnorm=28															# number of backup folders to keep for normal production load
+maxbackfoldersstressduur=16														# number of backup folders for keep for stress and duur load 
 	
 movelogs="true"																	# Should the logs be moved to the backup folder
 move_report="true"																# Should the report be moved to backup and publish folder
@@ -43,7 +45,7 @@ move_report="true"																# Should the report be moved to backup and pub
 #################################
 # Reporting
 #################################
-companylogoreference="<url location to logo>						"			# reference to compony logo inserted in report
+companylogoreference="<url location to logo>"									# reference to compony logo inserted in report
 reportdbconnectstring=<hostname>:<username>:<password>							# reference to rptgen database, to configure different port, use <hostname>:<port>:<username>:<password>								#reference to compony logo inserted in report
 
 #################################
@@ -63,6 +65,7 @@ rebuild_directories="true"														# Rebuilds directories after cleaning th
 removescriptfolder="false"														# 
 removelogfolders="true"															# Clean the logfolder of this project
 create_run_log="true"															# Write the start and end time in the buildlog
+cleanbackupfolder="true"														# Should backup folder be cleaned (only keep x amount of folders)
 ######################
 Vworkload="Verificatie"															# Default name of the Verification workload
 #################################
