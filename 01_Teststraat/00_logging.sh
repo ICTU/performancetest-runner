@@ -121,7 +121,9 @@ else
 fi
 
 if [[ "$cleanbackupfolder" == "true" ]]; then
+	
 	cleanbackupfolder
+	
 fi
 echo "-----------------------------------------------------------------------"
 

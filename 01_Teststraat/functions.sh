@@ -599,33 +599,21 @@ validateDiskSpace(){
 cleanbackupfolder(){
 	# Cleaning backup files
 	echo "Start removing backup result and logging folders"
-	files_in_dir_productieomgeving=$maxbackfoldersnorm #28  #1 mnd 1 testtype (28tests/mnd x 1mnd x 1typen)
-	files_in_dir_stressduuromgeving=$maxbackfoldersstressduur #16 # 2 mnd 2 testtypen (4tests/mnd x 2mnd x 2typen)
-
-	if [[ "$prodload" == "productie" ]]; then
-		files_in_dir=$files_in_dir_productieomgeving;
-	elif [[ "$prodload" == "stresstest" ]]; then
-		files_in_dir=$files_in_dir_stressduuromgeving;
-	elif [[ "$prodload" == "duurtest" ]]; then
-		files_in_dir=$files_in_dir_stressduuromgeving;
-	else
-		files_in_dir=$files_in_dir_productieomgeving; #default naar prod aantal
-	fi
-
+	
 	echo "Backup directory: $logbackupdir"
 	#echo "Project: $project"
 
 	arrResultDirs=(`find "$logbackupdir" -maxdepth 1 -type d -regex ".*\/[0-9][0-9]-[^ ]*_$project" | sort -r`)
-	echo "Keep numer of backups for $prodload: $files_in_dir"
+	echo "Keep numer of backups for $prodload: $backupsToKeep"
 	echo "Current number of backups: ${#arrResultDirs[@]}"
 
 	echo "The following backup folders are deleted: "
 	# Aangegeven aantal resultaten laten staan
-	for i in "${arrResultDirs[@]:$files_in_dir:${#arrResultDirs[@]}-$files_in_dir}"; do echo "$i"; done
+	for i in "${arrResultDirs[@]:$backupsToKeep:${#arrResultDirs[@]}-$backupsToKeep}"; do echo "$i"; done
 	
 	echo "Results: "
 	# Daadwerkelijk verwijderen files en directories, tevens weergeven (-v verbose)
-	for i in "${arrResultDirs[@]:$files_in_dir:${#arrResultDirs[@]}-$files_in_dir}"; do rm -r -v "$i"; done
+	for i in "${arrResultDirs[@]:$backupsToKeep:${#arrResultDirs[@]}-$backupsToKeep}"; do rm -r -v "$i"; done
 
 	unset arrResultDirs;
 	arrResultDirs=(`find "$logbackupdir" -maxdepth 1 -type d -regex ".*\/[0-9][0-9]-[^ ]*_$project" | sort -r`)
