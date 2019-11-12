@@ -128,6 +128,7 @@ fi
 echo "-----------------------------------------------------------------------"
 
 echo
+
 echo "-----------------------------------------------------------------------"
 # Check the available disk space, abort if not enough available
 # Will check space for each value in the hashmap with the provided space threshold

@@ -604,7 +604,7 @@ cleanbackupfolder(){
 	#echo "Project: $project"
 
 	arrResultDirs=(`find "$logbackupdir" -maxdepth 1 -type d -regex ".*\/[0-9][0-9]-[^ ]*_$project" | sort -r`)
-	echo "Keep numer of backups for $prodload: $backupsToKeep"
+	echo "Keep numer of backups for this environment: $backupsToKeep"
 	echo "Current number of backups: ${#arrResultDirs[@]}"
 
 	echo "The following backup folders are deleted: "
