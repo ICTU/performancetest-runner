@@ -8,8 +8,8 @@ testtag=$1
 workload=$2
 baseline=$3
 
-# even aanzetten om te testen
-# project="<projectnaam>"
+# Can be enabled to do test
+# project="<projectname>"
 
 . functions.sh || aborttest "Could not include functions"
 loadGlobals
@@ -21,23 +21,23 @@ test_variable "baseline" $baseline
 
 echo "Done with setting and checking incomming variables"
 echo "-----------------------------------------------------------------------"
-echo
 
 echo
+
 echo "-----------------------------------------------------------------------"
-# Genereren van het rapport
+# Generation of the report
 if [[ "$generatereport" == "true" ]]; then
 	
 	echo "Begin with generating report"
 
-	# Genereren report template
+	# First generate the template
 	echo "Report template: $reporttemplategenerator_root"
 	echo "project: $project"
 	cd "$reporttemplategenerator_root"
 	pwd
 	. ./generateTemplate.sh $project $projectfolder_root/$project/Transactions.csv || aborttest "Something went wrong generating the template"
 
-	# Kopieeren report template naar folder
+	# Copy the template to the report tool folder
 	mkdir -p $reporttemplatedestinationfolder
 	cp -f -v "${reporttemplategenerator_root}/templates/${project}_report_template.html" "${reporttemplatedestinationfolder}"
 	
@@ -50,7 +50,7 @@ if [[ "$generatereport" == "true" ]]; then
 	#cygstart  -w ./report_wrapper.bat $project $tool "\"Gegenereerd vanuit de TestStraat\"" $baseline
 	. ./report_wrapper.sh $project $tool "\"Gegenereerd vanuit de TestStraat\"" $baseline
 	
-	# Check of rapport gegenereerd is en of er een errorcode is
+	# Check if the report is generated or if there is an error code
 	if isfile $logdir_root/report/${project}_report.exitcode; then echo "Checking for errors..."; else aborttest "Warning, no error file found and therefore also no report generated!"; fi 
 	reporterrorcode=$(grep -o '[0-9]*' $logdir_root/report/${project}_report.exitcode)
 	if [[ "0" == "$reporterrorcode" ]]; then
@@ -75,9 +75,9 @@ else
 	echo "Generate report disabled"
 fi
 echo "-----------------------------------------------------------------------"
-echo
 
 echo
+
 echo "-----------------------------------------------------------------------"
 
 # Copying the generated report to backup structure
@@ -107,9 +107,9 @@ if [[ "$move_report" == "true" ]]; then
 fi
 
 echo "-----------------------------------------------------------------------"
-echo
 
 echo
+
 echo "-----------------------------------------------------------------------"
 # Generate a report history
 if [[ "$generatereporthistory" == "true" ]]; then
@@ -130,10 +130,9 @@ else
 	echo "Generate Report History is disabled"
 fi
 echo "-----------------------------------------------------------------------"
-echo
-
 
 echo
+
 echo "-----------------------------------------------------------------------"
 # Committing of report to repository
 if [[ "$committorepository" == "true" ]]; then

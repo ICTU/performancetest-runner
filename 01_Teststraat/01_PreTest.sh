@@ -17,11 +17,11 @@ test_variable "runverification" $runverification
 
 echo "Done with setting and checking incomming variables"
 echo "-----------------------------------------------------------------------"
-echo
 
 echo
+
 echo "-----------------------------------------------------------------------"
-# Ophalen van project specifieke parameters
+# Get the project specific parameters
 
 if [[ "$get_project_specific_parameters" == "true" ]]; then
  
@@ -34,13 +34,11 @@ else
 fi
 
 echo "-----------------------------------------------------------------------"
-echo
-
-
 
 echo
+
 echo "-----------------------------------------------------------------------"
-# Ophalen script vanuit SVN/GIT
+# Get the script from SVN/GIT
 
 if [[ "$getfromrepository" == "true" ]]; then
 	echo "Start getting script from repository"
@@ -51,11 +49,13 @@ else
 fi
 
 echo "-----------------------------------------------------------------------"
-echo
 
 echo
+
 echo "-----------------------------------------------------------------------"
-# Runnen van een verificatie workload, dit om de applicatie op te warmen, maar ook om de scripts te testen.
+# Running of the verification workload. This is done to:
+# - Warmup the application
+# - Validate if the application functionality is working as expected
 
 if [[ "$runverification" == "true" ]]; then
 	
