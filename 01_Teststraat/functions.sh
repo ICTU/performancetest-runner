@@ -585,7 +585,7 @@ validateDiskSpace(){
 	
 	if [[ $availSpace -lt $reqSpace ]]; then
 	  echo "*****************************"
-	  echo "Not enough diskspace available" 
+	  echo "Not enough diskspace available on $1" 
 	  echo "Required space (in MB)  = $reqSpace"
 	  echo "Available space (in MB) = $availSpace"
 	  echo "Aborting test"
