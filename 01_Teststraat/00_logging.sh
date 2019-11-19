@@ -133,8 +133,9 @@ echo "-----------------------------------------------------------------------"
 # Check the available disk space, abort if not enough available
 # Will check space for each value in the hashmap with the provided space threshold
 declare -A spaceHashTable=$spaceHashTableValues
+declare -A spaceHashTableWarning=$spaceHashTableValuesWarning
 for location in "${!spaceHashTable[@]}"; do 
-	validateDiskSpace "$location" "${spaceHashTable[$location]}" 
+	validateDiskSpace "$location" "${spaceHashTable[$location]}" "${spaceHashTableWarning[$location]}" 
 done
 echo "-----------------------------------------------------------------------"
 

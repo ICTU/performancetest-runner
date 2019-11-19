@@ -573,6 +573,7 @@ getAppVersion() {
 validateDiskSpace(){
 	location=$1
 	reqSpace=$2
+	reqSpaceWarning=$3
 	
 	if [[ "$OS_type" == "windows" ]]; then
 		availSpace=$(df "$location"":/" --block-size=MB | awk 'NR==2 { print $4 }' | sed 's/[^0-9]*//g')
@@ -584,13 +585,19 @@ validateDiskSpace(){
 	fi
 	
 	if [[ $availSpace -lt $reqSpace ]]; then
-	  echo "*****************************"
-	  echo "Not enough diskspace available on $1" 
-	  echo "Required space (in MB)  = $reqSpace"
-	  echo "Available space (in MB) = $availSpace"
-	  echo "Aborting test"
-	  echo "*****************************"
-	  exit 1
+		echo "*****************************"
+		echo "Not enough diskspace available on $1" 
+		echo "Required space (in MB)  = $reqSpace"
+		echo "Available space (in MB) = $availSpace"
+		echo "Aborting test"
+		echo "*****************************"
+		exit 1
+	elif [[ $availSpace -lt $reqSpaceWarning ]]; then
+		echo "*****************************"
+		echo "Warning disk space is getting limited on $1" 
+		echo "Required space (in MB)  = $reqSpaceWarning"
+		echo "Available space (in MB) = $availSpace"
+		echo "*****************************"
 	else
 		echo "Enough space available on $location: $availSpace MB, required: $reqSpace"
 	fi

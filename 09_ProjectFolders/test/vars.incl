@@ -11,3 +11,7 @@ kill_project_tool="false"			# 2018-11-15 EPO: Disabled to not disrupt other peop
 #jm_keystore=<project specific path to keystore>
 #jm_keyStorePassword=<project specific keystore password>
 ######################
+# Overwrite globals machine specific
+if isfile $projectfolder_root/$project/vars_environment_specific.incl; then echo "Found environment overwrite specific variables"; else aborttest "Found environment overwrite specific variables not found, aborting"; fi 
+. $projectfolder_root/$project/vars_environment_specific.incl
+#####################

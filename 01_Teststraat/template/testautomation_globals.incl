@@ -34,6 +34,7 @@ generatereporthistory="true"													# Set to true if you want to build a re
 reportpublishfolder="$reporthistory_root/$project/$workload"					# If the generatereporthistory is set to true, a report with timestamp will be placed in this location
 
 spaceHashTableValues="(["C"]="5000" ["E"]="10000")"								# Windows variant size should be in MB
+#spaceHashTableValuesWarning="(["C"]="6000" ["E"]="8000")"						# Windows variant size should be in MB
 #spaceHashTableValues="(["/cygdrive/c"]="5000" ["/cygdrive/e"]="10000")"		# Linux variant size should be in MB
 
 maxbackfoldersnorm=28															# number of backup folders to keep for normal production load
