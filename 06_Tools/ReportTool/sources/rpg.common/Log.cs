@@ -17,7 +17,7 @@ namespace rpg.common
         public static string GetTimestamp()
         {
             //return DateTime.Now.ToString("s");  MM/dd/yy H:mm:ss zzz
-            return DateTime.Now.ToString("[yyMMddTHHmmss]");
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace rpg.common
         /// <param name="message"></param>
         public static void WriteLine(String message)
         {
-            //Console.WriteLine(GetTimestamp()+" "+message);
+            //Console.WriteLine("["+GetTimestamp()+"] "+message);
             Console.WriteLine(message);
         }
 

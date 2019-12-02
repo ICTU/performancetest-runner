@@ -8,7 +8,7 @@
     <Company>ICTU</Company>
     <Product>Report Generator - load intermediate</Product>
     <Copyright>ICTU 2019</Copyright>
-    <Version>4.9.1.0</Version>
+    <Version>4.9.2.0</Version>
     <Authors>ISR</Authors>
     <PackageId></PackageId>
     <Description>Load intermediate csv data into the reportgenerator database</Description>

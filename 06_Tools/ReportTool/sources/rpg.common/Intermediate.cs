@@ -190,7 +190,7 @@ namespace rpg.common
             // Fix transaction entries and left length of value series
             Log.WriteLine(string.Format("expanding data for [{0}]", tag));
 
-            // add key if not exist
+            // add key (transaction name) if not exist
             foreach (KeyValuePair<string, string> pair in intermediate)
             {
                 if (!this.ContainsKey(pair.Key))
@@ -234,8 +234,11 @@ namespace rpg.common
         /// </summary>
         public void Normalize()
         {
+            Log.WriteLine("normalize intermediate...");
+
             int cnt;
             int maxCnt = 0;
+
             // find max value series length
             foreach (KeyValuePair<string, string> pair in this)
             {
@@ -249,14 +252,27 @@ namespace rpg.common
             foreach (KeyValuePair<string, string> pair in this)
             {
                 string newValue = pair.Value;
-                while (NumOfElements(newValue) < maxCnt)
+
+                // if new value: fill left
+                if ((NumOfElements(newValue) == 1) && (maxCnt>1))
                 {
-                    newValue = newValue + LISTSEPARATOR;
+                    //Log.Write("left fill:[" + pair.Key + "=" + pair.Value + "]");
+                    while (NumOfElements(newValue) < maxCnt)
+                        newValue = LISTSEPARATOR + newValue;
+                    //Log.WriteLine("->[" + newValue + "]");
                 }
-                
+                // if already present: fill right
+                else
+                {
+                    //Log.Write("right fill:[" + pair.Key + "=" + pair.Value + "]");
+                    while (NumOfElements(newValue) < maxCnt)
+                        newValue = newValue + LISTSEPARATOR;
+                    //Log.WriteLine("->[" + newValue + "]");
+                }
+
                 tmpList.Add(pair.Key, newValue);
             }
-            this.CopyFrom(tmpList);
+            this.ReplaceFrom(tmpList);
         }
 
 
@@ -264,7 +280,7 @@ namespace rpg.common
         /// Copy content from dictionary
         /// </summary>
         /// <param name="workList"></param>
-        public void CopyFrom(Intermediate workList)
+        public void ReplaceFrom(Intermediate workList)
         {
             this.Clear();
             foreach (KeyValuePair<string, string> pair in workList)
