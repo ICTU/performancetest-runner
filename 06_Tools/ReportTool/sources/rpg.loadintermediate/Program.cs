@@ -15,8 +15,8 @@ namespace rpg.loadintermediate
         static void Main(string[] args)
         {
 
-            Log.WriteLine("### rpg.loadintermediate <project> <testrun> <category> <entity> <intermediatefile> <database>");
-            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            Log.WriteLine("rpg.loadintermediate <project> <testrun> <category> <entity> <intermediatefile> <database>", true);
+            Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter Params = new ParamInterpreter();
             Params.Initialize(args);
@@ -34,7 +34,7 @@ namespace rpg.loadintermediate
             // opslaan intermediate in database
             c.StoreIntermediate(Params.Value("project"), Params.Value("testrun"), Params.Value("category"), Params.Value("entity") );
 
-            Log.WriteLine("### rpg.loadintermediate finished\n");
+            Log.WriteLine("rpg.loadintermediate finished\n", true);
 
         }
     }

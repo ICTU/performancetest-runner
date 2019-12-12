@@ -164,28 +164,6 @@ namespace rpg.merge
         }
 
         /// <summary>
-        /// Merge licenseinfo into output file, right after -body- tag
-        /// </summary>
-        /// <param name="outputResultFilename"></param>
-        public void MergeLicenseInfo(string outputResultFilename)
-        {
-            LicenseManager licMgr = new LicenseManager();
-            string licenseInfo = licMgr.IsValid() ? "" : licMgr.GetHtmlBoldExpiredSince();
-
-            Log.WriteLine("merge license info and write output...");
-            if (!licenseInfo.Equals(""))
-            {
-                string content = File.ReadAllText(outputResultFilename);
-                if (!content.Contains(licenseInfo))
-                {
-                    // evt later toevoegen
-                    //File.WriteAllText(outputResultFilename, content.Replace("<body>", "<body><b>" + licenseInfo + "</b>") );
-                }
-            }
-        }
-
-
-        /// <summary>
         /// Strip variable- and repeat placeholders form templateline
         /// </summary>
         /// <param name="templateLine"></param>

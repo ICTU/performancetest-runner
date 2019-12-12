@@ -8,8 +8,8 @@ namespace rpg.parsevariables
     {
         static void Main(string[] args)
         {
-            Log.WriteLine("### rpg.parsevariables parser=[jmeter|silkperformer] <...> <out:intermediatefile>");
-            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            Log.WriteLine("rpg.parsevariables parser=[jmeter|silkperformer] <...> <out:intermediatefile>", true);
+            Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
             //Log.WriteLine("silkperformer: <transactionfilecsv> <transactionfilebrp>");
             //Log.WriteLine("jmeter: <transactionfilejtl> <transactionfilecsv>");
 
@@ -34,7 +34,7 @@ namespace rpg.parsevariables
 
             controller.Parse(parameters);
 
-            Log.WriteLine("### rpg.parsevariables finished\n");
+            Log.WriteLine("rpg.parsevariables finished\n", true);
         }
     }
 }
