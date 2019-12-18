@@ -10,8 +10,8 @@ namespace rpg.parsemeasures
         // intermediate format should be search-and-replaceable in the target template, one merge tool for all types of intermediate values
         static void Main(string[] args)
         {
-            Log.WriteLine("### rpg.parsemeasures parser=[jmeter, silkperformer] <parameters (ask)>");
-            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            Log.WriteLine("rpg.parsemeasures parser=[jmeter, silkperformer] <parameters (ask)>", true);
+            Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter parameters = new ParamInterpreter();
             parameters.Initialize(args);
@@ -34,7 +34,7 @@ namespace rpg.parsemeasures
 
             controller.Parse(parameters);
 
-            Log.WriteLine("### rpg.parsemeasures finished\n");
+            Log.WriteLine("rpg.parsemeasures finished\n", true);
         }
 
     }

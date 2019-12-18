@@ -146,6 +146,7 @@ namespace rpg.common
             Threshold result = new Threshold();
 
             // if none found, set generic
+            result.eval = genericTag;
             result.th1 = genericTh1;
             result.th2 = genericTh2;
 
@@ -158,6 +159,9 @@ namespace rpg.common
                     result = threshold;
                 }
             }
+
+            Log.WriteLine(String.Format("threshold match for {0}=[{1}]", key, result.eval));
+
             return result;
         }
 

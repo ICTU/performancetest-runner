@@ -36,6 +36,7 @@ reportpublishfolder="$reporthistory_root/$project/$workload"					# If the genera
 spaceHashTableValues=[ENTER_VALUE]												# Windows variant size should be in MB, example: "(["C"]="5000" ["/var/log"]="10000")"
 spaceHashTableValuesWarning=[ENTER_VALUE]										# Windows variant size should be in MB, example: "(["C"]="6000" ["var/log"]="8000")"
 
+backupsToKeep=28																# old var
 maxbackfoldersnorm=28															# number of backup folders to keep for normal production load
 maxbackfoldersstressduur=16														# number of backup folders for keep for stress and duur load 
 	

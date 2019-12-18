@@ -7,8 +7,8 @@ namespace rpg.parsetransactions
     {
         static void Main(string[] args)
         {
-            Log.WriteLine("### rpg.parsetransactions <in:parser [jmeter|silkperformer]> <parameters (ask)>");
-            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            Log.WriteLine("rpg.parsetransactions <in:parser [jmeter|silkperformer]> <parameters (ask)>", true);
+            Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter parameters = new ParamInterpreter();
 
@@ -39,7 +39,7 @@ namespace rpg.parsetransactions
 
             controller.Parse(parameters);
 
-            Log.WriteLine("### rpg.parsetransactions finished\n");
+            Log.WriteLine("rpg.parsetransactions finished\n", true);
         }
 
     }

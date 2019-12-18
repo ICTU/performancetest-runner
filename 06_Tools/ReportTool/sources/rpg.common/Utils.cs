@@ -264,26 +264,9 @@ namespace rpg.common
         /// <returns></returns>
         public static string NormalizeTransactionName(string suggestedName)
         {
-            //string name = suggestedName;
-            //name = name.Replace('/','|');   // dangerous for sed statement in templategenerator (for now)
-            //name = name.Replace('\\','|');  // dangerous for sed statement in templategenerator (for now)
-            //name = name.Replace(":", "-");
-            //name = name.Replace("=", "-");
-            //name = name.Replace(".", "");   // dangerous for sed statement in templategenerator (for now)
-            //name = name.Replace("<", "");
-            //name = name.Replace(">", "");
-            //name = name.Replace("\"", "");
-            //name = name.Replace("\'", "");
-            //name = name.Replace("[", "(");
-            //name = name.Replace("]", ")");
-            //name = name.Replace('{', '|'); // sed in template generator is sensitive to curly brackets (replaces initial fix in post
-            //name = name.Replace('}', '|');
-            //name = name.Trim();             // just more beautiful
-            //name = name.Replace("  "," ");  // template generator is failing on this
-
-            // trial for testpurposes, not effective yet, appears only in log for now
             string newName = "";
-            foreach (char c in suggestedName)
+
+            foreach (char c in suggestedName.Trim())
             {
                 // characters allowed: a-z A-Z 0-9 - _ rest is replaced by _
                 if (Regex.IsMatch(c.ToString(), $"[a-zA-Z0-9-]"))

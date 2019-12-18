@@ -20,8 +20,8 @@ namespace rpg.merge
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Log.WriteLine("### rpg.merge [h (help), i (intermediate), v (variable), j (join), t (threshold), +t (with threshold), +d (with diff), +b (with baseline)] <templatefilename:name>");
-            Log.WriteLine("### version " + typeof(Program).Assembly.GetName().Version.ToString());
+            Log.WriteLine("rpg.merge [h (help), i (intermediate), v (variable), j (join), t (threshold), +t (with threshold), +d (with diff), +b (with baseline)] <templatefilename:name>", true);
+            Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
 
             ParamInterpreter _params = new ParamInterpreter();
             _params.Initialize(args);
@@ -122,10 +122,7 @@ namespace rpg.merge
                 throw new Exception("No parameters, nothing to do");
             }
 
-
-            //mergeController.MergeLicenseInfo(templateFilename);
-
-            Log.WriteLine("### rpg.merge finished\n");
+            Log.WriteLine("rpg.merge finished\n", true);
         }
     }
 }
