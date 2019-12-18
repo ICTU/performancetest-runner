@@ -6,29 +6,113 @@ aborttest() {
 	exit 1
 }
 
-loadGlobals() {
-	#echo "Start loading globals"
-	# Check if there is a testautomation_globals.incl file in the test automation root folder
+createGlobals() {
+	
+	# Check if globals_location is known
+	# Load globals_loaction
 	if isfile ./testautomation_globals_location.incl; then 
-		# echo "Found location of test automation global variables"
+		echo "Found location of test automation global variables, including it now..."
 		. ./testautomation_globals_location.incl
-	else 
-		echo "Could not find ./testautomation_globals_location creating it now"
-		echo "testautomation_globals_location=\"E:/00_Globals/testautomation_globals.incl\"" > testautomation_globals_location.incl
-		aborttest
+	else
+		aborttest "ERROR: Could not find \"testautomation_globals_location.incl\". Should be present in the performancetest-runner root. Probably something wrong with setup, aborting..."
+	fi
+
+	# Copy template to globals_location and overwrite file there if it exists
+	# echo "Copying default globals to $testautomation_globals_location"
+	# cp -f ./template/testautomation_globals_defaults.incl $testautomation_globals_location || aborttest "Could not copy template to globals folder"
+	# echo ""
+	# echo "including default globals..."
+	# . ./$testautomation_globals_location/testautomation_globals_defaults.incl
+
+	if isfile $testautomation_globals_location/testautomation_globals_overwrites.incl; then
+		# Check if all required variables are filled
+		numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals_overwrites.incl | wc -l)
+		if [[ $numberOfValuesToFill -gt 0 ]]; then
+			echo "*****************************"
+			echo "ERROR" 
+			echo "There are still variables containing [ENTER_VALUE] that require a value"
+			echo "Location: $testautomation_globals_location/testautomation_globals_overwrites.incl"
+			echo "Aborting test"
+			echo "*****************************"
+			exit 1
+		else
+			echo "All overwrite variables contain a value, merging with defaults..."
+			MergeGlobals
+			# echo "including $testautomation_globals_location/testautomation_globals_overwrites.incl now..."
+			# . ./$testautomation_globals_location/testautomation_globals_overwrites.incl
+		fi
+	else
+		cp ./template/testautomation_globals_overwrites.incl $testautomation_globals_location
+		aborttest "Created overwrite file in $testautomation_globals_location please fill it with the correct values before rerunning the test!"
 	fi
 		
-	if isfile $testautomation_globals_location; then 
-		echo "testautomation_globals found, including now"; 
-		. $testautomation_globals_location
-	else
-		echo "testautomation_globals_location: $testautomation_globals_location"
-		echo "Could not find location of global test automation variables! Copying template to testautomation_globals_location"
-		echo "current location: $(pwd)"
-		cp ./template/testautomation_globals.incl $testautomation_globals_location
-		aborttest "Aborting test due to testautomation_globals not present. Template is created now, please fill it with the correct locations before running test again!"
-	fi 
-	#echo "Done loading globals"
+}
+
+MergeGlobals() {
+	defaults_location="./template/testautomation_globals_defaults.incl"
+	overrides_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
+	output_location="$testautomation_globals_location/testautomation_globals.incl"
+
+	echo "--Start MergeGlobals--"
+	echo "---Start Part 1---"
+	echo "Put all the key=value pairs from the defaults file into the defaultsArray"
+	declare -A defaultsArray=( )   # Initialize an empty array for the defaults
+	while read line; do
+		if [[ $line == *"="* ]]; then 				   # only do lines containing = should be used
+	  		key=$(echo $line | cut -d '=' -f1) 		   # everything on the left of =
+			value=$(echo $line | cut -d '=' -f2-) 	   # everything on the right of =
+			defaultsArray[$key]=$value				   # store the variable name as key, store the variable name as value
+			# echo "key: $key | value: $value"	
+		fi
+	done < $defaults_location
+	declare -p defaultsArray       # print resulting array
+	echo "---End Part 1---"
+	
+	echo
+	
+	echo "---Start Part 2---"
+	echo "Grab all the key=value pairs from the override file into the overridesArray"
+	declare -A overridesArray=( )   # Initialize an empty array for the overrides
+	while read line; do
+		if [[ $line == *"="* ]]; then 				   # only use lines containing = should be used
+			key=$(echo $line | cut -d '=' -f1) 		   # everything on the left of =
+			value=$(echo $line | cut -d '=' -f2-) 	   # everything on the right of =
+			overridesArray[$key]=$value				   # store the variable name as key, store the variable name as value
+		fi
+	done < $overrides_location
+	declare -p overridesArray		# print the resulting array
+	echo "---End Part 2---"
+	
+	echo
+
+	echo "---Start Part 3---"
+	echo "Put the overrides into the defaultsArray"
+	for override_variable in "${!overridesArray[@]}"; do 
+		defaultsArray[$override_variable]=${overridesArray[$override_variable]}
+	done
+	echo "---End Part 3---"
+	
+	echo
+
+	echo "---Start Part 4---"
+	echo "create an orderedArray"
+	echo \#\! \/bin\/bash > $output_location
+	while read line; do
+		if [[ $line == *"="* ]]; then 				   # only do lines containing = should be used
+			key=$(echo $line | cut -d '=' -f1)
+			echo $key\=${defaultsArray[$key]} >> $output_location
+		fi
+	done < $defaults_location
+
+	echo "---End Part 4---"
+	
+	echo
+}
+
+loadGlobals() {
+	. ./testautomation_globals_location.incl || aborttest "Could not find testautomation_globals_location to include" #load location of the globals
+	. $testautomation_globals_location/testautomation_globals.incl || aborttest "Could not find globals to include" # load the globals
+	. $projectfolder_root/$project/vars.incl || aborttest "Could not include project variables"
 }
 
 #Function to check if directory exists

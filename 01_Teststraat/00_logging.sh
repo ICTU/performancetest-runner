@@ -4,17 +4,17 @@ echo "-----------------------------------------------------------------------"
 echo "Start script $0 on `date +"%m-%d-%y"` @ `date +"%T"`"
 echo "-----------------------------------------------------------------------"
 
+. ./functions.sh
+
 buildnumber=$1
 prodload=$2
 baseline=$3
 project=$4
 runverification=$5
 
-. ./functions.sh
-loadGlobals
-
 numberofvars=5
 
+echo "-----------------------------------------------------------------------"
 echo "The script received $# arguments"
 echo "The script expected "$numberofvars" arguments"
 
@@ -32,10 +32,19 @@ else
 
 	echo "All variables present and filled"
 fi
-	
-
 echo "Done with setting and checking incomming variables"
 echo "-----------------------------------------------------------------------"
+
+echo
+
+echo "-----------------------------------------------------------------------"
+echo "Start with creating and loading of globals"
+
+createGlobals
+loadGlobals
+
+echo "Done with creating and loading of globals"
+echo "-----------------------------------------------------------------------"	
 
 echo
 echo "-----------------------------------------------------------------------"
@@ -49,6 +58,7 @@ echo "-----------------------------------------------------------------------"
 echo
 echo "-----------------------------------------------------------------------"
 echo "Start writing start time + project to file"
+echo "BuildlogLocation: $BuildlogLocation"
 echo start=`date +"%y-%m-%d_%H_%M_%S"` : $project $prodload >> $BuildlogLocation
 echo "Done writing start time + project to file"
 echo "-----------------------------------------------------------------------"

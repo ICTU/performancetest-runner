@@ -1,0 +1,7 @@
+#!/bin/bash
+OS_type=[ENTER_VALUE]															# Either "windows" or "linux"
+root=[ENTER_VALUE]																# root of the performancetest-runner repository, example: "E:/Test/performancetest-runner"
+spaceHashTableValues=[ENTER_VALUE]												# Should be in MB, example: "(["C"]="5000" ["/var/log"]="10000")"
+spaceHashTableValuesWarning=[ENTER_VALUE]										# Should be in MB, example: "(["C"]="6000" ["var/log"]="8000")"
+companylogoreference=[ENTER_VALUE]												# reference to compony logo inserted in report, example: "<url location to logo>"
+reportdbconnectstring=[ENTER_VALUE]												# reference to rptgen database, to configure different port, use <hostname>:<port>:<username>:<password>

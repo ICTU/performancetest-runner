@@ -10,7 +10,6 @@ runverification=$2
 
 . functions.sh || aborttest "Could not include functions"
 loadGlobals
-. $projectfolder_root/$project/vars.incl || aborttest "Could not include project variables"
 
 test_variable "testtag" $testtag
 test_variable "runverification" $runverification
