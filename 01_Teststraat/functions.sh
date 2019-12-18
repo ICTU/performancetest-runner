@@ -42,8 +42,13 @@ createGlobals() {
 			# . ./$testautomation_globals_location/testautomation_globals_overwrites.incl
 		fi
 	else
+		echo "*****************************"
+		echo "ERROR"
+		echo "No overwrites file present yet, creating it now in $$testautomation_globals_location" 
 		cp ./template/testautomation_globals_overwrites.incl $testautomation_globals_location
-		aborttest "Created overwrite file in $testautomation_globals_location please fill it with the correct values before rerunning the test!"
+		echo "Created overwrite file in $testautomation_globals_location please fill it with the correct values before rerunning the test!"
+		echo "*****************************"
+		aborttest "Stopping test now..."
 	fi
 		
 }
