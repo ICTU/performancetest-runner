@@ -62,12 +62,12 @@ createGlobals() {
 		else
 			echo "All overwrite variables contain a value, merging with defaults..."
 			MergeGlobals
-			numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals_overwrites.incl | wc -l)
+			numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals.incl | wc -l)
 			if [[ $numberOfValuesToFill -gt 0 ]]; then
 				echo "*****************************"
 				echo "ERROR" 
 				echo "Merge was not fully successfull there are still variables containing [ENTER_VALUE] that require a value"
-				echo "Location: $testautomation_globals_location/testautomation_globals_overwrites.incl"
+				echo "Location: $testautomation_globals_location/testautomation_globals.incl"
 				echo "Aborting test"
 				echo "*****************************"
 				exit 1
