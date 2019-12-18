@@ -17,13 +17,37 @@ createGlobals() {
 		aborttest "ERROR: Could not find \"testautomation_globals_location.incl\". Should be present in the performancetest-runner root. Probably something wrong with setup, aborting..."
 	fi
 
-	# Copy template to globals_location and overwrite file there if it exists
-	# echo "Copying default globals to $testautomation_globals_location"
-	# cp -f ./template/testautomation_globals_defaults.incl $testautomation_globals_location || aborttest "Could not copy template to globals folder"
-	# echo ""
-	# echo "including default globals..."
-	# . ./$testautomation_globals_location/testautomation_globals_defaults.incl
-
+	# Check if there is an empty line at the end of the overwrites, this is required for sed to evaluate
+	overwrite_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
+	lastline_overwrite=$(tail -1 $overwrite_location)
+	if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
+		echo -e "\\n# Dummyline for sed" >> $overwrite_location
+		lastline_overwrite=$(tail -1 $overwrite_location)
+		if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
+			echo "*****************************"
+			echo "ERROR" 
+			echo "Could not add dummy line to $overwrite_location"
+			echo "Please contact support!"
+			echo "*****************************"
+			aborttest "Aborting test..."
+		fi
+	fi
+	
+	defaults_location="./template/testautomation_globals_defaults.incl"
+	lastline_default=$(tail -1 $defaults_location)
+	if [[ "$lastline_default" != "# Dummyline for sed" ]]; then
+		echo -e "\\n# Dummyline for sed" >> $defaults_location
+		lastline_default=$(tail -1 $defaults_location)
+		if [[ "$lastline_default" != "# Dummyline for sed" ]]; then
+			echo "*****************************"
+			echo "ERROR" 
+			echo "Could not add dummy line to $defaults_location"
+			echo "Please contact support!"
+			echo "*****************************"
+			aborttest "Aborting test..."
+		fi
+	fi
+	
 	if isfile $testautomation_globals_location/testautomation_globals_overwrites.incl; then
 		# Check if all required variables are filled
 		numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals_overwrites.incl | wc -l)
@@ -35,11 +59,6 @@ createGlobals() {
 			echo "Aborting test"
 			echo "*****************************"
 			exit 1
-		lastline=$(tail -1 $testautomation_globals_location/testautomation_globals_overwrites.incl)
-		if [[ "$lastline" != "# Dummyline for sed" ]]; then
-			echo -e "\\n" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
-			echo "# Dummyline for sed" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
-		fi
 		else
 			echo "All overwrite variables contain a value, merging with defaults..."
 			MergeGlobals
