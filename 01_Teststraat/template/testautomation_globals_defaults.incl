@@ -82,6 +82,6 @@ committorepository="true"														# If the report should be pushed to a rep
 revision_control_tool=GIT														# Which revision control tool is used
 repository_log_drive="E:"														# Drive of the local repository
 repository_report_dir="$reportsfolder_root\\$project"							# Location of the local repository
-giturl="http://[user]:[password]@[urltoreposotory].git"							# Remote URL for the GIT repository example: http://username:password@gitlab.performance.company/$project/$workload.git
+giturl="[ENTER_VALUE]"															# Remote URL for the GIT repository example: http://username:password@gitlab.performance.company/$project/$workload.git
 #################################
 # Dummyline for sed

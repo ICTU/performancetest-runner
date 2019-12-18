@@ -5,3 +5,4 @@ spaceHashTableValues=[ENTER_VALUE]												# Should be in MB, example: "(["C"
 spaceHashTableValuesWarning=[ENTER_VALUE]										# Should be in MB, example: "(["C"]="6000" ["var/log"]="8000")"
 companylogoreference=[ENTER_VALUE]												# reference to compony logo inserted in report, example: "<url location to logo>"
 reportdbconnectstring=[ENTER_VALUE]												# reference to rptgen database, to configure different port, use <hostname>:<port>:<username>:<password>
+giturl=[ENTER_VALUE]															# Remote URL for the GIT repository example: http://username:password@gitlab.performance.company/$project/$workload.git
