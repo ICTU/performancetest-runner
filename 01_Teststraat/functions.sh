@@ -35,8 +35,8 @@ createGlobals() {
 			echo "Aborting test"
 			echo "*****************************"
 			exit 1
-		lastline=$(tail $testautomation_globals_location/testautomation_globals_overwrites.incl)
-		if [[ $lastline != "# Dummyline for sed" ]]; then
+		lastline=$(tail -1 $testautomation_globals_location/testautomation_globals_overwrites.incl)
+		if [[ "$lastline" != "# Dummyline for sed" ]]; then
 			echo "# Dummyline for sed" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
 		fi
 		else
