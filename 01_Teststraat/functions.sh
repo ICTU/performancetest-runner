@@ -35,6 +35,10 @@ createGlobals() {
 			echo "Aborting test"
 			echo "*****************************"
 			exit 1
+		lastline=$(tail $testautomation_globals_location/testautomation_globals_overwrites.incl)
+		if [[ $lastline != "# Dummyline for sed" ]]; then
+			echo "# Dummyline for sed" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
+		fi
 		else
 			echo "All overwrite variables contain a value, merging with defaults..."
 			MergeGlobals
