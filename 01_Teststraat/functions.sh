@@ -37,6 +37,7 @@ createGlobals() {
 			exit 1
 		lastline=$(tail -1 $testautomation_globals_location/testautomation_globals_overwrites.incl)
 		if [[ "$lastline" != "# Dummyline for sed" ]]; then
+			echo -e "\\n" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
 			echo "# Dummyline for sed" >> $testautomation_globals_location/testautomation_globals_overwrites.incl
 		fi
 		else
