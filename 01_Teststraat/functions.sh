@@ -70,7 +70,7 @@ MergeGlobals() {
 			# echo "key: $key | value: $value"	
 		fi
 	done < $defaults_location
-	declare -p defaultsArray       # print resulting array
+	declare defaultsArray       # print resulting array
 	echo "---End Part 1---"
 	
 	echo
@@ -85,7 +85,7 @@ MergeGlobals() {
 			overridesArray[$key]=$value				   # store the variable name as key, store the variable name as value
 		fi
 	done < $overrides_location
-	declare -p overridesArray		# print the resulting array
+	declare overridesArray		# print the resulting array
 	echo "---End Part 2---"
 	
 	echo
