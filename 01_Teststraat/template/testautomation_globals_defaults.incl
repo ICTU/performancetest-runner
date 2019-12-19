@@ -81,7 +81,7 @@ getfromrepository="false"														# Should the scripts be pulled from a rep
 committorepository="true"														# If the report should be pushed to a repository
 revision_control_tool=GIT														# Which revision control tool is used
 repository_log_drive="E:"														# Drive of the local repository
-repository_report_dir="$reportsfolder_root\\$project"							# Location of the local repository
+repository_report_dir="$reportsfolder_root/$project"							# Location of the local repository
 giturl="[ENTER_VALUE]"															# Remote URL for the GIT repository example: http://username:password@gitlab.performance.company/$project/$workload.git
 #################################
 # Dummyline for sed
