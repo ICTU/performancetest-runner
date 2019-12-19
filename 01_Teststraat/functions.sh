@@ -32,18 +32,18 @@ createGlobals() {
 		fi
 	fi	
 	
-	if isfile $testautomation_globals_location/testautomation_globals_overwrites.incl; then
+	overrides_location="$testautomation_globals_location/testautomation_globals_overrides.incl"
+	if isfile $overrides_location; then
 		
-		# Check if there is an empty line at the end of the overwrites, this is required for sed to evaluate
-		overwrite_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
-		lastline_overwrite=$(tail -1 $overwrite_location)
+		# Check if there is an empty line at the end of the overrides, this is required for sed to evaluate
+		lastline_overwrite=$(tail -1 $overrides_location)
 		if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
-			echo -e "\\n# Dummyline for sed" >> $overwrite_location
-			lastline_overwrite=$(tail -1 $overwrite_location)
+			echo -e "\\n# Dummyline for sed" >> $overrides_location
+			lastline_overwrite=$(tail -1 $overrides_location)
 			if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
 				echo "*****************************"
 				echo "ERROR" 
-				echo "Could not add dummy line to $overwrite_location"
+				echo "Could not add dummy line to $overrides_location"
 				echo "Please contact support!"
 				echo "*****************************"
 				aborttest "Aborting test..."
@@ -51,12 +51,12 @@ createGlobals() {
 		fi
 		
 		# Check if all required variables are filled
-		numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals_overwrites.incl | wc -l)
+		numberOfValuesToFill=$(grep "ENTER_VALUE" $overrides_location | wc -l)
 		if [[ $numberOfValuesToFill -gt 0 ]]; then
 			echo "*****************************"
 			echo "ERROR" 
 			echo "There are still variables containing [ENTER_VALUE] that require a value"
-			echo "Location: $testautomation_globals_location/testautomation_globals_overwrites.incl"
+			echo "Location: $overrides_location"
 			echo "Aborting test"
 			echo "*****************************"
 			exit 1
@@ -77,9 +77,9 @@ createGlobals() {
 	else
 		echo "*****************************"
 		echo "ERROR"
-		echo "No overwrites file present yet, creating it now in $testautomation_globals_location" 
-		cp ./template/testautomation_globals_overwrites.incl $testautomation_globals_location
-		echo "Created overwrite file in $testautomation_globals_location please fill it with the correct values before rerunning the test!"
+		echo "No overrides file present yet, creating it now in $testautomation_globals_location" 
+		cp ./template/testautomation_globals_overrides.incl $testautomation_globals_location
+		echo "Created testautomation_globals_overrides.incl file in $testautomation_globals_location please fill it with the correct values before rerunning the test!"
 		echo "*****************************"
 		aborttest "Stopping test now..."
 	fi
@@ -88,7 +88,7 @@ createGlobals() {
 
 MergeGlobals() {
 	defaults_location="./template/testautomation_globals_defaults.incl"
-	overrides_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
+	overrides_location="$testautomation_globals_location/testautomation_globals_overrides.incl"
 	output_location="$testautomation_globals_location/testautomation_globals.incl"
 
 	echo "--Start MergeGlobals--"
