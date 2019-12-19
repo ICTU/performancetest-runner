@@ -16,22 +16,6 @@ createGlobals() {
 	else
 		aborttest "ERROR: Could not find \"testautomation_globals_location.incl\". Should be present in the performancetest-runner root. Probably something wrong with setup, aborting..."
 	fi
-
-	# Check if there is an empty line at the end of the overwrites, this is required for sed to evaluate
-	overwrite_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
-	lastline_overwrite=$(tail -1 $overwrite_location)
-	if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
-		echo -e "\\n# Dummyline for sed" >> $overwrite_location
-		lastline_overwrite=$(tail -1 $overwrite_location)
-		if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
-			echo "*****************************"
-			echo "ERROR" 
-			echo "Could not add dummy line to $overwrite_location"
-			echo "Please contact support!"
-			echo "*****************************"
-			aborttest "Aborting test..."
-		fi
-	fi
 	
 	defaults_location="./template/testautomation_globals_defaults.incl"
 	lastline_default=$(tail -1 $defaults_location)
@@ -46,9 +30,26 @@ createGlobals() {
 			echo "*****************************"
 			aborttest "Aborting test..."
 		fi
-	fi
+	fi	
 	
 	if isfile $testautomation_globals_location/testautomation_globals_overwrites.incl; then
+		
+		# Check if there is an empty line at the end of the overwrites, this is required for sed to evaluate
+		overwrite_location="$testautomation_globals_location/testautomation_globals_overwrites.incl"
+		lastline_overwrite=$(tail -1 $overwrite_location)
+		if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
+			echo -e "\\n# Dummyline for sed" >> $overwrite_location
+			lastline_overwrite=$(tail -1 $overwrite_location)
+			if [[ "$lastline_overwrite" != "# Dummyline for sed" ]]; then
+				echo "*****************************"
+				echo "ERROR" 
+				echo "Could not add dummy line to $overwrite_location"
+				echo "Please contact support!"
+				echo "*****************************"
+				aborttest "Aborting test..."
+			fi
+		fi
+		
 		# Check if all required variables are filled
 		numberOfValuesToFill=$(grep "ENTER_VALUE" $testautomation_globals_location/testautomation_globals_overwrites.incl | wc -l)
 		if [[ $numberOfValuesToFill -gt 0 ]]; then
