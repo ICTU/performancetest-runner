@@ -156,17 +156,41 @@ namespace rpg.common
         }
 
         /// <summary>
-        /// Convert malformed decimal string to workable decimal string (acc to system locale)
+        /// Convert any decimal string to decimal string according to System Locale
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string NormalizeFloatString(string value)
+        public static string ToSystemFloatString(string value)
+        {
+            return ToAnyFloatString(value, System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0]);
+        }
+
+        /// <summary>
+        /// Convert any decimal string to intermediate general float string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToIntermediateFloatString(string value)
+        {
+            return ToAnyFloatString(value, Intermediate.DECIMALSEPARATORINTERMEDIATE);
+        }
+
+        /// <summary>
+        /// convert any decimal string to intermediate measure float string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToMeasureFloatString(string value)
+        {
+            return ToAnyFloatString(value, Intermediate.DECIMALSEPARATORMEASURES);
+        }
+
+        public static string ToAnyFloatString(string value, char separator)
         {
             string outValue;
-            char systemDecimalSeparator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
-            // maakt niet uit wat er binnen komt (. of , als decimal separator): vervangen door system decimalseparator
-            outValue = value.Replace(',', systemDecimalSeparator);
-            outValue = outValue.Replace('.', systemDecimalSeparator);
+            // maakt niet uit wat er binnen komt (. of , als decimal separator): vervangen door decimalseparator
+            outValue = value.Replace(',', separator);
+            outValue = outValue.Replace('.', separator);
             return outValue;
         }
 
@@ -174,14 +198,16 @@ namespace rpg.common
         /// Convert Jmeter time to intermediate seconds
         /// </summary>
         /// <returns></returns>
-        public static string jmeterTimeToSeconds(string jmValueStr)
+        public static string jmeterTimeToIntermediateSecondsString(string jmValueStr)
         {
             //values: 01003_linkhelp,87,58,20,29,91,385,14,2445,0.00,0.1,17.8,262.78
             float f;
             string strVal;
             try
             {
-                strVal = NormalizeFloatString(jmValueStr);
+                //strVal = ToIntermediateFloatString(jmValueStr);
+                strVal = ToSystemFloatString(jmValueStr);
+
                 if (float.TryParse(strVal, out f))
                     f = f / 1000;
                 else
@@ -192,7 +218,11 @@ namespace rpg.common
                 Log.WriteLine(string.Format("WARNING cannot parse value [{0}]", jmValueStr));
                 return jmValueStr;
             }
-            return f.ToString("0.000");
+
+            //return f.ToString("0.000");
+
+            // elk formaat naar Intermediate float format
+            return ToIntermediateFloatString(f.ToString());
         }
 
         /// <summary>
@@ -200,9 +230,9 @@ namespace rpg.common
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        public static string ToMeasureFormat(string val)
+        public static string ToMeasureFormatString(string value)
         {
-            return val.Replace(",", ".");
+            return ToMeasureFloatString(value);
         }
 
         /// <summary>
@@ -210,9 +240,9 @@ namespace rpg.common
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string NormalizeFloat(string value)
+        public static string NormalizeFloatString(string value)
         {
-            return NormalizeFloatString(value);
+            return ToIntermediateFloatString(value);
         }
 
         /// <summary>
@@ -282,5 +312,15 @@ namespace rpg.common
             return newName;
         }
 
+        /// <summary>
+        /// Discover and return the decimal separator character in value
+        /// </summary>
+        /// <param name="returnValue"></param>
+        /// <returns></returns>
+        public static char GetDecimalChar(string value)
+        {
+            // return first non-numeric character
+            return Regex.Match(value, "[^\\d]").Value[0];
+        }
     }
 }

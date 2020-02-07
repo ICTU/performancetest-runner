@@ -38,6 +38,10 @@ namespace rpg.common
     {
         public static string NOENTITY = "-";
 
+        // intermediate standard separators
+        public const char DECIMALSEPARATORINTERMEDIATE = '.';
+        public const char DECIMALSEPARATORMEASURES = '.';
+
         /// <summary> key-value pair separator </summary>
         public const char KEYVALUESEPARATOR = '=';
         /// <summary> list value separator character </summary>
@@ -132,7 +136,7 @@ namespace rpg.common
         /// <param name="key"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
-        public int ReadFromDatabaseValue(string project, string testrun, string category, string key, string prefix)
+        public int ReadFromDatabaseValues(string project, string testrun, string category, string key, string prefix)
         {
             DataAccess da = new DataAccess(project);
             //Log.Write(string.Format("readfromdatabasevalue {0}/{1}/{2}/{3}/{4} :", project, testrun, category, entity, prefix));
@@ -150,9 +154,9 @@ namespace rpg.common
         /// <param name="category"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public int ReadFromDatabaseValue(string project, string testrun, string category, string entity)
+        public int ReadFromDatabaseValues(string project, string testrun, string category, string entity)
         {
-            return ReadFromDatabaseValue(project, testrun, category, entity, "");
+            return ReadFromDatabaseValues(project, testrun, category, entity, "");
         }
         
         /// <summary>
@@ -234,7 +238,7 @@ namespace rpg.common
         /// </summary>
         public void Normalize()
         {
-            Log.WriteLine("normalize intermediate...");
+            //Log.WriteLine("normalize intermediate...");
 
             int cnt;
             int maxCnt = 0;
@@ -256,18 +260,14 @@ namespace rpg.common
                 // if new value: fill left
                 if ((NumOfElements(newValue) == 1) && (maxCnt>1))
                 {
-                    //Log.Write("left fill:[" + pair.Key + "=" + pair.Value + "]");
                     while (NumOfElements(newValue) < maxCnt)
                         newValue = LISTSEPARATOR + newValue;
-                    //Log.WriteLine("->[" + newValue + "]");
                 }
                 // if already present: fill right
                 else
                 {
-                    //Log.Write("right fill:[" + pair.Key + "=" + pair.Value + "]");
                     while (NumOfElements(newValue) < maxCnt)
                         newValue = newValue + LISTSEPARATOR;
-                    //Log.WriteLine("->[" + newValue + "]");
                 }
 
                 tmpList.Add(pair.Key, newValue);
@@ -432,7 +432,7 @@ namespace rpg.common
                     cnt++;
                 }
                 else
-                    Log.WriteLine(string.Format("WARNING ignore intermediate duplicate [{0}]", prefix+row[0]));
+                    Log.WriteLine(string.Format("WARNING ignoring intermediate duplicate [{0}]", prefix+row[0]));
             }
             return cnt; // num of rows matching rows
         }

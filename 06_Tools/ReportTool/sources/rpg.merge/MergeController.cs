@@ -38,7 +38,7 @@ namespace rpg.merge
         /// <param name="p_testrun"></param>
         /// <param name="p_category"></param>
         /// <param name="p_entity"></param>
-        public void ReadIntermediateValue(string p_project, string p_testrun, string p_category, string p_entity)
+        public void ReadIntermediateValues(string p_project, string p_testrun, string p_category, string p_entity)
         {
             Log.WriteLine("read intermediate...");
             Log.WriteLine(string.Format("project/testrun={0}/{1}",project,testrun));
@@ -50,7 +50,7 @@ namespace rpg.merge
             this.entity = p_entity;
 
             // read intermediate from VALUE table (common intermediate source)
-            int cnt = intermediate.ReadFromDatabaseValue(this.project, this.testrun, this.category, this.entity);
+            int cnt = intermediate.ReadFromDatabaseValues(this.project, this.testrun, this.category, this.entity);
             Log.WriteLine(cnt+" lines/variables");
         }
 
@@ -238,11 +238,6 @@ namespace rpg.merge
                     returnValue = "empty";
                     templateVariable = match.Groups[1].Value; // volledig pattern "blaat:0:0.00"; blaat:0:0.000:0 (laatste waarde is waarde als geen waarde gevonden, bijv: ""; "null"; "0" (string)
 
-                    //templateVariableName = templateVariable.Contains(':') ? templateVariable.Split(':')[0] : templateVariable; // alleen variable name
-                    //templateValueIndex = templateVariable.Contains(':') ? templateVariable.Split(':')[1] : "0"; // indexer
-                    //templateFormatPattern = (templateVariable.Contains(':')) ? (templateVariable.Split(':').Length > 2) ? templateVariable.Split(':')[2] : string.Empty : string.Empty; // format pattern
-                    //templateTotalPattern = match.Value; // compleet pattern "${blaat:0:0.000}"
-
                     bool isFormatPresent = templateVariable.Contains(':');
                     string[] fields = templateVariable.Split(':');
                     int fieldCnt = templateVariable.Split(':').Length;
@@ -281,6 +276,7 @@ namespace rpg.merge
                                 if (GetValueFromIntermediate(intermediate, templateVariable, out val)) // out val is leeg als GetValue hem niet gevonden heeft
                                 {
                                     returnValue = FormatValue(val, templateFormatPattern);
+                                    //Log.WriteLine(string.Format("DEBUG FormatValue src={0} format={1} result={2}", val, templateFormatPattern, returnValue));
                                 }
                             }
                         }
@@ -300,7 +296,7 @@ namespace rpg.merge
                             returnValue = templateValueDefault;
                         }
 
-                        Log.WriteLine(string.Format("value for variable replacement ({0}): {1}->[{2}] ", reason, templateVariable, returnValue));
+                        Log.WriteLine(string.Format("value for variable replacement ({0}): {1} [{2}] ", reason, templateVariable, returnValue));
                         resultLine = resultLine.Replace(templateTotalPattern, returnValue);
                     }
                 } // foreach match in templateline
@@ -361,23 +357,27 @@ namespace rpg.merge
         /// <returns></returns>
         private string FormatValue(string value, string formatPattern)
         {
-            string returnValue = value; // default
-            string actualFormatPattern = formatPattern;
+            // if formatPattern is empty or has multiple occurences of separators: cancel
+            if ((formatPattern.Trim().Length == 0) || (formatPattern.Split('.').Length > 2) || (formatPattern.Split(',').Length > 2))
+                return value;
 
-            // if floatseparator = ',', then temporarily change to '.' 
-            bool isCommaAsFloatSep = formatPattern.Contains(",");
-            if (isCommaAsFloatSep)
-                actualFormatPattern = formatPattern.Replace(',','.');
+            string returnValue = value;
+            string formatPattern_usable = formatPattern.Replace(',','.'); // convert formatter to usable dotnet formatter
 
             try
             {
-                if (formatPattern != string.Empty)
-                {
-                    returnValue = float.Parse(value).ToString(actualFormatPattern);
-                    returnValue = isCommaAsFloatSep ? returnValue.Replace('.', ',') : returnValue.Replace(',','.');
-                }
+                // first convert to normal/system floating point value string
+                string normalizedValue = Utils.ToSystemFloatString(value);
+
+                //  this string can be safely parsed to a float, format that float with the format pattern
+                returnValue = float.Parse(normalizedValue).ToString(formatPattern_usable);
+
+                // now change the standard system decimal char to the decimal char in the format pattern
+                returnValue = returnValue.Replace(Utils.GetDecimalChar(returnValue), Utils.GetDecimalChar(formatPattern));
+
+                //Log.WriteLine(string.Format("DEBUG FormatValue value={0} formatPattern={1} normalizedValue={2} formatPattern_usable={3} returnValue={4} curDecimal={5} patternDecimal={6}", value, formatPattern, normalizedValue, formatPattern_usable, returnValue, a, b));
             }
-            catch { }
+            catch { return value; } // if drama: give up and return original
 
             return returnValue;
         }
@@ -560,7 +560,7 @@ namespace rpg.merge
 
             // lees baseline data
             Log.WriteLine("read baseline reference data...");
-            baselineFound = (baselineReferenceValues.ReadFromDatabaseValue(this.project, baselineTestrunNameUsed, this.category, this.entity) > 0);
+            baselineFound = (baselineReferenceValues.ReadFromDatabaseValues(this.project, baselineTestrunNameUsed, this.category, this.entity) > 0);
 
             // als baseline onbekend/niet gevuld: zoek naar geschikt alternatief
             if ((!baselineFound) || (baselineTestrunNameUsed.Length == 0))
@@ -588,13 +588,13 @@ namespace rpg.merge
                 }
 
                 // 2e poging (fallback scenario)
-                if (baselineReferenceValues.ReadFromDatabaseValue(this.project, baselineTestrunNameUsed, this.category, this.entity) == 0)
+                if (baselineReferenceValues.ReadFromDatabaseValues(this.project, baselineTestrunNameUsed, this.category, this.entity) == 0)
                     throw new Exception(string.Format("No baseline data found ({0}/{1}/{2})", this.project, this.category, this.entity));
             }
 
             // add baseline variables
             Log.WriteLine(string.Format("get variables from baseline [{0}]...", baselineTestrunNameUsed));
-            if (intermediate.ReadFromDatabaseValue(this.project, baselineTestrunNameUsed, Category.Variable, "*", BASELINEKEYPREFIX) == 0)
+            if (intermediate.ReadFromDatabaseValues(this.project, baselineTestrunNameUsed, Category.Variable, "*", BASELINEKEYPREFIX) == 0)
                 Log.WriteLine("WARNING: no variable data found for baseline");
 
             // add chosen baseline reference to intermediate (to be merged lateron) with reason

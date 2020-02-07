@@ -51,12 +51,9 @@ namespace rpg.parsemeasures
         {
             // Time
             string s = Utils.ExtractValueByPatternFirst(jtlTrsLines, @"ts=(\d+)");
-            //Log.WriteLine("DEBUG processing: ["+s+"]");
-            //_measureDetails.Add(STARTTIMEKEY, Utils.ParseJMeterEpoch(s).ToString(DATETIMETIMEFORMAT));
             _variables.Add(STARTTIMEKEY, Utils.ParseJMeterEpoch(s).ToString(DATETIMETIMEFORMAT));
 
             // Interval;
-            //_measureDetails.Add(INTERVALKEY, JMAGGREGATEPERIOD.ToString());
             _variables.Add(INTERVALKEY, JMAGGREGATEPERIOD.ToString());
         }
 
@@ -125,7 +122,7 @@ namespace rpg.parsemeasures
                         for (int a = 0; a < (timespan / JMAGGREGATEPERIOD); ++a) //for each timebucket create a datapoint
                         {
                             // agg -> measuredetails
-                            _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToSeconds(resptime_agg.Avg().ToString())); // normalize
+                            _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToIntermediateSecondsString(resptime_agg.Avg().ToString())); // normalize
                             _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
                             _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
                             _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
@@ -159,7 +156,7 @@ namespace rpg.parsemeasures
             if (resptime_agg.Count() > 0)
             {
                 // agg -> measuredetails (laaste restje wordt toegevoegd)
-                _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToSeconds(resptime_agg.Avg().ToString())); // normalize
+                _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToIntermediateSecondsString(resptime_agg.Avg().ToString())); // normalize
                 _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
                 _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
                 _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());

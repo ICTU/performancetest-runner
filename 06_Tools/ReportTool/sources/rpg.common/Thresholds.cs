@@ -174,6 +174,8 @@ namespace rpg.common
         {
             try
             {
+                return double.Parse(Utils.ToSystemFloatString(value));
+
                 // normale decimal separator
                 if (value.Contains( decimalSeparator ))
                 {
@@ -186,8 +188,8 @@ namespace rpg.common
                      return double.Parse( value.Replace( thousandSeparator, decimalSeparator) );
                 }
 
-                // of integer getal, of lege string
-                return double.Parse(value);
+                //// of integer getal, of lege string
+                //return double.Parse(value);
             }
             catch (Exception)
             {
@@ -198,15 +200,15 @@ namespace rpg.common
             return double.NaN;
         }
 
-        /// <summary>
-        /// Convert double to a string value with .000 format
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string DoubleValueToSTring(double value)
-        {
-            string formatString = string.Format("0{0}000", decimalSeparator);
-            return value.ToString(formatString);
-        }
+        ///// <summary>
+        ///// Convert double to a string value with .000 format
+        ///// </summary>
+        ///// <param name="value"></param>
+        ///// <returns></returns>
+        //public static string DoubleValueToSTring(double value)
+        //{
+        //    string formatString = string.Format("0{0}000", decimalSeparator);
+        //    return value.ToString(formatString);
+        //}
     }
 }

@@ -75,7 +75,7 @@ namespace rpg.merge
             if (_params.Function == 'i') // merge intermediate data
             {
                 // read valueset for current testrun
-                mergeController.ReadIntermediateValue(_params.Value("project"), _params.Value("testrun"), _params.Value("category"), _params.Value("entity", "*"));
+                mergeController.ReadIntermediateValues(_params.Value("project"), _params.Value("testrun"), _params.Value("category"), _params.Value("entity", "*"));
 
                 // Perform post-processing on data that was parsed and stored
                 Log.WriteLine("Data post-processing phase...");

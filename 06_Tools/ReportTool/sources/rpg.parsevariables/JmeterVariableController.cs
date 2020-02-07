@@ -6,7 +6,7 @@ namespace rpg.parsevariables
 {
     class JmeterVariableController: VariableController
     {
-        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+""(\d+[,.]\d+)%"; //@"TOTAL.*""(\d+,\d+)%";
+        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+(\d+[,.]\d+)%"; //@"TOTAL.*""(\d+,\d+)%"; // 20200204
         private const string TESTENDTIMEPATTERN = @"ts=""(\d+)";
         private const string TESTSTARTTIMEPATTERN = @"ts=""(\d+)";
         private const string MERGEDUSERSPATTERN = @"na=""(\d+)""";
@@ -92,17 +92,17 @@ namespace rpg.parsevariables
         {
             Log.WriteLine("parse faultpercentage...");
             // 10th position of
-            //TOTAL,82726,314,90,634,1122,2277,0,435097,"0,25%","22,8","940,6","3480,81"
+            //TOTAL,82726,314,90,634,1122,2277,0,435097,"0,25%","22,8","940,6","3480,81" [NL]
+            //TOTAL,82833,249,91,418,815,2096,3,247772,0.02%,22.6,2108.0,2810.89 [ENG]
             string val = "0";
             try
             {
-                // dit kan mis gaan afh van regional settings van werkstation waarop conversie naar CSV wordt gedaan (. of , als decimalseparator en als deze hetzelfde is als fieldseparator worden dubbelequotes toegevoegd)
-                // voor nu regex pattern ongevoelig gemaakt voor aanwezigheid van " en van . of ,
+                // let op, gevoelig voor CSV export format oiv SystemLoale settings
                 val = Utils.ExtractValueByPatternLast(csvLines, FAULTPERCENTAGEPATTERN);
             }
             catch { }
 
-            return Utils.ToMeasureFormat(val); //val.Replace(",", ".");
+            return Utils.ToMeasureFormatString(val); // replace , to .
         }
 
     }

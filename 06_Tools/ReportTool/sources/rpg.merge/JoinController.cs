@@ -75,7 +75,7 @@ namespace rpg.merge
 
             // read testrun intermediate from database
             Intermediate srcIntermediate = new Intermediate();
-            int cnt = srcIntermediate.ReadFromDatabaseValue(project, testrun, category, entity);
+            int cnt = srcIntermediate.ReadFromDatabaseValues(project, testrun, category, entity);
             Log.WriteLine(string.Format("num of values read for entity [{0}/{1}]: {2}", category, entity, cnt));
 
             // filter only one indexed value per key

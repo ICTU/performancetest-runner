@@ -3,12 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyVersion>4.3.0.0</AssemblyVersion>
-    <FileVersion>4.3.0.0</FileVersion>
+    <AssemblyVersion>4.10.0.0</AssemblyVersion>
+    <FileVersion>4.10.0.0</FileVersion>
     <Company>ICTU</Company>
     <Product>Report Generator - load intermediate</Product>
-    <Copyright>ICTU 2019</Copyright>
-    <Version>4.9.3.0</Version>
+    <Copyright>ICTU 2020</Copyright>
+    <Version>4.10.0.0</Version>
     <Authors>ISR</Authors>
     <PackageId></PackageId>
     <Description>Load intermediate csv data into the reportgenerator database</Description>

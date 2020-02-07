@@ -166,7 +166,7 @@ namespace rpg.common
         {
             try
             {
-                double d = double.Parse(Utils.NormalizeFloatString(value));
+                double d = double.Parse(Utils.ToSystemFloatString(value));
                 return d < baseValue ? d : baseValue;
             }
             catch
@@ -185,7 +185,7 @@ namespace rpg.common
         {
             try
             {
-                double d = double.Parse(Utils.NormalizeFloatString(value));
+                double d = double.Parse(Utils.ToSystemFloatString(value));
                 return baseValue + d;
             }
             catch
@@ -198,7 +198,7 @@ namespace rpg.common
         {
             try
             {
-                double d = double.Parse(Utils.NormalizeFloatString(value));
+                double d = double.Parse(Utils.ToSystemFloatString(value));
                 return baseValue > d ? baseValue : d;
             }
             catch

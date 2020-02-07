@@ -97,10 +97,10 @@ namespace rpg.parsetransactions
             _transactionDetails.Add(AGGREGATEDTRSNAME, transactionAggregate.ToString());
 
             // isolate most important values as variable for history graph -> measure format (later to variable category?)
-            _variables.Add(AVGOF90PERCENTILES, Utils.ToMeasureFormat(transactionAggregate.p90));
-            _variables.Add(AVGOFMEDIAN, Utils.ToMeasureFormat(transactionAggregate.median));
-            _variables.Add(AVGOF95PERCENTILES, Utils.ToMeasureFormat(transactionAggregate.p95));
-            _variables.Add(AVGOFAVERAGES, Utils.ToMeasureFormat(transactionAggregate.avg));
+            _variables.Add(AVGOF90PERCENTILES, Utils.ToMeasureFormatString(transactionAggregate.p90));
+            _variables.Add(AVGOFMEDIAN, Utils.ToMeasureFormatString(transactionAggregate.median));
+            _variables.Add(AVGOF95PERCENTILES, Utils.ToMeasureFormatString(transactionAggregate.p95));
+            _variables.Add(AVGOFAVERAGES, Utils.ToMeasureFormatString(transactionAggregate.avg));
             _variables.Add(TRANSACTIONSTOTAL, transactionAggregate.cnt);
             _variables.Add(TRANSACTIONSFAILED, transactionAggregate.fail);
 
@@ -183,13 +183,14 @@ namespace rpg.parsetransactions
 
         /// <summary>
         /// Format the data to current culture format (make it easy to calculate)
+        ///   changed: format any input float to intermediate format float
         /// </summary>
         public void FormatData()
         {
             Log.WriteLine("Formatting data (decimal separator)...");
             foreach (string trsName in _transactionNames)
             {
-                _transactionDetails.items[trsName] = Utils.NormalizeFloatString(_transactionDetails.items[trsName]);
+                _transactionDetails.items[trsName] = Utils.ToIntermediateFloatString(_transactionDetails.items[trsName]);
             }
         }
 

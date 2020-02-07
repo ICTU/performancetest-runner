@@ -3,16 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>4.9.3.0</Version>
+    <Version>4.10.0.0</Version>
     <Authors>ISR</Authors>
     <Company>ICTU</Company>
     <Product>Report Generator - console tool</Product>
-    <Copyright>ICTU 2019</Copyright>
+    <Copyright>ICTU 2020</Copyright>
     <ApplicationIcon />
     <StartupObject />
-    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.10.0.0</AssemblyVersion>
     <PackageId></PackageId>
-    <FileVersion>4.2.0.0</FileVersion>
+    <FileVersion>4.10.0.0</FileVersion>
     <Description>Data manipulation in reportgenerator database via the console</Description>
   </PropertyGroup>
 

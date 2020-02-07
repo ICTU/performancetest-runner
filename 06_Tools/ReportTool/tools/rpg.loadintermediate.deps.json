@@ -6,9 +6,9 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "rpg.loadintermediate/4.9.3.0": {
+      "rpg.loadintermediate/4.10.0.0": {
         "dependencies": {
-          "rpg.common": "4.9.3"
+          "rpg.common": "4.10.0"
         },
         "runtime": {
           "rpg.loadintermediate.dll": {}
@@ -397,7 +397,7 @@
       },
       "System.Threading.Tasks.Extensions/4.5.1": {},
       "System.ValueTuple/4.5.0": {},
-      "rpg.common/4.9.3": {
+      "rpg.common/4.10.0": {
         "dependencies": {
           "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.0"
         },
@@ -408,7 +408,7 @@
     }
   },
   "libraries": {
-    "rpg.loadintermediate/4.9.3.0": {
+    "rpg.loadintermediate/4.10.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -742,7 +742,7 @@
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
-    "rpg.common/4.9.3": {
+    "rpg.common/4.10.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

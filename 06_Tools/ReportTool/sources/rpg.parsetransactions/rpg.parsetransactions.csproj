@@ -3,14 +3,14 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>4.9.3.0</Version>
+    <Version>4.10.0.0</Version>
     <Authors>ISR</Authors>
     <Company>ICTU</Company>
     <Product>Report Generator - parse transactions</Product>
-    <Copyright>ICTU 2019</Copyright>
+    <Copyright>ICTU 2020</Copyright>
     <PackageId></PackageId>
-    <AssemblyVersion>4.6.0.0</AssemblyVersion>
-    <FileVersion>4.6.0.0</FileVersion>
+    <AssemblyVersion>4.10.0.0</AssemblyVersion>
+    <FileVersion>4.10.0.0</FileVersion>
     <Description>Parse raw loadgenerator transaction data into intermediate format (file based)</Description>
   </PropertyGroup>
 

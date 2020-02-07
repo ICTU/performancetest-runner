@@ -85,6 +85,7 @@ namespace rpg.parsetransactions
             foreach (string line in lines)
             {
                 trsName = Utils.NormalizeTransactionName(line.Split(',')[0]);
+
                 if (trsNames.Contains(trsName))
                 {
                     TransactionValue value = ExtractTrsDetailsCSV(line);
@@ -111,17 +112,16 @@ namespace rpg.parsetransactions
 
             value.cnt = parts[1];
             string cntExecuted = parts[1];
-            value.avg = Utils.jmeterTimeToSeconds(parts[2]);
-            value.median = Utils.jmeterTimeToSeconds(parts[3]);
-            value.p90 = Utils.jmeterTimeToSeconds(parts[4]);
-            value.p95 = Utils.jmeterTimeToSeconds(parts[5]);
+            value.avg = Utils.jmeterTimeToIntermediateSecondsString(parts[2]);
+            value.median = Utils.jmeterTimeToIntermediateSecondsString(parts[3]);
+            value.p90 = Utils.jmeterTimeToIntermediateSecondsString(parts[4]);
+            value.p95 = Utils.jmeterTimeToIntermediateSecondsString(parts[5]);
             //6=99p not present in csv but not really useable as an application perf metric
-            value.min = Utils.jmeterTimeToSeconds(parts[7]);
-            value.max = Utils.jmeterTimeToSeconds(parts[8]);
+            value.min = Utils.jmeterTimeToIntermediateSecondsString(parts[7]);
+            value.max = Utils.jmeterTimeToIntermediateSecondsString(parts[8]);
 
-            // convert fail from % to count
-            value.fail = NormalizeFail(Utils.NormalizeFloat(parts[9].TrimEnd('%')), cntExecuted);
-            value.stdev = Utils.jmeterTimeToSeconds(parts[12]);
+            value.fail = NormalizeFail(Utils.NormalizeFloatString(parts[9].TrimEnd('%')), cntExecuted);
+            value.stdev = Utils.jmeterTimeToIntermediateSecondsString(parts[12]);
 
             return value;
         }

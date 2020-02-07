@@ -6,10 +6,10 @@
     <Authors>ISR</Authors>
     <Company>ICTU</Company>
     <Product>Report Generator - parse measures</Product>
-    <Version>4.9.3.0</Version>
-    <AssemblyVersion>4.9.1.0</AssemblyVersion>
-    <FileVersion>4.9.1.0</FileVersion>
-    <Copyright>ICTU 2019</Copyright>
+    <Version>4.10.0.0</Version>
+    <AssemblyVersion>4.10.0.0</AssemblyVersion>
+    <FileVersion>4.10.0.0</FileVersion>
+    <Copyright>ICTU 2020</Copyright>
     <PackageId></PackageId>
     <Description>Parse raw loadgenerator measure data into intermediate format (file based)</Description>
   </PropertyGroup>
