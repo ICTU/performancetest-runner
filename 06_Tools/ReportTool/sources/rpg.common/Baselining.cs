@@ -143,19 +143,26 @@ namespace rpg.common
                 double baselineValue = Thresholds.StringValueToDouble(baselineValueStr);
                 double evaluateValue = Thresholds.StringValueToDouble(evaluateValueStr);
 
+
                 // give up if input is nonsense
                 if (!double.IsNaN(baselineValue) && !double.IsNaN(evaluateValue))
                 {
+                    //Log.Write("DEBUG baseline evaluation: ");
+
                     double evalValue = 100 * ((evaluateValue - baselineValue) / baselineValue);
+                    //Log.Write(string.Format("curvalue={0} baselinevalue={1} delta={2} ", evaluateValue, baselineValue, evalValue));
+
                     // only color value if overshoot > +-15%
                     colorCode = (evalValue > 15) ? colorcodeWorse : (evalValue < -15) ? colorcodeBetter : string.Empty;
 
                     if (colorCode != string.Empty)
                     {
-                        //Log.WriteLine(string.Format("baseline warning trigger [{0}]", evalValue));
-                        Log.Write("*");
-                        evalStr = string.Format("{0:+0.0;-0.0;0}%", evalValue);
+                        Log.Write(".");
+                        //evalStr = string.Format("{0:+0.0;-0.0;0}%", evalValue);                        
+                        evalStr = string.Format("{0:+0.0;-0.0;0}", evalValue); // format to intermediate standard
                     }
+
+                    //Log.WriteLine("deltaformatted=" + evalStr);
                 }
             }
             catch (Exception)

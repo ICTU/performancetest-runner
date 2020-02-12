@@ -357,6 +357,8 @@ namespace rpg.merge
         /// <returns></returns>
         private string FormatValue(string value, string formatPattern)
         {
+            //Log.Write(string.Format("format value [{0}] format [{1}] [", value, formatPattern));
+
             // if formatPattern is empty or has multiple occurences of separators: cancel
             if ((formatPattern.Trim().Length == 0) || (formatPattern.Split('.').Length > 2) || (formatPattern.Split(',').Length > 2))
                 return value;
@@ -370,14 +372,19 @@ namespace rpg.merge
                 string normalizedValue = Utils.ToSystemFloatString(value);
 
                 //  this string can be safely parsed to a float, format that float with the format pattern
-                returnValue = float.Parse(normalizedValue).ToString(formatPattern_usable);
+                string parsedValue = float.Parse(normalizedValue).ToString(formatPattern_usable);
 
                 // now change the standard system decimal char to the decimal char in the format pattern
-                returnValue = returnValue.Replace(Utils.GetDecimalChar(returnValue), Utils.GetDecimalChar(formatPattern));
+                returnValue = parsedValue.Replace(Utils.GetDecimalChar(parsedValue), Utils.GetDecimalChar(formatPattern));
 
-                //Log.WriteLine(string.Format("DEBUG FormatValue value={0} formatPattern={1} normalizedValue={2} formatPattern_usable={3} returnValue={4} curDecimal={5} patternDecimal={6}", value, formatPattern, normalizedValue, formatPattern_usable, returnValue, a, b));
+                //Log.Write(string.Format("value={0} formatPattern={1} normalizedValue={2} formatPattern_usable={3} parsedValue={4} returnValue={5}", value, formatPattern, normalizedValue, formatPattern_usable, parsedValue, returnValue));
             }
-            catch { return value; } // if drama: give up and return original
+            catch // if drama: give up and return original
+            {
+                Log.WriteLine(string.Format("WARNING value formatting failed value={0} format={1}", value, formatPattern));
+                return value;
+            }
+            //Log.WriteLine("]");
 
             return returnValue;
         }

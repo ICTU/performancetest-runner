@@ -218,7 +218,7 @@ namespace rpg.common
 
             string testrunId = GetSaveIdFromRefTestrun(testrunName);
             if (testrunId == "0")
-                Log.WriteLine(string.Format("WARNING testrun [{0}] not found in table)", testrunId));
+                Log.WriteLine(string.Format("WARNING testrun [{0}] not found in database", testrunId));
 
             return int.Parse(testrunId);
 

@@ -233,14 +233,19 @@ namespace rpg.common
         {
             cnt = raw_cnt.ToString(); // cnt
             min = raw_min.ToString(); // min of min
-            avg = (raw_avg / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of average
+            //avg = (raw_avg / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of average
+            avg = Utils.ToIntermediateFloatString(raw_avg / eval_cnt);
             max = raw_max.ToString(); // max of max
-            median = (raw_median / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
-            p90 = (raw_p90 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
-            p95 = (raw_p95 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            //median = (raw_median / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            median = Utils.ToIntermediateFloatString(raw_median / eval_cnt);
+            //p90 = (raw_p90 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            p90 = Utils.ToIntermediateFloatString(raw_p90 / eval_cnt);
+            //p95 = (raw_p95 / eval_cnt).ToString(AGGREGATE_FLOATFORMAT); // average of percentile
+            p95 = Utils.ToIntermediateFloatString(raw_p95 / eval_cnt);
             fail = raw_fail.ToString();
             cancel = raw_cancel.ToString();
-            stdev = (raw_stdev / eval_cnt).ToString(AGGREGATE_FLOATFORMAT);
+            //stdev = (raw_stdev / eval_cnt).ToString(AGGREGATE_FLOATFORMAT);
+            stdev = Utils.ToIntermediateFloatString(raw_stdev / eval_cnt);
         }
     }
 }

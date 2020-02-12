@@ -176,6 +176,17 @@ namespace rpg.common
         }
 
         /// <summary>
+        /// Override for double
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToIntermediateFloatString(double value)
+        {
+            return ToIntermediateFloatString(value.ToString());
+        }
+
+
+        /// <summary>
         /// convert any decimal string to intermediate measure float string
         /// </summary>
         /// <param name="value"></param>
@@ -320,7 +331,7 @@ namespace rpg.common
         public static char GetDecimalChar(string value)
         {
             // return first non-numeric character
-            return Regex.Match(value, "[^\\d]").Value[0];
+            return Regex.Match(value, "[.,]").Value[0];
         }
     }
 }

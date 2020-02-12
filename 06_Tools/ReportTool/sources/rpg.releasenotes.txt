@@ -2,8 +2,14 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform independent .NetCore Silk Result Tools (srt)
 
+4.10.1.0
+12-2-2020	delta decimal separator repair (did not listen to format string)
+12-2-2020	repair of markers in merge.sh (shell) and template (html) by introducing specific 'begin' and 'end' markers
+12-2-2020	AGGREGATED transaction format repair
+12-2-2020	delta number format + and % removed, is now equal to rest of % numbers
+
 4.10.0.0
-5-2-2020	reportgenerator made independent from operating system number format settings	
+5-2-2020	reportgenerator made independent from operating system number format settings
 
 4.9.3.0
 11-12-2019	threshold choise added to the log

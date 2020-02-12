@@ -49,7 +49,7 @@ dotnet $rpt_toolspath/rpg.merge.dll v project=$rpt_projectname name=companylogor
 cp -f $rpt_reporttemptargetfile $rpt_temppath/report.04.html
 
 echo "GenerateReport - Cleanup non-used variables top section of the report..."
-dotnet $rpt_toolspath/rpg.merge.dll v project=$rpt_projectname name=* value=" " templatefile=$rpt_reporttemptargetfile beginpattern="Response times (ms)" endpattern="Trend (ms)" database=$rpt_reportdbconnectstring
+dotnet $rpt_toolspath/rpg.merge.dll v project=$rpt_projectname name=* value=" " templatefile=$rpt_reporttemptargetfile beginpattern="responsetimestable_begin" endpattern="responsetimestable_end" database=$rpt_reportdbconnectstring
 cp -f $rpt_reporttemptargetfile $rpt_temppath/report.05.html
 
 echo "GenerateReport - Merge trend data (all transactions)..."
