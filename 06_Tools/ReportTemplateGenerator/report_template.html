@@ -217,17 +217,18 @@
 		Percentage of (max) users at which ramp-up of throughput breaks</td></tr>
 	<tr><td class="name">Metric Trendbreak 'stability'</td><td>
 		Progress of test at which stability of throughput or errorcount breaks</td></tr>
-<tr><td>&nbsp</td></tr>
-	<tr><td class="name">Paragraph Response times</td><td/></tr>
+	<tr><td class="name">Paragraph Response times</td><td>Only transactions in Transactions.csv are evaluated</td></tr>
 	<tr><td class="name">Column Evaluated</td><td>Requirements are evaluated against this value</td></tr>
 	<tr><td class="name">Column Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Current</td><td>This session's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Delta %</td><td>
 		Difference between current and baseline, in % compared to the baseline<br>
-		Shows if current or baseline exceeds a threshold (yellow or red)<br>
-		Shows if difference is substantial (>15%)<br>
-		Shows Red at performance degradation<br>
-		Shows Green at performance improvement</td></tr>
+		Shows if current or baseline exceeds YELLOW or RED a threshold<br>
+		AND difference is >15%<br>
+		Shows RED if slower or GREEN if faster compared to baseline</td></tr>
+	<tr><td class="name">Paragraph Trend</td><td>Response times only colymn 'evaluated' of previous ${maxtrendcount} testruns</td></tr>
+	<tr><td class="name">Decimal separator</td><td id="decimalseparator">.</td></tr>
+	<tr><td class="name">Thousand separator</td><td id="thousandseparator"></td></tr>
 </table>
 
 </td>
