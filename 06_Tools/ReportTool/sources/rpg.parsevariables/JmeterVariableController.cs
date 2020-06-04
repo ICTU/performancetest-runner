@@ -6,7 +6,7 @@ namespace rpg.parsevariables
 {
     class JmeterVariableController: VariableController
     {
-        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+(\d+[,.]\d+)%"; //@"TOTAL.*""(\d+,\d+)%"; // 20200204
+        private const string FAULTPERCENTAGEPATTERN = @"TOTAL.+[""](\d+[.,]\d+)%"; //@"TOTAL.+(\d+[,.]\d+)%" 20200604 //@"TOTAL.*""(\d+,\d+)%" // 20200204
         private const string TESTENDTIMEPATTERN = @"ts=""(\d+)";
         private const string TESTSTARTTIMEPATTERN = @"ts=""(\d+)";
         private const string MERGEDUSERSPATTERN = @"na=""(\d+)""";

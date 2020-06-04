@@ -70,9 +70,12 @@ namespace rpg.common
 
             foreach (string line in lines.Reverse())
             {
+                //Log.WriteLine("DEBUG handing line: "+line);
                 if (regex.IsMatch(line))
                 {
+                    //Log.WriteLine("DEBUG match! applying pattern: " + valuePattern + "/" + line);
                     result = regex.Match(line).Groups[1].Value;
+                    //Log.WriteLine("DEBUG match: "+result);
                     return result;
                 }
             }
