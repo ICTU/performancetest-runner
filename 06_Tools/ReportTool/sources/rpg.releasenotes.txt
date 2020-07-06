@@ -2,6 +2,9 @@ RPG (RePortGenerator tools) release notes
 
 Replaces platform independent .NetCore Silk Result Tools (srt)
 
+4.11.0.0
+6-7-2020	variable 'transactionstotal' corrected to count failed+success and 'transactionssuccess' added new, containing only success transactions
+
 4.10.2.0
 4-6-2020	repair of fault percentage regex pattern (including ten's)
 

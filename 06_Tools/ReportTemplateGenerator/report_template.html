@@ -247,9 +247,9 @@
 	<tr><td>&nbsp</td><td></td></tr>
 	<tr><td class="name">Duration</td><td id="duration">${testduration}</td></tr>
 	<tr><td class="name">Virtual users</td><td id="virtual_users">${mergedusers}</td></tr>	
-	<tr><td class="name">Success</td><td id="success">${AGGREGATED:0:0:0}</td></tr>	
-	<tr><td class="name">Failed</td><td id="failed">${AGGREGATED:5:0:0}</td></tr>	
-	<tr><td class="name">Canceled</td><td id="canceled">${AGGREGATED:6:0:0}</td></tr>	
+	<tr><td class="name">Transactions executed</td><td id="executed">${transactionstotal}</td></tr>	
+	<tr><td class="name">Transactions success</td><td id="success">${transactionssuccess}</td></tr>	
+	<tr><td class="name">Transactions failed</td><td id="failed">${transactionsfailed}</td></tr>	
 	<tr><td class="name">Min of minima (s)</td><td id="min">${AGGREGATED:1:0,000}</td></tr>	
 	<tr><td class="name">Avg of averages (s)</td><td id="avg">${AGGREGATED:2:0,000}</td></tr>	
 	<tr><td class="name">Avg of 90 percentiles (s)</td><td id="avg_90_percentile">${AGGREGATED:4:0,000}</td></tr>	
@@ -276,17 +276,17 @@
 <h3>Response times (s)</h3>
 <table cellspacing="2" cellpadding="5" border="0" class="details" id="responsetimestable_begin">
 	<tr valign="top">
-	<th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Evaluated</th><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Baseline</th><th class="blank">Current</th><th class="blank"/>
+	<th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Evaluated</th><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Baseline</th><th class="blank">Current</th><th class="blank"/>
 	</tr>
 	
 	<tr valign="top">
-	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"/></th><th>${baselineref}<br>${baseline.appversion}</th><th>${testrundatetime}<br>${appversion}</th><th>Delta %</th>
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th class="blank"/><th>${baselineref}<br>${baseline.appversion}</th><th>${testrundatetime}<br>${appversion}</th><th>Delta %</th>
 	</tr>
 	
 	||BLOK2||
 
 	<tr valign="top">
-	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Canceled</th><th class="blank"></th><th>${baselineref}</th><th>${testrundatetime}</th><th>Delta %</th>
+	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th class="blank"><th>${baselineref}</th><th>${testrundatetime}</th><th>Delta %</th>
 	</tr>
 </table id="responsetimestable_end">
 

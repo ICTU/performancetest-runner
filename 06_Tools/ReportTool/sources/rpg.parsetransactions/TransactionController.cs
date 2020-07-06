@@ -24,6 +24,7 @@ namespace rpg.parsetransactions
         public const string AVGOF95PERCENTILES = "avgof95percentiles";
         public const string AVGOFAVERAGES = "avgofaverages";
         public const string TRANSACTIONSTOTAL = "transactionstotal";
+        public const string TRANSACTIONSSUCCESS = "transactionssuccess";
         public const string TRANSACTIONSFAILED = "transactionsfailed";
 
         public virtual void Parse(ParamInterpreter parameters)
@@ -71,7 +72,7 @@ namespace rpg.parsetransactions
             // scrape and aggregate data from transaction data
             TransactionValueAggregate transactionAggregate = new TransactionValueAggregate();
 
-            // foreach transactionlines
+            // foreach transactionlines (evaluate only successful transactions, leave faulty ones away from aggregation)
             foreach (string transactionName in _transactionNames)
             {
                 // only include in agggregation if transactionname matches 'report transacton name pattern'
@@ -101,11 +102,36 @@ namespace rpg.parsetransactions
             _variables.Add(AVGOFMEDIAN, Utils.ToMeasureFormatString(transactionAggregate.median));
             _variables.Add(AVGOF95PERCENTILES, Utils.ToMeasureFormatString(transactionAggregate.p95));
             _variables.Add(AVGOFAVERAGES, Utils.ToMeasureFormatString(transactionAggregate.avg));
-            _variables.Add(TRANSACTIONSTOTAL, transactionAggregate.cnt);
             _variables.Add(TRANSACTIONSFAILED, transactionAggregate.fail);
+
+            // old, can be deleted in time (replaced by transactionssuccess)
+            // _variables.Add(TRANSACTIONSTOTAL, transactionAggregate.cnt);
+            _variables.Add(TRANSACTIONSTOTAL, AddIntStrings(transactionAggregate.cnt, transactionAggregate.fail));
+            _variables.Add(TRANSACTIONSSUCCESS, transactionAggregate.cnt); // is new
 
             Log.WriteLine(string.Format("{0} of {1} transactions aggregated", cnt, _transactionNames.Length));
         }
+
+        /// <summary>
+        /// Add integer strings to string, default to first if no worky
+        /// </summary>
+        /// <param name="int1"></param>
+        /// <param name="int2"></param>
+        /// <returns></returns>
+        public string AddIntStrings(string int1, string int2)
+        {
+            try
+            {
+                return (Int32.Parse(int1) + Int32.Parse(int2)).ToString();
+            }
+            catch
+            {
+                Log.WriteLine("WARNING adding integer stings did not work, default to first integer");
+                return int1;
+            }
+            
+        }
+
 
         /// <summary>
         /// Check if pased data is enough to work with, generic check

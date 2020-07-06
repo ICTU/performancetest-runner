@@ -128,6 +128,7 @@ namespace rpg.parsetransactions
 
         /// <summary>
         /// Add num of failed executions to base (good) transactiondata
+        /// TODO and total num of executed
         /// </summary>
         /// <param name="allFileName"></param>
         private void EnrichFailed(string allFileName)
