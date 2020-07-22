@@ -435,6 +435,9 @@ run_jmeter() {
 	else
 		aborttest "\$OS_type in globals is not windows or linux but is: \"$OS_type\", aborting test..."
 	fi
+
+	# Obtain process that will start the jmeter script (job most recently placed into the background)
+	java_group_process=$(echo $!)
 	
 	# Start and wait 10 for process to show
 	sleep 10
@@ -447,8 +450,16 @@ run_jmeter() {
 		processStart=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 		process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 	fi
+
+	# LET OP: onderstaande zou nog getest moeten worden met linux
+	# Get the ProcessID of JMeter based on java_group_process
+	java_process=$(ps -a | grep $java_group_process | grep -i Java | awk '{print $1}' | head -1)
+	found_process=$java_process
+	#echo "Process Group ID:" $java_group_process
+	#echo "Process Java ID:" $java_process
+	#echo "Found Java ID:" $found_process
 	
-	if [[ $process == "" ]]; then
+	if [[ $java_process == "" ]]; then
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 		echo "Something is wrong with Jmeter, it did not start"
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -461,7 +472,7 @@ run_jmeter() {
 	tdiff=`expr $tcurrent - $tstart`
 	
 	# If the Jmeter process is still in the process list we expect that the test is still running
-	while [[ "$processStart" == "$process" ]]
+	while [[ "$java_process" == "$found_process" ]]
 	do
 		# echo "Performance test in progress, running for: $tdiff seconds"
 		
@@ -472,6 +483,9 @@ run_jmeter() {
 			elif [[ $OS_type == "linux" ]]; then
 				process=$(ps -a | grep jmeter.sh | awk '{print $1}' | head -1)
 			fi
+
+			# LET OP: onderstaande zou nog getest moeten worden met linux
+			found_process=$(ps -a | grep $java_group_process | grep -i Java | awk '{print $1}' | head -1)
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
