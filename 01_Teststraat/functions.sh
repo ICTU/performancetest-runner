@@ -436,8 +436,10 @@ run_jmeter() {
 		aborttest "\$OS_type in globals is not windows or linux but is: \"$OS_type\", aborting test..."
 	fi
 
-	# Obtain process that will start the jmeter script (job most recently placed into the background)
+	# Get process that will start the jmeter script (job most recently placed into the background)
 	java_group_process=$(echo $!)
+	# Get correct PGID based on fonnd PID (or PGID)
+	java_group_process=$(ps -a | grep $java_group_process | awk '{print $3}' | head -1)
 	
 	# Start and wait 10 for process to show
 	sleep 10
