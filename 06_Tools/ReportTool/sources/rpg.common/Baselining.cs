@@ -49,10 +49,10 @@ namespace rpg.common
                 if (intermediate.ContainsKey(baselinePair.Key))
                 {
                     string baselineValueSeries = baselineIntermediate.GetValue(baselinePair.Key);
-                    string baselineThresholdValueSeries = baselineIntermediate.GetValue(Thresholds.GetThresholdKey(baselinePair.Key));
+                    string baselineThresholdValueSeries = baselineIntermediate.GetValue(Thresholds.GetThresholdColorKey(baselinePair.Key));
 
                     string currentValueSeries = intermediate.GetValue(baselinePair.Key);
-                    string currentThresholdValueSeries = intermediate.GetValue(Thresholds.GetThresholdKey(baselinePair.Key));
+                    string currentThresholdValueSeries = intermediate.GetValue(Thresholds.GetThresholdColorKey(baselinePair.Key));
 
                     // generate _be and _be_c values
                     Intermediate evalResult = GenerateEvaluation(baselinePair.Key, baselineValueSeries, currentValueSeries, baselineThresholdValueSeries, currentThresholdValueSeries, colorcodeBetter, colorcodeWorse);

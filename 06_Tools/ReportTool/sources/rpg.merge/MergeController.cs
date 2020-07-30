@@ -457,17 +457,17 @@ namespace rpg.merge
             // load threshold config from database
             Thresholds thresholds = new Thresholds(project);
 
-            // generate new color transactions
-            Intermediate thValues = thresholds.GenerateThresholdValues(intermediate, greenColorcode, yellowColorcode, redColorcode);
-
+            // generate color values
+            Intermediate thValues = thresholds.GenerateThresholdValuesForTransactions(intermediate, greenColorcode, yellowColorcode, redColorcode);
             // merge threshold colortransactions with dataset
             Log.WriteLine(string.Format("adding {0} threshold entries...", thValues.Count));
             intermediate.Add(thValues);
 
-            // count threshold violations (add in separate series)
+            // count threshold violations (add in separate series) by transactionname patter + red color
             Log.WriteLine("aggregate threshold violations...");
             Intermediate thresholdViolations = thValues.AggregateCount(THRESHOLDVIOLATIONSKEY, @"\d\d_.*_c$", redColorcode); // only evaluate script transactions!
 
+            // store these newly generated metrics back to the database
             if (storeMetrics)
                 thresholdViolations.SaveToDatabase(this.project, this.testrun, Category.Transaction, Entity.None);
 
@@ -477,7 +477,7 @@ namespace rpg.merge
 
         /// <summary>
         /// Generate diff colorscheme for all loaded intermediate key/values
-        /// compare values for all loaded key-value pairs (multiple value strings) and generate new _c color keys
+        ///  compare values for all loaded key-value pairs (multiple value strings) and generate new _c color keys
         /// </summary>
         /// <param name="markColorcode"></param>
         public void GenerateDiffValues(string markColorcode)
@@ -515,12 +515,12 @@ namespace rpg.merge
             Intermediate baselineValues = ReadBaselineData(currentTestrun, baselineTestrun);
 
             Log.WriteLine("generate threshold evaluation on baseline run...");
-            Intermediate baselineThresholdValues = thresholds.GenerateThresholdValues(baselineValues, Baselining.belowLowThreshold, "y", "r");
+            Intermediate baselineThresholdValues = thresholds.GenerateThresholdValuesForTransactions(baselineValues, Baselining.belowLowThreshold, "y", "r");
             // baseline: merge values with threshold colorcodes
             baselineThresholdValues.Add(baselineValues);
 
             Log.WriteLine("generate threshold evaluation on current run...");
-            Intermediate currentThresholdValues = thresholds.GenerateThresholdValues(this.intermediate, Baselining.belowLowThreshold, "y", "r");
+            Intermediate currentThresholdValues = thresholds.GenerateThresholdValuesForTransactions(this.intermediate, Baselining.belowLowThreshold, "y", "r");
             // current testrun: merge values (this.intermediate) with threshold colorcodes
             currentThresholdValues.Add(this.intermediate);
 

@@ -80,10 +80,10 @@ namespace rpg.merge
                 // Perform post-processing on data that was parsed and stored
                 Log.WriteLine("Data post-processing phase...");
 
-                // intermediate verrijken met evaluatie items
+                // enrich intermediate with evaluation items
                 if (_params.Switch == 't') mergeController.GenerateThresholdValues(colCodeBelowTh1, colCodeBetweenTh1Th2, colCodeAboveTh2, true); // threshold evaluatie -> kleurcodering (it= itermediate+threshold eval category x (trs))
-                if (_params.Switch == 'd') mergeController.GenerateDiffValues(colCodeHighlite); // diff evaluatie -> kleurcodering (id = intermediate+diff eval category x (params))
-                // auto keuze baseline komt alleen hier vandaan, dus baseline vars hier genereren
+                if (_params.Switch == 'd') mergeController.GenerateDiffValues(colCodeHighlite); // diff evaluation -> colorcoding (id = intermediate+diff eval category x (params))
+                // baseline column values (or auto choise of baseline if not set)
                 if (_params.Switch == 'b') mergeController.GenerateBaselineValues(_params.Value("testrun"), _params.Value("baselinetestrun"), colCodeBetterThanBaseline, colCodeWorseThanBaseline, true);
 
                 Log.WriteLine("Post-processing done, start merge...");
@@ -92,29 +92,31 @@ namespace rpg.merge
                 if (_params.Value("prefix", "EMPTY") != "EMPTY")
                     mergeController.ApplyPrefix(_params.Value("prefix"));
 
-                // merge result intermediate with template
+                // merge with template
                 mergeController.MergeIntermediate(templateFilename, false, beginPattern, endPattern);
             }
             else if (_params.Function == 'v') // merge variable with external value
             {
+                // merge with template
                 mergeController.MergeVariable(_params.Value("name"), _params.Value("value"), templateFilename, beginPattern, endPattern);
             }
-            else if (_params.Function == 't') // merge thresholds
+            else if (_params.Function == 't') // merge thresholds table in top section of report
             {
+                // get data from database
                 mergeController.ReadIntermediateThreshold(_params.Value("project"));
 
-                // merge result intermediate with template
+                // merge with template
                 mergeController.MergeIntermediate(templateFilename, true, beginPattern, endPattern);
             }
             else if (_params.Function == 'j') // join values historic overview
             {
-                // join all indexed values into one intermediate
+                // get data from database (join all indexed values into one intermediate)
                 mergeController.JoinIntermediateValues(_params.Value("project"), _params.Value("testrun", ".*"), _params.Value("category"), _params.Value("entity", "*"), _params.ValueInt("valueindex", "0"), _params.ValueInt("historycount", "10"), _params.Value("workload","*"));
 
                 // evaluate thresholds if needed
                 if (_params.Switch == 't') mergeController.GenerateThresholdValues(colCodeBelowTh1, colCodeBetweenTh1Th2, colCodeAboveTh2);
 
-                // merge result intermediate with template
+                // merge with template
                 mergeController.MergeIntermediate(templateFilename, true, beginPattern, endPattern);
             }
             else

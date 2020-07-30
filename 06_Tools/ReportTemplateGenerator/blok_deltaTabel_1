@@ -6,6 +6,7 @@
 	<td class="${||TransactionName||_c:4} evaluated">${||TransactionName||:4:0,000}</td>
 	<td>${||TransactionName||:3:0,000}</td>
 	<td>${||TransactionName||:9:0,000}</td><td>${||TransactionName||:5:0}</td>
+	<td class="threshold">${||TransactionName||_th:1:0,000}</td>
 	<td class="blank"/>
-	<td>${||TransactionName||_br:4:0,000}</td><td>${||TransactionName||:4:0,000}</td><td class="${||TransactionName||_be_c:4}">${||TransactionName||_be:4:0,0}</td>
+	<td>${||TransactionName||_br:4:0,000}</td><td>${||TransactionName||:4:0,000}</td><td class="${||TransactionName||_be_c:4} delta">${||TransactionName||_be:4:0,0}</td>
 </tr>

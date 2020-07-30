@@ -73,9 +73,19 @@ namespace rpg.common
         /// </summary>
         /// <param name="orgKey"></param>
         /// <returns></returns>
-        public static string GetThresholdKey(string orgKey)
+        public static string GetThresholdColorKey(string orgKey)
         {
             return orgKey+"_c";
+        }
+
+        /// <summary>
+        /// Determine threshold reference key (value containing 2 values: th1, th2)
+        /// </summary>
+        /// <param name="orgKey"></param>
+        /// <returns></returns>
+        public static string GetThresholdReferenceKey(string orgKey)
+        {
+            return orgKey + "_th";
         }
 
         /// <summary>
@@ -86,16 +96,40 @@ namespace rpg.common
         /// <param name="yellow"></param>
         /// <param name="red"></param>
         /// <returns></returns>
-        public Intermediate GenerateThresholdValues(Intermediate intermediate, string green, string yellow, string red)
+        public Intermediate GenerateThresholdValuesForTransactions(Intermediate intermediate, string green, string yellow, string red)
         {
             Intermediate thIntermediate = new Intermediate();
 
             foreach(KeyValuePair<string, string> pair in intermediate)
             {
-                thIntermediate.Add( GetThresholdKey(pair.Key), GenerateThresholdValue(pair.Key, pair.Value, green, yellow, red));
+                // add threshold color code for all value fields of this transaction
+                thIntermediate.Add( GetThresholdColorKey(pair.Key), GenerateThresholdColorValuesForTransaction(pair.Key, pair.Value, green, yellow, red));
+                // add threshold reference values (th[0,1]) for this transaction
+                thIntermediate.Add( GetThresholdReferenceKey(pair.Key), GenerateThresholdReferenceForTransaction(pair.Key, pair.Value));
             }
             return thIntermediate;
         }
+
+        /// <summary>
+        /// Add intermediate threshold reference values
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string GenerateThresholdReferenceForTransaction(string key, string value)
+        {
+            List<string> outValues = new List<string>();
+
+            // what are the threshold values for this key
+            Threshold th = GetThresholdForKey(key);
+
+            // add the thresholds as values in a new threshold key
+            outValues.Add(Utils.ToIntermediateFloatString(th.th1));
+            outValues.Add(Utils.ToIntermediateFloatString(th.th2));
+
+            return string.Join(Intermediate.LISTSEPARATOR.ToString(), outValues.ToArray());
+        }
+
 
         /// <summary>
         /// Add intermediate colorcode values according to threshold
@@ -106,7 +140,7 @@ namespace rpg.common
         /// <param name="yellow"></param>
         /// <param name="red"></param>
         /// <returns></returns>
-        private string GenerateThresholdValue(string key, string valueList, string green, string yellow, string red)
+        private string GenerateThresholdColorValuesForTransaction(string key, string valueList, string green, string yellow, string red)
         {
             List<string> outValues = new List<string>();
             string colorCode;
@@ -171,17 +205,17 @@ namespace rpg.common
             {
                 return double.Parse(Utils.ToSystemFloatString(value));
 
-                // normale decimal separator
-                if (value.Contains( decimalSeparator ))
-                {
-                    return double.Parse(value);
-                }
+                //// normale decimal separator
+                //if (value.Contains( decimalSeparator ))
+                //{
+                //    return double.Parse(value);
+                //}
 
-                // thousend separator als decimal separator
-                if (value.Contains( thousandSeparator ))
-                {
-                     return double.Parse( value.Replace( thousandSeparator, decimalSeparator) );
-                }
+                //// thousend separator als decimal separator
+                //if (value.Contains( thousandSeparator ))
+                //{
+                //     return double.Parse( value.Replace( thousandSeparator, decimalSeparator) );
+                //}
 
                 //// of integer getal, of lege string
                 //return double.Parse(value);
