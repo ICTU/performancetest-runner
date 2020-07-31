@@ -477,8 +477,8 @@ new Chart(document.getElementById("chart_trend_stats_1"), {
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{			
-          label: "Faults (%)",
-          data: [$[${faultpercentage:#:0.00:null},]],
+          label: "Transactions executed",
+          data: [$[${transactionstotal:#:0.00:null},]],
 		  fill: false,
 		  lineTension: 0.1,
 		  pointRadius: 2,
@@ -516,7 +516,7 @@ new Chart(document.getElementById("chart_trend_stats_1"), {
                 ticks: { beginAtZero:true },
 				scaleLabel: {
 					display: true,
-					labelString: 'number'
+					labelString: 'num of users'
 					}
 },{
 				id: 'Y2',
@@ -525,7 +525,7 @@ new Chart(document.getElementById("chart_trend_stats_1"), {
                 ticks: { beginAtZero:true },
 				scaleLabel: {
 					display: true,
-					labelString: 'percentage'
+					labelString: 'num of transactions'
 					}
 					
 			}],
@@ -609,21 +609,21 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Executed",
-          data: [$[${transactionstotal:#:0:null},]],
+          label: "Success",
+          data: [$[${transactionssuccess:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
 		  pointRadius: 2,
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{
-          label: "Failed",
+          label: "Failed (%)",
           data: [$[${transactionsfailed:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
 		  pointRadius: 2,
 		  borderWidth: 2,
-		  yAxisID: 'Y1'
+		  yAxisID: 'Y2'
 }]
     },
     options: {
@@ -656,7 +656,17 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
                 ticks: { beginAtZero:true },
 				scaleLabel: {
 					display: false,
-					labelString: 'number'
+					labelString: 'num of success'
+					}
+			},
+			{
+				id: 'Y2',
+				type: 'linear',
+				position: 'right',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
+					labelString: '% failed'
 					}
 			}],
 			xAxes: [{
