@@ -444,6 +444,12 @@ run_jmeter() {
 	# Start and wait 10 for process to show
 	sleep 10
 	
+	# Show all active processes (after the test is started)
+	echo "-----------------------------------------------------------------------"
+	echo "ALL processen:"
+	ps -e
+	echo "-----------------------------------------------------------------------"
+
 	# Get the ProcessID for silkperformer to see if it is still running
 	if [[ $OS_type == "windows" ]]; then
 		processStart=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
@@ -457,11 +463,19 @@ run_jmeter() {
 	# Get the ProcessID of JMeter based on java_group_process
 	java_process=$(ps -a | grep $java_group_process | grep -i Java | awk '{print $1}' | head -1)
 	found_process=$java_process
-	#echo "Process Group ID:" $java_group_process
-	#echo "Process Java ID:" $java_process
-	#echo "Found Java ID:" $found_process
+	echo "Process Group ID:" $java_group_process
+	echo "Process Java ID:" $java_process
+	echo "-----------------------------------------------------------------------"
 	
-	if [[ $java_process == "" ]]; then
+	# Achterhalen van netwerkconnectie UDP indien jmeter draait:
+	#  UDP    0.0.0.0:4445           *:* 
+	#  UDP    [::]:4445              *:*
+	jmeter_actief=$(netstat -na | grep ":4445 " | head -1 | awk '{print $1}')
+	
+	# If Jmeter process not found, abort
+#	if [[ $java_process == "" ]]; then
+	# If Jmeter is not running, abort
+	if [[ $jmeter_actief == "" ]]; then
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 		echo "Something is wrong with Jmeter, it did not start"
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -474,7 +488,9 @@ run_jmeter() {
 	tdiff=`expr $tcurrent - $tstart`
 	
 	# If the Jmeter process is still in the process list we expect that the test is still running
-	while [[ "$java_process" == "$found_process" ]]
+#	while [[ "$java_process" == "$found_process" ]]
+	# If the UDP connection on poort 4445 is still found we expect that the Jmeter test is still running
+	while [[ "$jmeter_actief" != "" ]]
 	do
 		# echo "Performance test in progress, running for: $tdiff seconds"
 		
@@ -487,7 +503,14 @@ run_jmeter() {
 			fi
 
 			# LET OP: onderstaande zou nog getest moeten worden met linux
-			found_process=$(ps -a | grep $java_group_process | grep -i Java | awk '{print $1}' | head -1)
+#			found_process=$(ps -a | grep $java_group_process | grep -i Java | awk '{print $1}' | head -1)
+			found_process=$(ps -a | grep $java_process | awk '{print $1}' | head -1)
+			#echo "Found Java ID:" $found_process
+
+			# Achterhalen van netwerkconnectie UDP indien jmeter draait:
+		        #  UDP    0.0.0.0:4445           *:* 
+			#  UDP    [::]:4445              *:*
+			jmeter_actief=$(netstat -na | grep ":4445 " | head -1 | awk '{print $1}')
 		else
 			echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 			echo "Treshold exceeded aborting test..."
@@ -520,6 +543,15 @@ run_jmeter() {
 		##	
 	done
 	
+	# Show all active processes (after the test is stopped)
+	echo "-----------------------------------------------------------------------"
+	echo "ALL processen:"
+	ps -e
+	echo "-----------------------------------------------------------------------"
+	echo "GROUP processen:"
+	ps -e | grep $java_group_process
+	echo "-----------------------------------------------------------------------"
+
 	sleep 10
 	
 	# Making a copy of the JMeter log for reference
