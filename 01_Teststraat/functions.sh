@@ -449,6 +449,9 @@ run_jmeter() {
 	echo "ALL processen:"
 	ps -e
 	echo "-----------------------------------------------------------------------"
+#	echo "GROUP processen:"
+#	ps -e | grep $java_group_process
+#	echo "-----------------------------------------------------------------------"
 
 	# Get the ProcessID for silkperformer to see if it is still running
 	if [[ $OS_type == "windows" ]]; then
@@ -470,7 +473,8 @@ run_jmeter() {
 	# Achterhalen van netwerkconnectie UDP indien jmeter draait:
 	#  UDP    0.0.0.0:4445           *:* 
 	#  UDP    [::]:4445              *:*
-	jmeter_actief=$(netstat -na | grep ":4445 " | head -1 | awk '{print $1}')
+#	jmeter_actief=$(netstat -na | grep ":4445 " | head -1 | awk '{print $1}')
+	jmeter_actief=$java_process
 	
 	# If Jmeter process not found, abort
 #	if [[ $java_process == "" ]]; then
@@ -490,9 +494,16 @@ run_jmeter() {
 	# If the Jmeter process is still in the process list we expect that the test is still running
 #	while [[ "$java_process" == "$found_process" ]]
 	# If the UDP connection on poort 4445 is still found we expect that the Jmeter test is still running
+	# If the java process is still active (and/or the UDP connection is active), we expect that the test is still running
 	while [[ "$jmeter_actief" != "" ]]
 	do
 		# echo "Performance test in progress, running for: $tdiff seconds"
+		
+		if [[ "$workload" == "Verificatie" ]]; then
+			sleep 10
+		else
+			sleep 60
+		fi
 		
 		# Prep for next while loop and make sure Jmeter does not run for too long
 		if [[ $threshold -gt $tdiff ]]; then
@@ -532,12 +543,6 @@ run_jmeter() {
 			exit 1
 		fi
 		
-		if [[ "$workload" == "Verificatie" ]]; then
-			sleep 10
-		else
-			sleep 60
-		fi
-		
 		tcurrent=`date +"%s"`
 		tdiff=`expr $tcurrent - $tstart`
 		##	
@@ -545,9 +550,9 @@ run_jmeter() {
 	
 	# Show all active processes (after the test is stopped)
 	echo "-----------------------------------------------------------------------"
-	echo "ALL processen:"
-	ps -e
-	echo "-----------------------------------------------------------------------"
+#	echo "ALL processen:"
+#	ps -e
+#	echo "-----------------------------------------------------------------------"
 	echo "GROUP processen:"
 	ps -e | grep $java_group_process
 	echo "-----------------------------------------------------------------------"
@@ -603,6 +608,9 @@ extractfault_jmeter () {
 	echo "-------------------------"
 	echo "The following transaction(s) are reporting an error"
 	cat $verification_logdir/result.jtl | grep  "s=\"false\"" | sed -e 's/.*lb=\"\(.*\)" rc.*/\1/' | uniq
+	echo "-------------------------"
+	echo "The following response code(s) were(/was) found per failed transaction"
+	cat $verification_logdir/result.jtl | grep -e "rc=\"[^23\"]" | sed -e 's/.*lb=\"\(.*\)\" rc=\"\(.*\)\" rm=\"\(.*\)\" tn=.*/\1\t\2\t\3/' | sort | uniq | sed -e 's/\(.*\)\t\(.*\)\t\(.*\)/\1\n\2 \3/'
 	echo "-------------------------"
 }
 
