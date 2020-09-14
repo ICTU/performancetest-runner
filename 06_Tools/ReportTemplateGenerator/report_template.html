@@ -427,7 +427,10 @@ new Chart(document.getElementById("chart_counters"), {
 			}],
 			xAxes: [{
                 ticks: {
+					display: true,
                     beginAtZero:true,
+					autoSkip: true,
+					maxTicksLimit: 100,
 					minRotation: 90,
 					maxRotation: 90,					
 					callback: function(dataLabel, index) {
