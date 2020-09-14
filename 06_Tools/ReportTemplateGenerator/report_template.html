@@ -2,8 +2,13 @@
 	<head>
 	<title>PERF ||Project||/${testrundatetime}</title>
 			
+	<!-- ChartJS lib -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes@latest/dist/chartjs-plugin-colorschemes.min.js"></script>
+
+	<!-- TableSorter lib -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
 
 	<style type="text/css">
 		body {
@@ -274,28 +279,35 @@
 <hr align="left" width="100%" size="1"/>
 
 <h3>Response times (s)</h3>
-<table cellspacing="2" cellpadding="5" border="0" class="details" id="responsetimestable_begin">
+<table cellspacing="2" cellpadding="5" border="0" class="details sorted" id="responsetimestable_begin">
+	<thead>
 	<tr valign="top">
 	<th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Evaluated</th><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank"/><th class="blank">Baseline</th><th class="blank">Current</th><th class="blank"/>
-	</tr>
-	
+	</tr>	
 	<tr valign="top">
 	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Threshold</th><th class="blank"/><th>${baselineref}<br>${baseline.appversion}</th><th>${testrundatetime}<br>${appversion}</th><th>Delta %</th>
 	</tr>
+	</thead>
+	<tbody>
 	
 	||BLOK2||
 
+	</tbody>
 	<tr valign="top">
 	<th>Transaction</th><th>Success</th><th>Min</th><th>Avg</th><th>90 perc</th><th>Max</th><th>StDev</th><th>Failed</th><th>Threshold</th><th class="blank"/><th>${baselineref}<br>${baseline.appversion}</th><th>${testrundatetime}<br>${appversion}</th><th>Delta %</th>
 	</tr>
 </table id="responsetimestable_end">
 
 <h3>Trend (s)</h3>
-<table cellspacing="2" cellpadding="5" border="0" class="details" id="trendtable_begin">
+<table cellspacing="2" cellpadding="5" border="0" class="details sorted" id="trendtable_begin">
+	<thead>
 	<tr>
 	<th>Transaction</th>$[<th class="rotate"><div><span>${testrundatetime:#}<br>${appversion:#}</span></div></th>]
 	</tr>
+	</thead>
+	<tbody>
 	||BLOK3||
+	</tbody>
 	<th>Transaction</th>$[<th id="${testrundatetime:#}"></th>]
 </table id="trendtable_end">
 
@@ -305,6 +317,13 @@
 <h3>end of report</h3>
 
 <script>
+
+$(function() {
+  $("table.sorted").tablesorter({
+	sortMultiSortKey: "shiftKey"
+  })
+});
+
 new Chart(document.getElementById("chart_counters"), {
     type: 'line',
     data: {
