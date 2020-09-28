@@ -4,6 +4,9 @@ Replaces platform independent .NetCore Silk Result Tools (srt)
 
 wish: add colum 'threshold' to individual transaction lines
 
+4.12.0.0
+30-7-2020	per transaction column 'Threshold' added in table Response Times (label transaction thresholds)
+
 4.11.0.0
 6-7-2020	variable 'transactionstotal' corrected to count failed+success and 'transactionssuccess' added new, containing only success transactions
 

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>4.11.0.0</Version>
+    <Authors>ISR</Authors>
+    <Company>ICTU</Company>
+    <Product>Report Generator - loadgenerator log compression</Product>
+    <Description>Reduce the size of loadgenerator logs to only used lines</Description>
+    <Copyright>ICTU 2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\rpg.common\rpg.common.csproj" />
+  </ItemGroup>
+
+</Project>

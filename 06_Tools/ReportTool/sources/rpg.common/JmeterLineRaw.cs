@@ -22,9 +22,13 @@ namespace rpg.common
             Dictionary<string, string> attributes = new Dictionary<string, string>();
             attributes.Add("ts", Regex.Match(line, regex_ts).Groups[1].Value);
             attributes.Add("t", Regex.Match(line, regex_t).Groups[1].Value);
-            attributes.Add("na", Regex.Match(line, regex_na).Groups[1].Value);
+
+            string na = Regex.Match(line, regex_na).Groups[1].Value;
+            attributes.Add("na", (na.Trim() == "") ? "0" : na); // default na=0 if empty, legal correction can occur
+
             string s = Regex.Match(line, regex_s).Groups[1].Value;
-            attributes.Add("s", ((s == "false") || (s == "0")) ? "false" : "true");
+            attributes.Add("s", ((s == "false") || (s == "0")) ? "false" : "true"); // correct format to true/false
+
             attributes.Add("lb", Regex.Match(line, regex_lb).Groups[1].Value);
 
             return attributes;

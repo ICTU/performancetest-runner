@@ -14,7 +14,6 @@ namespace rpg.loadintermediate
 
         static void Main(string[] args)
         {
-
             Log.WriteLine("rpg.loadintermediate <project> <testrun> <category> <entity> <intermediatefile> <database>", true);
             Log.WriteLine("version " + typeof(Program).Assembly.GetName().Version.ToString());
 
@@ -35,7 +34,6 @@ namespace rpg.loadintermediate
             c.StoreIntermediate(Params.Value("project"), Params.Value("testrun"), Params.Value("category"), Params.Value("entity") );
 
             Log.WriteLine("rpg.loadintermediate finished\n", true);
-
         }
     }
 }

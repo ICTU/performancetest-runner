@@ -20,5 +20,6 @@ cp sources/rpg.merge/bin/Release/netcoreapp2.1/publish/*.* sources/build
 cp sources/rpg.parsemeasures/bin/Release/netcoreapp2.1/publish/*.* sources/build
 cp sources/rpg.parsetransactions/bin/Release/netcoreapp2.1/publish/*.* sources/build
 cp sources/rpg.parsevariables/bin/Release/netcoreapp2.1/publish/*.* sources/build
+cp sources/rpg.compresslglog/bin/Release/netcoreapp2.1/publish/*.* sources/build
 
 echo done build

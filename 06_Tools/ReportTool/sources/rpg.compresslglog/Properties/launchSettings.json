@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "rpg.compresslglog": {
+      "commandName": "Project",
+      "commandLineArgs": "parser=jmeter sourcelogfile=c:\\temp\\grandresult.jtl destinationlogfile=c:\\temp\\grandresult.compressed.jtl"
+    }
+  }
+}

@@ -26,7 +26,7 @@ namespace rpg.parsemeasures
             jtlTrsLines = ReadMeasureDataText(p.Value(TRSJTLFILETAG));
 
             // ruwe measure data aggregeren
-            ExtractMeasureData(jtlTrsLines);
+            ExtractTransactionMeasureData(jtlTrsLines);
 
             // additionele definities (nodig voor config van grafieken) inlezen -> measuredetails
             ExtractAdditionals(jtlTrsLines);
@@ -40,7 +40,7 @@ namespace rpg.parsemeasures
             Log.WriteLine("checking file format (XML + keyvalue) of " + filename);
 
             if (!Utils.IsXMLWithKey(filename, JTLCHECKSTR))
-                throw new FormatException("file is not XML format, or missing crucial key values: " + filename);
+                throw new FormatException("File is not XML format, or missing crucial key values: " + filename);
         }
 
         /// <summary>
@@ -57,10 +57,13 @@ namespace rpg.parsemeasures
             _variables.Add(INTERVALKEY, JMAGGREGATEPERIOD.ToString());
         }
 
+
         /// <summary>
         /// Calculate aggregated measure data from raw sample data
+        /// 
         /// </summary>
-        private void ExtractMeasureData(string[] lines)
+        /// <param name="lines"></param>
+        private void ExtractTransactionMeasureData(string[] lines)
         {
             //<sample t="18" it="0" lt="0" ts="1509550962840" s="true" lb="setUp: regex tbv uitwerking beoordeling" rc="200" rm="OK" tn="setUp: 05-06_gir_inspecteren 3-1" dt="text" by="59" ng="1" na="3"/>
             //<httpSample t="97" it="0" lt="96" ts="1509550966125" s="true" lb="gbr_gebruikerbeheer" rc="200" rm="OK" tn="setUp: standaardgebruikers 1-1" dt="text" by="13469" ng="1" na="1">
@@ -84,62 +87,69 @@ namespace rpg.parsemeasures
             // build aggregated timeseries
             foreach (string line in lines)
             {
-                //Log.WriteLine("DEBUG processing line: " + line);
-                if (IsSeriesLine(line))
+                try
                 {
-                    //Log.WriteLine("DEBUG is series line, processing: " + line);
-                    // extract transactiedata naar aggregatie objecten
-                    try // gevoelig stuk
+                    //Log.WriteLine("DEBUG processing line: " + line);
+                    if (IsSeriesLine(line))
                     {
-                        Dictionary<string, string> values = JmeterLineClean.Parse(line);
-                        valueCnt++;
-
-                        //Log.WriteLine("DEBUG gaat parsen naar long: "+ values["ts"]);
-                        // ts = timestamp
-                        timestamp = long.Parse(values["ts"]);
-                        
-                        // t = response time (int milliseconds)
-                        resptime_agg.Add(int.Parse(values["t"])); // optellen voor de aggregatieperiode
-
-                        // errors
-                        errors_agg.Add(bool.Parse(values["s"]) ? 0 : 1); // if success: err=0, else: 1
-
-                        //concurrent threads
-                        numofthreads_agg.Add(int.Parse(values["na"]));
-                    }
-                    catch (Exception e)
-                    {
-                        throw new FormatException(String.Format("unexpected format of data found in line:\r\n [{0}]\r\n {1}", line, e.Message));
-                    }
-
-                    // TODO add individual transaction measures
-                    if (threshold == 0 ) { threshold = timestamp; } // set it for the first time to prevent large timejump
-                    timespan = timestamp - threshold;
-
-                    // eens per periode aggregatie berekenen en door met vlg aggr blok, als timespan negatief is dan klopt de sortering in het JTL bestand niet
-                    if (timespan > JMAGGREGATEPERIOD || timespan < 0)
-                    {
-                        for (int a = 0; a < (timespan / JMAGGREGATEPERIOD); ++a) //for each timebucket create a datapoint
+                        //Log.WriteLine("DEBUG is series line, processing: " + line);
+                        // extract transactiedata naar aggregatie objecten
+                        try // gevoelig stuk
                         {
-                            // agg -> measuredetails
-                            _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToIntermediateSecondsString(resptime_agg.Avg().ToString())); // normalize
-                            _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
-                            _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
-                            _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
+                            Dictionary<string, string> values = JmeterLineClean.Parse(line);
+                            valueCnt++;
 
-                            // add timeseries sequence (in seconds)
-                            timeSeriesPoint = (int)aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
-                            _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
+                            //Log.WriteLine("DEBUG gaat parsen naar long: "+ values["ts"]);
+                            // ts = timestamp
+                            timestamp = long.Parse(values["ts"]);
 
-                            // reset all
-                            resptime_agg.Reset();
-                            errors_agg.Reset();
-                            numofthreads_agg.Reset();
+                            // t = response time (int milliseconds)
+                            resptime_agg.Add(int.Parse(values["t"])); // optellen voor de aggregatieperiode
 
-                            threshold = timestamp;
-                            aggregateCnt++;
+                            // errors
+                            errors_agg.Add(bool.Parse(values["s"]) ? 0 : 1); // if success: err=0, else: 1
+
+                            //concurrent threads
+                            numofthreads_agg.Add(int.Parse(values["na"]));
+                        }
+                        catch (Exception e)
+                        {
+                            throw new FormatException(String.Format("Parsing of values failed for line:\r\n [{0}]\r\n {1}", line, e.Message));
+                        }
+
+                        // TODO add individual transaction measures
+                        if (threshold == 0) { threshold = timestamp; } // set it for the first time to prevent large timejump
+                        timespan = timestamp - threshold;
+
+                        // eens per periode aggregatie berekenen en door met vlg aggr blok, als timespan negatief is dan klopt de sortering in het JTL bestand niet
+                        if (timespan > JMAGGREGATEPERIOD || timespan < 0)
+                        {
+                            for (int a = 0; a < (timespan / JMAGGREGATEPERIOD); ++a) //for each timebucket create a datapoint
+                            {
+                                // agg -> measuredetails
+                                _measureDetails.Add(OVERALLRESPONSETIMEKEY, Utils.jmeterTimeToIntermediateSecondsString(resptime_agg.Avg().ToString())); // normalize
+                                _measureDetails.Add(OVERALLTRANSACTIONSKEY, resptime_agg.Count().ToString());
+                                _measureDetails.Add(OVERALLUSERSKEY, numofthreads_agg.Max().ToString());
+                                _measureDetails.Add(OVERALLERRORSKEY, errors_agg.Sum().ToString());
+
+                                // add timeseries sequence (in seconds)
+                                timeSeriesPoint = (int)aggregateCnt * (JMAGGREGATEPERIOD / 1000); // timeseries datapoint in seconds
+                                _measureDetails.Add(OVERALLTIMESERIESKEY, timeSeriesPoint.ToString());
+
+                                // reset all
+                                resptime_agg.Reset();
+                                errors_agg.Reset();
+                                numofthreads_agg.Reset();
+
+                                threshold = timestamp;
+                                aggregateCnt++;
+                            }
                         }
                     }
+                }
+                catch (Exception exceptionMsg)
+                {
+                    Log.WriteLine("WARNING having trouble parsing JTL line for measures, skipped this line \r"+exceptionMsg.Message);
                 }
             }
 
