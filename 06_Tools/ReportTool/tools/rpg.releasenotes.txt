@@ -1,8 +1,10 @@
 RPG (RePortGenerator tools) release notes
 
-Replaces platform independent .NetCore Silk Result Tools (srt)
+Replaces platform dependent Silk Result Tools (srt)
 
-wish: add colum 'threshold' to individual transaction lines
+
+new
+15-9-2020	set na=0 as default when blank
 
 4.12.0.0
 30-7-2020	per transaction column 'Threshold' added in table Response Times (label transaction thresholds)
