@@ -653,7 +653,7 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
 		  borderWidth: 2,
 		  yAxisID: 'Y1'
 },{
-          label: "Failed (%)",
+          label: "Failed",
           data: [$[${transactionsfailed:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
@@ -702,7 +702,7 @@ new Chart(document.getElementById("chart_trend_stats_3"), {
                 ticks: { beginAtZero:true },
 				scaleLabel: {
 					display: true,
-					labelString: '% failed'
+					labelString: 'num failed'
 					}
 			}],
 			xAxes: [{
