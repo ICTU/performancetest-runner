@@ -15,12 +15,12 @@ aborttest_parse() {
 
 orgpath=$('pwd')
 
-mv $rpt_temppath/_transactions.jtl $rpt_temppath/_transactions.org.jtl
-
-echo
-echo Compress jtl...
-dotnet $rpt_toolspath/rpg.compresslglog.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.org.jtl destinationfile=$rpt_temppath/_transactions.jtl
-if [ $? -ne 0 ]; then aborttest_parse "parse transactions"; return; fi
+#echo
+#echo Compress jtl...
+#nesting of main/subsamples resulting in counting problems, disable until fixed
+#mv $rpt_temppath/_transactions.jtl $rpt_temppath/_transactions.org.jtl
+#dotnet $rpt_toolspath/rpg.compresslglog.dll parser=jmeter transactionfilejtl=$rpt_temppath/_transactions.org.jtl destinationfile=$rpt_temppath/_transactions.jtl
+#if [ $? -ne 0 ]; then aborttest_parse "parse transactions"; return; fi
 
 cd $rpt_loadgendir
 
