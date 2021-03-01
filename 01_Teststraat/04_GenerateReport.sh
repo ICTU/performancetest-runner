@@ -152,7 +152,6 @@ if [[ "$committorepository" == "true" ]]; then
 	if [[ $aantalBestanden -eq 0 ]]; then
 		echo "Lege repo, geen pull nodig"
 	else
-		git reset --hard origin/master || aborttest "GIT Reset failed, aborting"
 		git pull $giturl || aborttest "GIT Pull failed, aborting"
 	fi
 	
