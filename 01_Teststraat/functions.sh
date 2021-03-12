@@ -610,7 +610,7 @@ extractfault_jmeter () {
 	cat $verification_logdir/result.jtl | grep  "s=\"false\"" | sed -e 's/.*lb=\"\(.*\)" rc.*/\1/' | uniq
 	echo "-------------------------"
 	echo "The following response code(s) were(/was) found per failed transaction"
-	cat $verification_logdir/result.jtl | grep -e "rc=\"[^23\"]" | sed -e 's/.*lb=\"\(.*\)\" rc=\"\(.*\)\" rm=\"\(.*\)\" tn=.*/\1\t\2\t\3/' | sort | uniq | sed -e 's/\(.*\)\t\(.*\)\t\(.*\)/\1\n\2 \3/'
+	cat $verification_logdir/result.jtl | grep -e "s=\"false\"" | sed -e 's/.*lb=\"\(.*\)\" rc=\"\(.*\)\" rm=\"\(.*\)\" tn=.*/\1\t\2\t\3/' | sort | uniq | sed -e 's/\(.*\)\t\(.*\)\t\(.*\)/\1\n\2 \3/'
 	echo "-------------------------"
 }
 
