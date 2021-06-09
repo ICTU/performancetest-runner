@@ -216,22 +216,21 @@
 	<tr><td class="name">Paragraph Summary</td><td>
 		Only transactions containing pattern '<2 digit number>_' are evaluated</td></tr>
 	<tr><td class="name">Metric Threshold violations</td><td>
-		Number of transactions exceeding 'red' threshold</td></tr>
+		Number of transactions exceeding their 'high' threshold (and are marked 'red')</td></tr>
 	<tr><td class="name">Metric Baseline warnings</td><td>
-		Number of 'red' transactions in column Delta%</td></tr>
+		Number of transactions exceeding their 'warning' threshold and increased more than 15% compared to the beseline (marked 'red' in column Delta)</td></tr>
 	<tr><td class="name">Metric Trendbreak 'scalability'</td><td>
 		<a href="https://github.com/ICTU/performancetest-runner/wiki/Metrics#trendbreak-scalability--stress-testing" target='_blank'>help on metric Trendbreak scalability</a></td></tr>
 	<tr><td class="name">Metric Trendbreak 'stability'</td><td>
 		<a href="https://github.com/ICTU/performancetest-runner/wiki/Metrics#trendbreak-stability--endurance-testing" target='_blank'>help on metric Trendbreak stability</a></td></tr>
-	<tr><td class="name">Paragraph Response times</td><td>Only transactions in Transactions.csv are evaluated</td></tr>
 	<tr><td class="name">Column Evaluated</td><td>Requirements are evaluated against this value</td></tr>
 	<tr><td class="name">Column Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Current</td><td>This session's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Delta %</td><td>
 		Difference between current and baseline, in % compared to the baseline<br>
-		Shows if current or baseline exceeds YELLOW or RED a threshold<br>
-		AND difference is >15%<br>
-		Shows RED if slower or GREEN if faster compared to baseline</td></tr>
+		Only shows if current or baseline exceeds 'warning' or 'high' thresholds<br>
+		AND difference is substantial (>15%)<br>
+		Shows 'red' if slower or 'green' if faster compared to the baseline</td></tr>
 	<tr><td class="name">Paragraph Trend</td><td>Response times only colymn 'evaluated' of previous ${maxtrendcount} testruns</td></tr>
 	<tr><td class="name">Separator characters</td><td id="separatorcharacters">decimal: ',' thousand: '' (none)</td></tr>
 </table>
