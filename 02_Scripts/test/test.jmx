@@ -228,7 +228,7 @@
           </collectionProp>
         </Arguments>
         <hashTree/>
-        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_duurtest" enabled="false">
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="WORKLOAD_duurtest" enabled="true">
           <collectionProp name="Arguments.arguments">
             <elementProp name="NOT" elementType="Argument">
               <stringProp name="Argument.name">NOT</stringProp>
@@ -244,7 +244,7 @@
             </elementProp>
             <elementProp name="DRN" elementType="Argument">
               <stringProp name="Argument.name">DRN</stringProp>
-              <stringProp name="Argument.value">300</stringProp>
+              <stringProp name="Argument.value">7200</stringProp>
               <stringProp name="Argument.desc">Duration of the test</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
