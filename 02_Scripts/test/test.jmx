@@ -85,8 +85,8 @@
         <boolProp name="include_checkbox_state">false</boolProp>
         <boolProp name="exclude_checkbox_state">false</boolProp>
         <collectionProp name="samplers">
-          <collectionProp name="-1519596648">
-            <stringProp name="941141794">resmon.lg_cpu_loadlg_cpu_load</stringProp>
+          <collectionProp name="-323472927">
+            <stringProp name="-39779617">resmon.lg_cpu_load</stringProp>
             <stringProp name="0"></stringProp>
             <stringProp name="0"></stringProp>
             <stringProp name="0"></stringProp>
@@ -107,8 +107,8 @@
             <stringProp name="1237">false</stringProp>
             <stringProp name="1237">false</stringProp>
           </collectionProp>
-          <collectionProp name="965736545">
-            <stringProp name="-1999276992">resmon.system_cpuload</stringProp>
+          <collectionProp name="-1594852073">
+            <stringProp name="-1860126293">resmon.system_cpu_load</stringProp>
             <stringProp name="0"></stringProp>
             <stringProp name="0"></stringProp>
             <stringProp name="0"></stringProp>
