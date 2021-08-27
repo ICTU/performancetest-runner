@@ -75,7 +75,7 @@
             <assertionsResultsToSave>0</assertionsResultsToSave>
           </value>
         </objProp>
-        <stringProp name="filename">${__P(resultfile,result.jtl)}</stringProp>
+        <stringProp name="filename">${__P(resultfile,result.jtl)}.csv</stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <stringProp name="include_sample_labels"></stringProp>
