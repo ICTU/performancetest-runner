@@ -159,9 +159,7 @@
 	<h1>PERFORMANCETEST SUMMARY FOR PROJECT ||Project||</h1>
 	<h3 id="testrun_id">Testrun ID: ${testrundatetime}</h3>
 </td>
-<td align="right">
-<a href="https://github.com/ICTU/performancetest-runner/wiki/Evaluation-of-testresults:-5-steps" target='_blank'>Help on report evaluation</a>
-</td>
+
 <td align="right">
 <img src="${companylogoreference}" height="30p"/>
 </td></tr></table>
@@ -211,6 +209,10 @@
 
 </td><td>
 
+<h3>Help</h3>
+<a href="https://github.com/ICTU/performancetest-runner/wiki/Evaluation-of-testresults:-5-steps" target='_blank'>Help on report evaluation</a></br>
+<a href="https://github.com/ICTU/performancetest-runner/wiki/Metrics" target='_blank'>Help on metrics</a>
+
 <h3>Legend</h3>
 <table class="config">
 	<tr><td class="name">Paragraph Summary</td><td>
@@ -219,10 +221,6 @@
 		Number of transactions exceeding their 'high' threshold (and are marked 'red')</td></tr>
 	<tr><td class="name">Metric Baseline warnings</td><td>
 		Number of transactions exceeding their 'warning' threshold and increased more than 15% compared to the beseline (marked 'red' in column Delta)</td></tr>
-	<tr><td class="name">Metric Trendbreak 'scalability'</td><td>
-		<a href="https://github.com/ICTU/performancetest-runner/wiki/Metrics#trendbreak-scalability--stress-testing" target='_blank'>help on metric Trendbreak scalability</a></td></tr>
-	<tr><td class="name">Metric Trendbreak 'stability'</td><td>
-		<a href="https://github.com/ICTU/performancetest-runner/wiki/Metrics#trendbreak-stability--endurance-testing" target='_blank'>help on metric Trendbreak stability</a></td></tr>
 	<tr><td class="name">Column Evaluated</td><td>Requirements are evaluated against this value</td></tr>
 	<tr><td class="name">Column Baseline</td><td>Baseline's measurement (evaluated value)</td></tr>
 	<tr><td class="name">Column Current</td><td>This session's measurement (evaluated value)</td></tr>
@@ -247,8 +245,9 @@
 	<tr><td class="name">Transactions failed (%)</td><td id="transactions_failed">${faultpercentage:0:0,00}</td></tr>
 	<tr><td class="name">Threshold violations</td><td id="threshold_violations">${thresholdviolations:4:0:0}</td></tr>
 	<tr><td class="name">Baseline warnings</td><td id="baseline_warnings">${baselinewarnings:4:0:0}</td></tr>
-	<tr><td class="name">Trendbreak 'scalability' (%)</td><td id="trendbreak_scalability">${trendbreakrampuppercentage:0:0}</td></tr>
-	<tr><td class="name">Trendbreak 'stability' (%)</td><td id="trendbreak_stability">${trendbreakstabilitypercentage:0:0}</td></tr>
+	<tr style="display:none"><td class="name">Breaking point stress (%)</td><td id="trendbreak_scalability">${trendbreakrampuppercentage:0:0}</td></tr>
+	<tr><td class="name">Breaking point stress (#virtual users)</td><td id="trendbreak_scalability_vusers">${trendbreakrampupusers:0:0}</td></tr>	
+	<tr><td class="name">Breaking point endurance (%)</td><td id="trendbreak_stability">${trendbreakstabilitypercentage:0:0}</td></tr>
 	<tr><td>&nbsp</td><td></td></tr>
 	<tr><td class="name">Duration</td><td id="duration">${testduration}</td></tr>
 	<tr><td class="name">Virtual users</td><td id="virtual_users">${mergedusers}</td></tr>	
@@ -725,8 +724,8 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
       labels: [$['${testrundatetime:#}',]],
       datasets: [
         {			
-          label: "Scalability (%)",
-          data: [$[${trendbreakrampuppercentage:#:0:null},]],
+          label: "Stress (vusers)",
+          data: [$[${trendbreakrampupusers:#:0:null},]],
 		  fill: false,
 		  lineTension: 0.1,
 		  pointRadius: 2,
@@ -739,7 +738,7 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
 		  lineTension: 0.1,
 		  pointRadius: 2,
 		  borderWidth: 2,
-		  yAxisID: 'Y1'
+		  yAxisID: 'Y2'
 }]
     },
     options: {
@@ -762,7 +761,7 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
 	  },
       title: {
         display: true,
-        text: 'Trendbreak'
+        text: 'Breaking point'
       },
       scales: {
             yAxes: [{
@@ -771,7 +770,17 @@ new Chart(document.getElementById("chart_trend_stats_4"), {
 				position: 'left',
                 ticks: { beginAtZero:true },
 				scaleLabel: {
-					display: false,
+					display: true,
+					labelString: 'vusers'
+					}
+			},
+			{
+				id: 'Y2',
+				type: 'linear',
+				position: 'right',
+                ticks: { beginAtZero:true },
+				scaleLabel: {
+					display: true,
 					labelString: 'percentage'
 					}
 			}],

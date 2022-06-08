@@ -81,8 +81,12 @@ namespace rpg.common
         private int ELEMENTSEVALUATED_STABILITY = 5; // number of historic values evaluated
 
         private int VARIATIONFACTOR_TRENDUP = 5; // factor x drop of expected difference
-        private int ELEMENTSEVALUATED_TRENDUP = 10; // avg can be extrapolated to expected next value
+        private int ELEMENTSEVALUATED_TRENDUP = 10; // number of historic values evaluated for moving windows of averages
 
+        private int ELEMENTSEVALUATED_TRENDSTABLE = 10; // number of values in moving window for average series
+        private int ELEMENTSSTART_TRENDSTABLE = 30; // number of values to start of baseline
+        private int ELEMENTSSPAN_TRENDSTABLE = 30; // number of values to span the baseline (1st 5 mins)
+        private float BREAKFACTOR_TRENDSTABLE = 2; // factor times 
 
         public int BreakIndex
         {
@@ -90,7 +94,6 @@ namespace rpg.common
             set { _breakIndex = value; }
         }
         
-
         /// <summary>
         /// Get the breaking value factor relative to max
         /// </summary>
@@ -150,11 +153,11 @@ namespace rpg.common
         /// <returns>array index of breakpoint</returns>
         public int DetectTrendBreak_Stability(double[] values)
         {
-            //Log.WriteLine("detect trendbreak-stability started...");
+            Log.WriteLine("detect trendbreak-stability started...");
             double[] avgValues = GenerateAvgArray(values, ELEMENTSEVALUATED_STABILITY);
 
             // evaluate trend and consider breaking if value is out of expected bandwidth
-            _breakIndex = DetectExpectedBandBreak(avgValues, values, ELEMENTSEVALUATED_STABILITY, VARIATIONPERCENTAGE_STABILITY);
+            _breakIndex = DetectBandBreak(avgValues, values, ELEMENTSEVALUATED_STABILITY, VARIATIONPERCENTAGE_STABILITY);
             Log.WriteLine(string.Format("break found at value={0:0.0} referenceseries={1:0.0}", values[_breakIndex], ReferenceSeries[_breakIndex]));
 
             return _breakIndex;
@@ -166,17 +169,97 @@ namespace rpg.common
         /// </summary>
         /// <param name="throughput_values"></param>
         /// <returns></returns>
-        public int DetectTrendBreak_Rampup(double[] throughput_values)
+        public int DetectTrendBreak_Rampup_Throughput(double[] throughput_values)
         {
-            //Log.WriteLine("detect trendbreak-rampup started...");
+            Log.WriteLine("detect trendbreak-rampup started | algorithm:DetectExpectedRiseBreak (throughput rise)...");
 
             double[] avgArray = GenerateAvgArray(throughput_values, ELEMENTSEVALUATED_TRENDUP);
 
             // evaluate trend and consider breaking if new value is not rising enough
-            _breakIndex = DetectExpectedRiseBreak(avgArray, throughput_values, ELEMENTSEVALUATED_TRENDUP, VARIATIONFACTOR_TRENDUP);
-            Log.WriteLine(string.Format("break found at throughput={0} referenceseries={1}", throughput_values[_breakIndex], ReferenceSeries[_breakIndex]));
+            _breakIndex = DetectRiseBreak(avgArray, throughput_values, ELEMENTSEVALUATED_TRENDUP, VARIATIONFACTOR_TRENDUP);
+            Log.WriteLine(string.Format("break found at throughput={0:0.0} avg={1:0.000} reference={2:0.000}", throughput_values[_breakIndex], avgArray[_breakIndex], ReferenceSeries[_breakIndex]));
 
             return _breakIndex;
+        }
+
+        /// <summary>
+        /// Detect a trend break based on expected stability of response times, derived from avg response times in begin phase
+        ///   used for stress testing (ramp-up)
+        /// </summary>
+        /// <param name="responsetime_values"></param>
+        /// <returns></returns>
+        public int DetectTrendBreak_Rampup_Responsetimes(double[] responsetime_values)
+        {
+            Log.WriteLine("detect trendbreak rampup responsetimes started | algorithm:DetectLevelBreak (response time stability)...");
+
+            // get interval averages
+            double[] avgArray = GenerateAvgArray(responsetime_values, ELEMENTSEVALUATED_TRENDSTABLE);
+
+            // get reference value, average from first period between elementsstart and widh elementsspan
+            double[] referenceArray = GetArraySubset(avgArray, ELEMENTSSTART_TRENDSTABLE, ELEMENTSSPAN_TRENDSTABLE);
+            double referenceAvg = GetAvgFromSeries(referenceArray); // get reference value from first
+
+            _breakIndex = DetectLevelBreak(avgArray, referenceAvg, BREAKFACTOR_TRENDSTABLE, ELEMENTSSTART_TRENDSTABLE+ELEMENTSSPAN_TRENDSTABLE);
+            Log.WriteLine(string.Format("break found at response time={0} avg={1:0.000} reference={2:0.000}", responsetime_values[_breakIndex], avgArray[_breakIndex], ReferenceSeries[_breakIndex]));
+
+            return _breakIndex;
+        }
+
+        /// <summary>
+        /// Calculate average value from value array
+        /// </summary>
+        /// <param name="valueArray"></param>
+        /// <returns></returns>
+        private double GetAvgFromSeries(double[] valueArray)
+        {
+            double val = 0;
+            foreach (double value in valueArray)
+                val += value;
+
+            return (val / valueArray.Length);
+        }
+
+        /// <summary>
+        /// Detect breaking point where element values break through the reference average by breakfactor
+        /// </summary>
+        /// <param name="valueArray"></param>
+        /// <param name="referenceValue"></param>
+        /// <param name="breakfactor">factor*referenceValue is the breaking level</param>
+        /// <returns></returns>
+        private int DetectLevelBreak(double[] valueArray, double referenceValue, float breakfactor, int elementStartIndex)
+        {
+            // Average from reference series
+            Log.WriteLine(string.Format("detect level break, start scanning from element {0}...", elementStartIndex));
+
+            for (int i = elementStartIndex; i < valueArray.Length; i++)
+            {
+                if (valueArray[i] > (referenceValue * breakfactor))
+                {
+                    Log.WriteLine("break found");
+                    return i;
+                }
+                    
+            }
+            Log.WriteLine("no break found, set break to 100%");
+            return valueArray.Length;
+        }
+
+        /// <summary>
+        /// Copy a subset array out of a lengthy array
+        /// </summary>
+        /// <param name="valueArray"></param>
+        /// <param name="element_start"></param>
+        /// <param name="element_span"></param>
+        /// <returns></returns>
+        private double[] GetArraySubset(double[] valueArray, int element_start, int element_span)
+        {
+            double[] subset = new double[element_span];
+
+            for (int i = 0; i < element_span; i++)
+            {
+                subset[i] = valueArray[i + element_start];
+            }
+            return subset;
         }
 
         /// <summary>
@@ -224,9 +307,9 @@ namespace rpg.common
         /// <param name="values"></param>
         /// <param name="variationPercentage"></param>
         /// <returns></returns>
-        private int DetectExpectedBandBreak(double[] meanArray, double[] values, int meanEvaluatedElements, int variationPercentage)
+        private int DetectBandBreak(double[] meanArray, double[] values, int meanEvaluatedElements, int variationPercentage)
         {
-            Log.WriteLine(string.Format("ExpectedBandBreak algorythm with delta variation factor={0} evaluated history elements={1} ...", variationPercentage, meanEvaluatedElements));
+            Log.WriteLine(string.Format("detect band break with BandBreak algorythm, delta variation factor={0} evaluated history elements={1} ...", variationPercentage, meanEvaluatedElements));
 
             int result = -1;
             double lowLimit = 0;
@@ -287,7 +370,7 @@ namespace rpg.common
         /// <param name="values"></param>
         /// <param name="variationFactor"></param>
         /// <returns></returns>
-        private int DetectExpectedRiseBreak(double[] meanArray, double[] values, int meanEvaluatedElements, int variationFactor)
+        private int DetectRiseBreak(double[] meanArray, double[] values, int meanEvaluatedElements, int variationFactor)
         {
             Log.WriteLine(string.Format("ExpectedRiseBreak algorythm with delta variation factor={0} evaluated history elements={1} ...", variationFactor, meanEvaluatedElements));
             int result = -1;

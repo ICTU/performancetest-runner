@@ -151,14 +151,16 @@ namespace rpg.parsemeasures
             try
             {
                 // get timeseries
-                double[] throughput_values = _measureDetails.GetValuesAsDoubleArray(OVERALLTRANSACTIONSKEY);
+                // double[] throughput_values = _measureDetails.GetValuesAsDoubleArray(OVERALLTRANSACTIONSKEY);
+                double[] responsetimes_values = _measureDetails.GetValuesAsDoubleArray(OVERALLRESPONSETIMEKEY);
                 double[] users_values = _measureDetails.GetValuesAsDoubleArray(OVERALLUSERSKEY);
 
                 TrendAnalyzer trendAnalyzer = new TrendAnalyzer();
                 trendAnalyzer.ReferenceSeries = users_values;
 
                 // search for trend break if stable ramp-up is expected (stress testing)
-                trendAnalyzer.DetectTrendBreak_Rampup(throughput_values);
+                // trendAnalyzer.DetectTrendBreak_Rampup_Throughput(throughput_values); // based on stable rise of throughput (needs more complexity, first try alternative)
+                trendAnalyzer.DetectTrendBreak_Rampup_Responsetimes(responsetimes_values); // based on stability of response times
 
                 _variables.Add(TRENDBREAKRAMPUPPRCKEY, trendAnalyzer.GetBreakPercentage_Reference().ToString("0"));
                 _variables.Add(TRENDBREAKRAMPUPUSRKEY, trendAnalyzer.GetBreakReferenceValue().ToString());
