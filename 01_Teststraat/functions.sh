@@ -469,6 +469,13 @@ run_jmeter() {
 	echo "Process Group ID:" $java_group_process
 	echo "Process Java ID:" $java_process
 	echo "-----------------------------------------------------------------------"
+	# Retry for all processes if no Java proces is found in Group
+	if [[ $java_process == "" ]]; then
+		java_process=$(ps -a | grep -i Java | awk '{print $1}' | head -1)
+		found_process=$java_process
+		echo "Process Java ID (retry):" $java_process
+		echo "-----------------------------------------------------------------------"
+	fi
 	
 	# Achterhalen van netwerkconnectie UDP indien jmeter draait:
 	#  UDP    0.0.0.0:4445           *:* 
