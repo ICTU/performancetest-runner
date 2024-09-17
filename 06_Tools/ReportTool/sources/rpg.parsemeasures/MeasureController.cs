@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using rpg.common;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace rpg.parsemeasures
 {
@@ -176,7 +177,8 @@ namespace rpg.parsemeasures
         }
 
         /// <summary>
-        /// Identify break in stability trend
+        /// Identify break in stability trend, use throughput and errors.
+        /// Using throughput instead of response times prevents long interval heavy transactions to cause breaks
         /// </summary>
         private void ExtractStabilityBreak()
         {
@@ -185,18 +187,27 @@ namespace rpg.parsemeasures
             try
             {
                 // get timeseries
-                double[] throughput_values = _measureDetails.GetValuesAsDoubleArray(OVERALLTRANSACTIONSKEY);
-                double[] users_values = _measureDetails.GetValuesAsDoubleArray(OVERALLUSERSKEY);
-                double[] error_values = _measureDetails.GetValuesAsDoubleArray(OVERALLERRORSKEY);
+                double[] throughput_values = _measureDetails.GetValuesAsDoubleArray(OVERALLTRANSACTIONSKEY); // summary general transactions (num of trs)
+                double[] users_values = _measureDetails.GetValuesAsDoubleArray(OVERALLUSERSKEY); // summary general active users
+                double[] error_values = _measureDetails.GetValuesAsDoubleArray(OVERALLERRORSKEY); // symmary general errors (num of errors)
 
                 TrendAnalyzer trendAnalyzer = new TrendAnalyzer();
                 trendAnalyzer.ReferenceSeries = users_values;
 
+                //TODO: controleer of algoritme goed geimplementeerd
+
                 // search for trendbreak if stability is expected (duration testing)
-                Log.WriteLine("phase 1: stability of throughput");
-                int breakThroughput = trendAnalyzer.DetectTrendBreak_Stability(throughput_values);
-                Log.WriteLine("phase 2: stability of errors");
-                int breakErrors = trendAnalyzer.DetectTrendBreak_Stability(error_values);
+                //Log.WriteLine("phase 1: stability of throughput (fixed band)");
+                //int breakThroughput = trendAnalyzer.DetectTrendBreak_Stability_FixedBand(throughput_values);
+
+                Log.WriteLine("phase 1: stability of throughput (historical band)");
+                int breakThroughput = trendAnalyzer.DetectTrendBreak_Stability_HistoricalBand(throughput_values);
+
+                //Log.WriteLine("phase 2: stability of errors (fixed band");
+                //int breakErrors = trendAnalyzer.DetectTrendBreak_Stability_FixedBand(error_values);
+
+                Log.WriteLine("phase 2: stability of errors (historical band");
+                int breakErrors = trendAnalyzer.DetectTrendBreak_Stability_HistoricalBand(error_values);
 
                 // break is lowest break level
                 int breakResult = (breakThroughput < breakErrors) ? breakThroughput : breakErrors;
