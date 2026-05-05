@@ -1,9 +1,9 @@
 RPG (RePortGenerator tools) release notes
 
-Replaces platform dependent Silk Result Tools (srt)
 
+5-5-2026    made sure the code is on par with current deployment at ICTU and compileable, final Accenture release for ICTU
+            untested development rolled back: .netcore3.1 => .net8; auto breakpoint detection fixed bandwidth => variable history bandwith
 
-new
 15-9-2020	set na=0 as default when blank
 
 4.12.0.0
